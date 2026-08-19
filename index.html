@@ -1,0 +1,3091 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GATE CS 2027 Command Center</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Supabase JS Client CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- External Environment Config -->
+  <script src="config.js"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            matte: {
+              bg: '#121214',
+              surface: '#18181b',
+              elevated: '#202024',
+              border: '#2e2e33',
+              hover: '#27272a',
+              text: '#f4f4f5',
+              muted: '#a1a1aa'
+            },
+            accent: {
+              blue: '#3b82f6',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              purple: '#8b5cf6',
+              rose: '#f43f5e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+<style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #121214; }
+    .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .dark .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    
+    /* Top Header Wallpaper Banner Only (Smooth Bottom Fade) */
+    #topHeroWallpaper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 230px;
+      background-size: cover !important;
+      background-position: center 35% !important;
+      background-repeat: no-repeat !important;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+      transition: background-image 0.4s ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="bg-[#121214] text-slate-100 min-h-screen flex flex-col relative antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP HEADER WALLPAPER ONLY -->
+  <div id="topHeroWallpaper"></div>
+  <div class="absolute top-0 left-0 right-0 h-[230px] bg-slate-950/30 pointer-events-none z-0"></div>
+
+  <!-- FLOATING TOP COMMAND HEADER (MATCHING REFERENCE IMAGE) -->
+  <header class="relative z-40 max-w-7xl mx-auto w-[96%] sm:w-full mt-3 sm:mt-4 px-4 sm:px-6 py-3 rounded-2xl bg-slate-900/85 dark:bg-[#15171e]/85 backdrop-blur-xl border border-white/10 dark:border-white/10 shadow-2xl flex flex-wrap justify-between items-center gap-3">
+    
+    <!-- Brand / Target -->
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-slate-800/90 text-slate-100 dark:bg-zinc-800/90 dark:text-zinc-100 flex items-center justify-center font-bold text-base border border-white/10 shadow-inner">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <h1 class="font-bold text-sm sm:text-base leading-tight tracking-tight text-white">GATE CS 2027 Command Center</h1>
+        <p class="text-[11px] text-slate-400">Target: AIR Top 100 &bull; IIT / IISc</p>
+      </div>
+    </div>
+
+    <!-- Right Controls Pill Group -->
+    <div class="flex items-center gap-2 sm:gap-3 text-xs">
+      
+      <!-- GATE 2027 Live Countdown Badge -->
+      <div class="flex items-center gap-2 bg-slate-950/60 dark:bg-black/50 px-3.5 py-1.5 rounded-full border border-white/10 shadow-inner">
+        <i class="fa-regular fa-clock text-amber-400"></i>
+        <span class="text-slate-400">GATE 2027:</span>
+        <span id="gateCountdownDisplay" class="font-mono font-bold text-white">Calculating...</span>
+      </div>
+
+      <!-- Cloud Sync Status Pill -->
+      <div id="cloudStatusPill" class="flex items-center gap-2 bg-slate-950/60 dark:bg-black/50 px-3.5 py-1.5 rounded-full border border-white/10 text-slate-300">
+        <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-blue-500"></span>
+        <span id="cloudStatusText" class="font-medium">Connecting...</span>
+      </div>
+
+      <!-- User Email & Logout / Login Actions -->
+      <div id="authActionsContainer" class="flex items-center gap-2">
+        <button onclick="openAuthModal('login-password')" class="px-3.5 py-1.5 rounded-full bg-white dark:bg-zinc-100 text-slate-900 font-bold transition flex items-center gap-1.5 shadow">
+          <i class="fa-solid fa-user"></i> <span>Login / Sync</span>
+        </button>
+      </div>
+
+      <!-- Wallpaper Selector -->
+      <button onclick="openWallpaperModal()" class="p-2 rounded-xl bg-slate-950/60 dark:bg-black/50 hover:bg-slate-800 border border-white/10 text-slate-300 transition" title="Change Background Wallpaper">
+        <i class="fa-solid fa-image text-sm"></i>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-950/60 dark:bg-black/50 hover:bg-slate-800 border border-white/10 text-slate-300 transition">
+        <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
+      </button>
+
+      <!-- Backup JSON -->
+      <button onclick="exportData()" class="px-3 py-1.5 rounded-xl bg-slate-950/60 dark:bg-black/50 hover:bg-slate-800 border border-white/10 text-slate-300 transition font-medium hidden sm:flex items-center gap-1.5">
+        <i class="fa-solid fa-download"></i> <span>Backup</span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 py-5 flex-1 w-full space-y-5">
+
+    <!-- FLOATING SEGMENTED TABS BAR -->
+    <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl border border-white/10 shadow-xl overflow-x-auto custom-scroll text-xs font-semibold">
+      <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn px-4 py-2 rounded-xl bg-white dark:bg-zinc-100 text-slate-950 shadow-md flex items-center gap-2 shrink-0 transition">
+        <i class="fa-solid fa-chart-pie text-accent-blue"></i> Analytics & Insights Hub
+      </button>
+      <button onclick="switchTab('daily-flow')" id="tab-daily-flow" class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
+        <i class="fa-solid fa-play-circle"></i> Daily Routine & Timer
+      </button>
+      <button onclick="switchTab('tests')" id="tab-tests" class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
+        <i class="fa-solid fa-file-pen text-accent-amber"></i> Tests & Mocks (<span id="testsTabBadge">0</span>)
+      </button>
+      <button onclick="switchTab('completed')" id="tab-completed" class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
+        <i class="fa-solid fa-circle-check text-accent-emerald"></i> Completed Archive (<span id="completedTabBadge">0</span>)
+      </button>
+      <button onclick="switchTab('cycle-setup')" id="tab-cycle-setup" class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
+        <i class="fa-solid fa-calendar-check"></i> Monthly 2+1 Setup & Carryover
+      </button>
+      <button onclick="switchTab('syllabus')" id="tab-syllabus" class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
+        <i class="fa-solid fa-book-bookmark"></i> Syllabus Matrix
+      </button>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: ANALYTICS & INSIGHTS HUB (HOME PAGE) -->
+    <!-- ============================================================== -->
+    <div id="view-analytics" class="space-y-5">
+      
+      <!-- HERO KPI ROW -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">Total Study Time</span>
+            <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs">
+              <i class="fa-solid fa-hourglass-start"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h2 id="anTotalStudyHours" class="text-3xl font-bold font-mono text-white">0.0 <span class="text-sm font-sans font-normal text-slate-400">Hours</span></h2>
+            <p id="anThisMonthHoursPill" class="text-[11px] text-accent-blue font-semibold mt-1">0.0h logged this month</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">DPP / PYQ Questions</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-accent-emerald flex items-center justify-center text-xs">
+              <i class="fa-solid fa-pen-clip"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h2 id="anTotalQuestionsSolved" class="text-3xl font-bold font-mono text-white">0 <span class="text-sm font-sans font-normal text-slate-400">Qs</span></h2>
+            <p id="anThisMonthQsPill" class="text-[11px] text-accent-emerald font-semibold mt-1">0 questions this month</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">Syllabus Completion</span>
+            <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-accent-purple flex items-center justify-center text-xs">
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h2 id="anSyllabusPercent" class="text-3xl font-bold font-mono text-white">0.0%</h2>
+            <div class="w-full bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
+              <div id="anSyllabusBar" class="bg-purple-500 h-1.5 rounded-full" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">Study Streak</span>
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-accent-amber flex items-center justify-center text-xs">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h2 id="anCurrentStreak" class="text-3xl font-bold font-mono text-white">0 <span class="text-sm font-sans font-normal text-slate-400">Days</span></h2>
+            <p class="text-[11px] text-accent-amber font-semibold mt-1">Consistent daily preparation</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 1: DAILY TARGETS & 7-DAY ACTIVITY HEAT-STRIP -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Daily Goal vs Actual Card (5 cols) -->
+        <div class="lg:col-span-5 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+          <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <div>
+              <h3 class="text-sm font-bold flex items-center gap-2 text-white">
+                <i class="fa-solid fa-bullseye text-accent-rose"></i> Today's Goals vs. Actual
+              </h3>
+              <p class="text-[11px] text-slate-400" id="anTodayDateLabel">Today</p>
+            </div>
+            <button onclick="switchTab('daily-flow')" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-xs font-semibold text-accent-blue transition">
+              Open Timer &rarr;
+            </button>
+          </div>
+
+          <div class="space-y-3.5 text-xs">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium text-slate-300">Study Time: <b id="anTodayHoursVal" class="text-white">0h 0m</b> / 5h 30m target</span>
+                <span id="anTodayTimePct" class="font-mono font-bold text-accent-blue">0%</span>
+              </div>
+              <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                <div id="anTodayTimeBar" class="bg-accent-blue h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium text-slate-300">Questions Solved: <b id="anTodayQsVal" class="text-white">0 Qs</b> / 30 Qs target</span>
+                <span id="anTodayQsPct" class="font-mono font-bold text-accent-emerald">0%</span>
+              </div>
+              <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                <div id="anTodayQsBar" class="bg-accent-emerald h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium text-slate-300">Routine Steps: <b id="anTodayStepsVal" class="text-white">0/5 Done</b></span>
+                <span id="anTodayStepsPct" class="font-mono font-bold text-purple-400">0%</span>
+              </div>
+              <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                <div id="anTodayStepsBar" class="bg-purple-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7-Day Study Velocity Chart (7 cols) -->
+        <div class="lg:col-span-7 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4 flex flex-col justify-between">
+          <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <div>
+              <h3 class="text-sm font-bold flex items-center gap-2 text-white">
+                <i class="fa-solid fa-chart-column text-accent-blue"></i> 7-Day Study Time Velocity
+              </h3>
+              <p class="text-[11px] text-slate-400">Minutes studied each day over the past week</p>
+            </div>
+            <span id="an7DayTotalHours" class="text-xs font-mono font-bold text-slate-300">0h Total</span>
+          </div>
+
+          <div class="grid grid-cols-7 gap-2 items-end h-40 pt-4" id="an7DayBarsContainer">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 2: MONTHLY GOALS & ACTIVE CYCLE PROGRESS -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <div class="lg:col-span-6 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+          <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <div>
+              <h3 class="text-sm font-bold flex items-center gap-2 text-white">
+                <i class="fa-solid fa-calendar-check text-accent-emerald"></i> Active 2+1 Monthly Target Cycle
+              </h3>
+              <p id="anActiveCycleNameLabel" class="text-[11px] text-slate-400">Current Slot</p>
+            </div>
+            <span id="anActiveCycleDaysLeftBadge" class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-amber-500/20 text-accent-amber border border-amber-500/30">-- Days Left</span>
+          </div>
+
+          <div class="space-y-3" id="anActiveCycleSubjectsList">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+          <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <div>
+              <h3 class="text-sm font-bold flex items-center gap-2 text-white">
+                <i class="fa-solid fa-calendar-days text-accent-purple"></i> Combined Monthly Time History
+              </h3>
+              <p class="text-[11px] text-slate-400">Aggregated hours and questions solved per month</p>
+            </div>
+          </div>
+
+          <div id="anMonthlyHistoryList" class="space-y-2.5 max-h-48 overflow-y-auto custom-scroll pr-1 text-xs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 3: ALL 12 SUBJECTS DISTRIBUTION -->
+      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-5">
+        <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/10 pb-3">
+          <div>
+            <h3 class="text-sm font-bold flex items-center gap-2 text-white">
+              <i class="fa-solid fa-layer-group text-accent-blue"></i> Subject-Wise Effort & Syllabus Distribution (All 12 Subjects)
+            </h3>
+            <p class="text-xs text-slate-400">Track time invested and syllabus completion across each GATE CS subject.</p>
+          </div>
+        </div>
+
+        <div id="anSubjectDistributionGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- ROW 4: SYLLABUS SPLIT & TEST DIAGNOSTICS -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+          <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <h3 class="text-sm font-bold flex items-center gap-2 text-white">
+              <i class="fa-solid fa-book-bookmark text-accent-emerald"></i> Core CS vs. Mathematics Mastery
+            </h3>
+          </div>
+
+          <div class="space-y-4 text-xs">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-slate-200">Core Computer Science (10 Subjects)</span>
+                <span id="anCoreSyllabusPct" class="font-mono font-bold text-accent-blue">0.0%</span>
+              </div>
+              <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                <div id="anCoreSyllabusBar" class="bg-accent-blue h-2 rounded-full" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-slate-200">Mathematics (Discrete & Engg Math)</span>
+                <span id="anMathSyllabusPct" class="font-mono font-bold text-accent-purple">0.0%</span>
+              </div>
+              <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                <div id="anMathSyllabusBar" class="bg-purple-500 h-2 rounded-full" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+          <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <h3 class="text-sm font-bold flex items-center gap-2 text-white">
+              <i class="fa-solid fa-chart-line text-accent-amber"></i> Test Series & Mock Accuracy Diagnostic
+            </h3>
+            <button onclick="switchTab('tests')" class="text-xs font-semibold text-accent-amber hover:underline">
+              View Tests &rarr;
+            </button>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 text-center text-xs">
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-[10px] text-slate-400 uppercase font-bold">Topic Tests</span>
+              <h4 id="anDiagTopicAvg" class="text-lg font-bold font-mono mt-1 text-accent-blue">0.0%</h4>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-[10px] text-slate-400 uppercase font-bold">Subject Tests</span>
+              <h4 id="anDiagSubjAvg" class="text-lg font-bold font-mono mt-1 text-accent-emerald">0.0%</h4>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-[10px] text-slate-400 uppercase font-bold">Full Mocks</span>
+              <h4 id="anDiagMockAvg" class="text-lg font-bold font-mono mt-1 text-accent-amber">0.0%</h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: DAILY ROUTINE, ACTIVE SLOTS & TIMER -->
+    <!-- ============================================================== -->
+    <div id="view-daily-flow" class="hidden space-y-5">
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">Daily Routine Completed</span>
+            <span id="dashDailyStepFraction" class="text-xs font-mono font-bold text-accent-blue">0/5 Done</span>
+          </div>
+          <h2 id="dashDailyProgressPercent" class="text-2xl font-bold mt-2 text-white">0%</h2>
+          <div class="w-full bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
+            <div id="dashDailyProgressBar" class="bg-slate-100 h-1.5 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">Today's Study Time</span>
+            <div class="w-7 h-7 rounded bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+          </div>
+          <h2 id="dashTotalTimeToday" class="text-2xl font-bold mt-2 font-mono text-white">0h 0m</h2>
+          <p class="text-[11px] text-slate-400 mt-1">Across all logged sessions</p>
+        </div>
+
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">Questions Solved Today</span>
+            <div class="w-7 h-7 rounded bg-emerald-500/20 text-accent-emerald flex items-center justify-center text-xs">
+              <i class="fa-solid fa-pen-nib"></i>
+            </div>
+          </div>
+          <h2 id="dashTotalQsToday" class="text-2xl font-bold mt-2 font-mono text-white">0 Qs</h2>
+          <p class="text-[11px] text-slate-400 mt-1">DPP & subject practice</p>
+        </div>
+
+        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+          <div class="flex justify-between items-start">
+            <span class="text-xs text-slate-400 font-medium">Active Cycle Time Left</span>
+            <div class="w-7 h-7 rounded bg-amber-500/20 text-accent-amber flex items-center justify-center text-xs">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+          </div>
+          <h2 id="dashCycleDaysLeft" class="text-2xl font-bold mt-2 font-mono text-white">-- Days</h2>
+          <p id="dashCycleNameBadge" class="text-[11px] text-slate-400 mt-1 truncate">Monthly Slot</p>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl space-y-4">
+        <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/10 pb-3">
+          <div>
+            <h2 class="text-base font-bold flex items-center gap-2 text-white">
+              <i class="fa-solid fa-layer-group text-accent-blue"></i> Active Cycle Subjects (2 Core + 1 Math)
+            </h2>
+            <p class="text-xs text-slate-400">Finish a subject early? Mark it complete to send it to the Completed Archive and load a new subject into the cycle!</p>
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-300" id="activeCycleTitlePill">
+            Cycle Slot
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="homeActiveSubjectsCardsGrid"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl space-y-3">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+              <div>
+                <h2 class="text-sm font-bold flex items-center gap-2 text-white">
+                  <i class="fa-solid fa-list-ol text-accent-blue"></i> Daily 5-Step Execution Order
+                </h2>
+                <p class="text-[11px] text-slate-400">Click any step to load it into the Focus Timer</p>
+              </div>
+              <button onclick="resetTodaySteps()" class="text-[10px] bg-white/10 hover:bg-white/20 px-2 py-1 rounded text-slate-300">
+                Reset Today
+              </button>
+            </div>
+
+            <div class="space-y-2.5" id="stepsQueueContainer"></div>
+          </div>
+
+          <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl text-xs space-y-2">
+            <div class="flex justify-between items-center font-bold text-white">
+              <span>Today's Completed Session Logs</span>
+              <span id="streakPill" class="text-amber-400 font-mono"><i class="fa-solid fa-fire"></i> 0 Day Streak</span>
+            </div>
+            <div id="todayCompletedSessionsList" class="space-y-1.5 max-h-40 overflow-y-auto custom-scroll pr-1 text-slate-300"></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between space-y-6">
+          <div>
+            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/10 pb-3">
+              <div>
+                <span id="activeStepTag" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-accent-blue uppercase tracking-wider">STEP 1 OF 5</span>
+                <h3 id="activeTimerTitle" class="text-base sm:text-lg font-bold text-white mt-1">C Programming</h3>
+                <p id="activeTimerSubtitle" class="text-xs text-slate-400">Core Subject 1 Slot</p>
+              </div>
+
+              <div class="flex items-center bg-black/40 p-1 rounded-xl border border-white/10 text-xs font-semibold">
+                <button id="modeBtnStopwatch" onclick="setTimerMode('stopwatch')" class="px-3 py-1 rounded-lg bg-white/20 text-white shadow-xs">
+                  Stopwatch
+                </button>
+                <button id="modeBtnCountdown" onclick="setTimerMode('countdown')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">
+                  Countdown
+                </button>
+              </div>
+            </div>
+
+            <div id="countdownDurationConfig" class="hidden mt-3 p-3 bg-black/30 rounded-xl border border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span class="font-medium text-slate-300">Set Target Duration:</span>
+              <div class="flex items-center gap-2">
+                <button onclick="setPresetMinutes(45)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">45m</button>
+                <button onclick="setPresetMinutes(60)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">60m</button>
+                <button onclick="setPresetMinutes(90)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">90m (1.5h)</button>
+                <button onclick="setPresetMinutes(120)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">120m</button>
+                <input type="number" id="customMinutesInput" min="5" placeholder="Custom min" onchange="setCustomMinutes(this.value)" class="w-24 px-2 py-1 bg-black/40 border border-white/10 rounded-lg text-xs" />
+              </div>
+            </div>
+          </div>
+
+          <div class="py-4 text-center">
+            <div id="timerBigClock" class="text-6xl sm:text-7xl md:text-8xl font-mono font-extrabold tracking-tight text-white select-none drop-shadow-md">
+              00:00:00
+            </div>
+            <p id="timerStatusLabel" class="text-xs font-semibold text-slate-400 mt-2 tracking-widest uppercase">READY TO START</p>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              <button id="mainTimerToggleBtn" onclick="toggleMainTimer()" class="px-7 py-3 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-sm transition flex items-center gap-2 shadow-lg">
+                <i class="fa-solid fa-play" id="mainTimerToggleIcon"></i> <span id="mainTimerToggleText">Start Session</span>
+              </button>
+              
+              <button onclick="resetMainTimer()" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold text-white transition">
+                <i class="fa-solid fa-rotate-left mr-1"></i> Reset
+              </button>
+
+              <button onclick="openFinishSessionModal()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition flex items-center gap-2 shadow-lg">
+                <i class="fa-solid fa-flag-checkered"></i> End & Complete Slot
+              </button>
+            </div>
+
+            <p class="text-[11px] text-center text-slate-400">
+              Ending the timer will prompt you to log questions solved and advance to the next step.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: TESTS & MOCKS -->
+    <!-- ============================================================== -->
+    <div id="view-tests" class="hidden space-y-5">
+      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl space-y-6">
+        <div class="flex flex-wrap justify-between items-center gap-4 border-b border-white/10 pb-4">
+          <div>
+            <h2 class="text-lg font-bold flex items-center gap-2 text-white">
+              <i class="fa-solid fa-chart-line text-accent-amber"></i> Test Series & Mock Assessment Hub
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Track and analyze Topic-Wise Tests, Subject-Wise Tests, and Full/Combined Mock Tests.</p>
+          </div>
+          <button onclick="openAddTestModal('topic')" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-plus-circle"></i> <span>Log Test Result</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 border-b border-white/10 pb-3 text-xs font-semibold overflow-x-auto custom-scroll">
+          <button onclick="filterTestsList('all')" id="testFilter-all" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-950 font-bold">All Tests</button>
+          <button onclick="filterTestsList('topic')" id="testFilter-topic" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:bg-white/10">Topic-Wise</button>
+          <button onclick="filterTestsList('subject')" id="testFilter-subject" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:bg-white/10">Subject-Wise</button>
+          <button onclick="filterTestsList('mock')" id="testFilter-mock" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:bg-white/10">Combined / Full Mocks</button>
+        </div>
+
+        <div id="testsHistoryContainer" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: COMPLETED ARCHIVE -->
+    <!-- ============================================================== -->
+    <div id="view-completed" class="hidden space-y-5">
+      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl space-y-6">
+        <div class="flex flex-wrap justify-between items-center gap-4 border-b border-white/10 pb-4">
+          <div>
+            <h2 class="text-lg font-bold flex items-center gap-2 text-white">
+              <i class="fa-solid fa-circle-check text-accent-emerald"></i> Completed Subjects Archive
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Mastered GATE CS Subjects. Reopen them anytime if you wish to put them back into active study.</p>
+          </div>
+          <div class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold text-xs border border-emerald-500/30" id="completedCountBadge">
+            0 / 12 Subjects Mastered
+          </div>
+        </div>
+
+        <div id="completedSubjectsListGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 5: MONTHLY SETUP -->
+    <!-- ============================================================== -->
+    <div id="view-cycle-setup" class="hidden space-y-5">
+      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl space-y-6">
+        <div class="flex flex-wrap justify-between items-start gap-4">
+          <div>
+            <h2 class="text-lg font-bold text-white">Configure Active 2+1 Monthly Target Cycle</h2>
+            <p class="text-xs text-slate-400 mt-1">Select your 2 Core Subjects + 1 Math Subject and define your target completion duration.</p>
+          </div>
+
+          <button onclick="openForceEndCycleModal()" class="px-3.5 py-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 text-xs font-bold transition">
+            <i class="fa-solid fa-forward-step mr-1.5"></i> Force Finish / Rollover Incomplete
+          </button>
+        </div>
+
+        <div id="rolloverNoticeBanner" class="hidden p-3.5 bg-amber-500/20 border border-amber-500/30 rounded-xl text-xs flex items-center gap-3 text-amber-300">
+          <i class="fa-solid fa-triangle-exclamation text-base text-amber-400"></i>
+          <div>
+            <p class="font-bold">Incomplete Subjects Carried Over!</p>
+            <p class="text-[11px] opacity-90">Subjects not completed in your prior cycle have been preserved for this cycle.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-slate-300 flex items-center justify-between">
+              <span>Core Subject 1</span>
+              <span id="c1RolloverBadge" class="hidden text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded">Carried Over</span>
+            </label>
+            <select id="cfgCore1Select" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-300 flex items-center justify-between">
+              <span>Core Subject 2</span>
+              <span id="c2RolloverBadge" class="hidden text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded">Carried Over</span>
+            </label>
+            <select id="cfgCore2Select" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-300 flex items-center justify-between">
+              <span>Mathematics Subject</span>
+              <span id="mathRolloverBadge" class="hidden text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded">Carried Over</span>
+            </label>
+            <select id="cfgMathSelect" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div>
+            <label class="text-xs font-semibold text-slate-300">Cycle Name / Identifier</label>
+            <input type="text" id="cfgCycleNameInput" placeholder="e.g. Month 1 Target" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-300">Completion Duration (Days)</label>
+            <input type="number" id="cfgDurationDaysInput" min="7" max="90" value="30" oninput="autoCalculateEndDate(this.value)" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-300">Target Completion Date</label>
+            <input type="date" id="cfgEndDateInput" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-white/10">
+          <button onclick="saveActiveCycleConfig()" class="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-xs transition shadow-lg">
+            Save & Load Into Daily Station
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 6: SYLLABUS MATRIX -->
+    <!-- ============================================================== -->
+    <div id="view-syllabus" class="hidden space-y-5">
+      <div class="flex flex-wrap justify-between items-center gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-white">Official GATE CS Syllabus Matrix</h2>
+          <p class="text-xs text-slate-300">Mark Theory, DPP, and PYQ progress across each subject</p>
+        </div>
+        <div>
+          <input type="text" id="syllabusSearchInput" oninput="filterSyllabusList()" placeholder="Search topic or subject..." class="bg-slate-900/80 backdrop-blur-xl border border-white/10 text-xs px-3.5 py-2.5 rounded-xl w-64 text-white focus:outline-none" />
+        </div>
+      </div>
+
+      <div id="syllabusCardsGrid" class="space-y-4"></div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: WALLPAPER & SCENERY SELECTOR -->
+  <!-- ============================================================== -->
+  <div id="wallpaperModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl">
+      <div class="flex justify-between items-start border-b border-white/10 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-image text-accent-blue"></i> Choose Ambient Wallpaper
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Select a high-resolution scenic background for your study station.</p>
+        </div>
+        <button onclick="closeWallpaperModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Presets Grid -->
+      <div class="grid grid-cols-2 gap-3 text-xs">
+        <button onclick="setWallpaperPreset('alpine')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-accent-blue flex items-center gap-2.5 text-left transition">
+          <i class="fa-solid fa-mountain text-accent-blue text-base"></i>
+          <div>
+            <p class="font-bold text-white">Alpine Lake Reflection</p>
+            <span class="text-[10px] text-slate-400">Reference Theme</span>
+          </div>
+        </button>
+
+        <button onclick="setWallpaperPreset('forest')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-accent-emerald flex items-center gap-2.5 text-left transition">
+          <i class="fa-solid fa-tree text-accent-emerald text-base"></i>
+          <div>
+            <p class="font-bold text-white">Misty Pine Forest</p>
+            <span class="text-[10px] text-slate-400">Calm Evergreen</span>
+          </div>
+        </button>
+
+        <button onclick="setWallpaperPreset('night')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-purple-400 flex items-center gap-2.5 text-left transition">
+          <i class="fa-solid fa-moon text-purple-400 text-base"></i>
+          <div>
+            <p class="font-bold text-white">Stargazer Peaks</p>
+            <span class="text-[10px] text-slate-400">Night Atmosphere</span>
+          </div>
+        </button>
+
+        <button onclick="setWallpaperPreset('solid')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-amber-400 flex items-center gap-2.5 text-left transition">
+          <i class="fa-solid fa-palette text-amber-400 text-base"></i>
+          <div>
+            <p class="font-bold text-white">Solid Matte Studio</p>
+            <span class="text-[10px] text-slate-400">Minimalist Dark</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <label class="font-semibold text-slate-300">Or Paste Custom Image URL:</label>
+        <div class="flex gap-2">
+          <input type="text" id="customWallpaperInput" placeholder="https://images.unsplash.com/..." class="flex-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          <button onclick="applyCustomWallpaper()" class="px-4 py-2.5 bg-white text-slate-900 font-bold rounded-xl text-xs">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD TEST -->
+  <div id="addTestModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl">
+      <div class="flex justify-between items-start">
+        <div>
+          <h3 class="text-base font-bold text-white">Log Test Series Result</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Record marks and track performance for your GATE CS preparation.</p>
+        </div>
+        <button onclick="closeAddTestModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="flex border-b border-white/10 text-xs font-semibold">
+        <button onclick="switchTestTypeForm('topic')" id="testTypeBtn-topic" class="pb-2 border-b-2 border-white text-white flex-1 text-center font-bold">
+          Topic-Wise Test
+        </button>
+        <button onclick="switchTestTypeForm('subject')" id="testTypeBtn-subject" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white flex-1 text-center">
+          Subject-Wise Test
+        </button>
+        <button onclick="switchTestTypeForm('mock')" id="testTypeBtn-mock" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white flex-1 text-center">
+          Combined / Full Mock
+        </button>
+      </div>
+
+      <div id="form-test-topic" class="space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Test Name:</label>
+          <input type="text" id="topicTestName" placeholder="e.g. Recursion & Pointers Test 1" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-300">Subject:</label>
+            <select id="topicTestSubjectSelect" onchange="updateTopicDropdownOptions()" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">Topic:</label>
+            <select id="topicTestTopicSelect" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-semibold text-slate-300">Total Marks:</label>
+            <input type="number" id="topicTestTotalMarks" step="0.5" value="25" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-white" />
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">Scored Marks:</label>
+            <input type="number" id="topicTestScoredMarks" step="0.33" placeholder="e.g. 20.67" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-accent-emerald" />
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">Date:</label>
+            <input type="date" id="topicTestDate" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          </div>
+        </div>
+        <div>
+          <label class="font-semibold text-slate-300">Mistakes / Review Notes:</label>
+          <input type="text" id="topicTestNotes" placeholder="e.g. Revise static variables" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+      </div>
+
+      <div id="form-test-subject" class="hidden space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Test Name:</label>
+          <input type="text" id="subjectTestName" placeholder="e.g. Algorithms Grand Subject Test 1" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+        <div>
+          <label class="font-semibold text-slate-300">Select Subject:</label>
+          <select id="subjectTestSubjectSelect" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-semibold text-slate-300">Total Marks:</label>
+            <input type="number" id="subjectTestTotalMarks" step="0.5" value="50" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-white" />
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">Scored Marks:</label>
+            <input type="number" id="subjectTestScoredMarks" step="0.33" placeholder="e.g. 41.33" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-accent-emerald" />
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">Date:</label>
+            <input type="date" id="subjectTestDate" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          </div>
+        </div>
+        <div>
+          <label class="font-semibold text-slate-300">Analysis Notes:</label>
+          <input type="text" id="subjectTestNotes" placeholder="e.g. Review DP knapsack" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+      </div>
+
+      <div id="form-test-mock" class="hidden space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Mock Test Name:</label>
+          <input type="text" id="mockTestName" placeholder="e.g. National Mock Test 1 - Full Syllabus" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="font-semibold text-slate-300">Subjects Included:</label>
+            <button type="button" onclick="toggleAllMockSubjects()" class="text-[11px] text-accent-blue font-semibold hover:underline">Select All 12 (Full Mock)</button>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5 max-h-32 overflow-y-auto custom-scroll p-2 rounded-xl bg-black/40 border border-white/10 text-white" id="mockSubjectsCheckboxesList"></div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-semibold text-slate-300">Total Marks:</label>
+            <input type="number" id="mockTestTotalMarks" step="0.5" value="100" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-white" />
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">Scored Marks:</label>
+            <input type="number" id="mockTestScoredMarks" step="0.33" placeholder="e.g. 74.33" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-accent-emerald" />
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">Date:</label>
+            <input type="date" id="mockTestDate" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          </div>
+        </div>
+        <div>
+          <label class="font-semibold text-slate-300">Rank / Percentile / Feedback:</label>
+          <input type="text" id="mockTestNotes" placeholder="e.g. Rank 42/1200, Accuracy 88%" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-3 pt-3 border-t border-white/10">
+        <button onclick="closeAddTestModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white">Cancel</button>
+        <button onclick="saveNewTestResult()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition">Save Test Result</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MANDATORY POST-OTP PASSWORD SETUP -->
+  <div id="setPasswordRequiredModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl">
+      <div>
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-3">
+          <i class="fa-solid fa-key"></i>
+        </div>
+        <h3 class="text-base font-bold text-white">Set Your Permanent Password</h3>
+        <p class="text-xs text-slate-400 mt-1">You're verified! Set a password now so you can easily log in with <b>Email & Password</b> on any device.</p>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Create New Password (min 6 chars):</label>
+          <input type="password" id="postOtpNewPassword" placeholder="••••••••" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs font-mono text-white" />
+        </div>
+        <div>
+          <label class="font-semibold text-slate-300">Confirm Password:</label>
+          <input type="password" id="postOtpConfirmPassword" placeholder="••••••••" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs font-mono text-white" />
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="handleSavePermanentPassword()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow flex items-center justify-center gap-2">
+          <span>Save Password & Enter Dashboard</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: AUTH -->
+  <div id="authModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl">
+      <div class="flex justify-between items-start">
+        <div>
+          <h3 id="authModalHeaderTitle" class="text-base font-bold text-white">Account Login</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Sign in to sync your GATE preparation in real-time.</p>
+        </div>
+        <button onclick="closeAuthModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="flex border-b border-white/10 text-xs font-semibold">
+        <button onclick="switchAuthView('login-password')" id="authSubtab-pass" class="pb-2 border-b-2 border-white text-white flex-1 text-center font-bold">Email & Password</button>
+        <button onclick="switchAuthView('login-otp')" id="authSubtab-otp" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white flex-1 text-center">Sign In with OTP / Link</button>
+      </div>
+
+      <div id="authView-password" class="space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Email Address:</label>
+          <input type="email" id="authPassEmailInput" placeholder="aspirant@gate2027.com" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+        <div>
+          <div class="flex justify-between items-center">
+            <label class="font-semibold text-slate-300">Password:</label>
+            <button onclick="switchAuthView('forgot-password')" class="text-[11px] text-accent-blue hover:underline">Forgot password?</button>
+          </div>
+          <input type="password" id="authPassPasswordInput" placeholder="••••••••" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <button onclick="handleEmailPasswordSignIn()" class="w-full py-2.5 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-xs transition">Sign In</button>
+          <button onclick="handleEmailPasswordSignUp()" class="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 font-bold text-xs text-white transition">Register New</button>
+        </div>
+      </div>
+
+      <div id="authView-otp" class="hidden space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Email Address:</label>
+          <div class="flex gap-2 mt-1">
+            <input type="email" id="authOtpEmailInput" placeholder="aspirant@gate2027.com" class="flex-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+            <button onclick="handleSendOtp()" id="btnSendOtp" class="px-3.5 py-2.5 bg-white/20 hover:bg-white/30 text-white rounded-xl font-bold text-xs shrink-0">Send Link / OTP</button>
+          </div>
+        </div>
+
+        <div id="otpInputContainer" class="hidden space-y-1 pt-1">
+          <label class="font-semibold text-slate-300">Or enter 6-Digit OTP Code from email:</label>
+          <input type="text" id="authOtpTokenInput" placeholder="123456" maxlength="8" class="w-full bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-center text-sm font-bold tracking-widest text-white" />
+          <button onclick="handleVerifyOtpLogin()" class="w-full mt-2 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">Verify & Proceed</button>
+        </div>
+      </div>
+
+      <div id="authView-forgot" class="hidden space-y-3 text-xs">
+        <div>
+          <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">RESET PASSWORD VIA OTP</span>
+          <p class="text-[11px] text-slate-400 mt-0.5">We will send an OTP to your email to securely reset your password.</p>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-300">Email Address:</label>
+          <div class="flex gap-2 mt-1">
+            <input type="email" id="authForgotEmailInput" placeholder="aspirant@gate2027.com" class="flex-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+            <button onclick="handleSendForgotOtp()" id="btnSendForgotOtp" class="px-3.5 py-2.5 bg-white/20 hover:bg-white/30 text-white rounded-xl font-bold text-xs shrink-0">Send OTP</button>
+          </div>
+        </div>
+
+        <div id="forgotPasswordFields" class="hidden space-y-2.5 pt-1">
+          <div>
+            <label class="font-semibold text-slate-300">OTP Code:</label>
+            <input type="text" id="authForgotOtpTokenInput" placeholder="123456" maxlength="8" class="w-full bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-center text-sm font-bold text-white" />
+          </div>
+          <div>
+            <label class="font-semibold text-slate-300">New Password:</label>
+            <input type="password" id="authForgotNewPassInput" placeholder="Enter new password" class="w-full bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white" />
+          </div>
+          <button onclick="handleConfirmResetPassword()" class="w-full mt-2 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">Reset Password & Login</button>
+        </div>
+
+        <div class="pt-2 text-center">
+          <button onclick="switchAuthView('login-password')" class="text-[11px] text-slate-400 hover:underline">Back to Password Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: REPLACE SUBJECT -->
+  <div id="replaceSubjectModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div>
+        <span class="text-[10px] font-bold text-accent-blue uppercase tracking-wider" id="replaceModalSlotTag">REPLACE SUBJECT</span>
+        <h3 class="text-base font-bold text-white mt-0.5">Pick Next Subject for this Cycle</h3>
+        <p class="text-xs text-slate-400">Select an uncompleted subject to load into this slot. Your ongoing monthly countdown continues uninterrupted.</p>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Select New Subject:</label>
+          <select id="replacementSubjectSelect" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-3 pt-3 border-t border-white/10">
+        <button onclick="closeReplaceModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white">Cancel</button>
+        <button onclick="confirmReplaceSubject()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-xs">Load Into Cycle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: FINISH SESSION -->
+  <div id="finishSessionModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div>
+        <span class="text-[10px] font-bold text-accent-emerald uppercase tracking-wider">STEP COMPLETED</span>
+        <h3 id="modalSessionTitle" class="text-base font-bold text-white mt-0.5">Session Complete</h3>
+        <p class="text-xs text-slate-400">Confirm your logged study time and questions solved to complete this step.</p>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-300">Duration (Minutes):</label>
+          <input type="number" id="modalDurationInput" min="1" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono font-bold text-white" />
+        </div>
+        <div>
+          <label class="font-semibold text-slate-300">Questions Solved (DPP/PYQ/Practice):</label>
+          <input type="number" id="modalQuestionsInput" min="0" value="0" class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono font-bold text-white" />
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-3 pt-3 border-t border-white/10">
+        <button onclick="closeFinishSessionModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white">Cancel</button>
+        <button onclick="confirmFinishSession()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">Save & Mark Step Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: FORCE END CYCLE -->
+  <div id="forceEndCycleModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div>
+        <h3 class="text-base font-bold text-white">End Current Cycle Early</h3>
+        <p class="text-xs text-slate-400 mt-1">Check which subjects you have fully finished. Unchecked subjects will be carried over to your next cycle.</p>
+      </div>
+
+      <div class="space-y-2.5" id="rolloverChecklistContainer"></div>
+
+      <div class="flex justify-end gap-3 pt-3 border-t border-white/10">
+        <button onclick="closeForceEndCycleModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white">Cancel</button>
+        <button onclick="confirmForceEndCycle()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 text-xs font-bold">Confirm & Roll Incomplete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APP LOGIC & SCENIC CONTROLLER -->
+  <script>
+    // 1. ULTRA-HD (4K 3840px, Q=100) WALLPAPER COLLECTION
+    const WALLPAPERS = {
+      alpine: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=3840&q=100",
+      forest: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=3840&q=100",
+      night: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=3840&q=100",
+      solid: ""
+    };
+
+    function applyWallpaper(url) {
+      const banner = document.getElementById("topHeroWallpaper");
+      if (!banner) return;
+      if (!url || url === "solid") {
+        banner.style.backgroundImage = "none";
+      } else {
+        banner.style.backgroundImage = `url('${url}')`;
+      }
+      appState.wallpaper = url;
+    }
+
+    function openWallpaperModal() {
+      document.getElementById("wallpaperModal").classList.remove("hidden");
+    }
+    function closeWallpaperModal() {
+      document.getElementById("wallpaperModal").classList.add("hidden");
+    }
+    function setWallpaperPreset(key) {
+      applyWallpaper(WALLPAPERS[key]);
+      saveState();
+      closeWallpaperModal();
+    }
+    function applyCustomWallpaper() {
+      const url = document.getElementById("customWallpaperInput").value.trim();
+      if (url) {
+        applyWallpaper(url);
+        saveState();
+        closeWallpaperModal();
+      }
+    }
+
+    // 2. OFFICIAL GATE CS SUBJECTS DATA (C & DS ARE SEPARATE)
+    const SUBJECTS = [
+      {
+        id: "cprog",
+        name: "C Programming",
+        type: "Core",
+        icon: "fa-code",
+        subtopics: [
+          "Data Types, Operators, Precedence & Associativity",
+          "Control Flow: If-Else, Loops, Switch-Case, Break, Continue",
+          "Functions, Parameter Passing (Call by Value & Reference)",
+          "Recursion & Call Stack Execution Mechanics",
+          "Pointers, Pointer Arithmetic & Pointers to Pointers",
+          "Structures, Unions, Bit-fields & Enum",
+          "Dynamic Memory Allocation (malloc, calloc, realloc, free)",
+          "Scope, Lifetime, Binding & Storage Classes"
+        ]
+      },
+      {
+        id: "ds",
+        name: "Data Structures",
+        type: "Core",
+        icon: "fa-cubes-stacked",
+        subtopics: [
+          "Arrays, Address Calculation (Row-major & Column-major)",
+          "Stacks & Applications (Infix to Postfix, Evaluation)",
+          "Queues, Circular Queues & Double-Ended Queues (Deque)",
+          "Linked Lists (Singly, Doubly, Circular & Reversal)",
+          "Binary Trees: Traversals (Inorder, Preorder, Postorder)",
+          "Binary Search Trees (BST): Search, Insertion, Deletion",
+          "AVL Trees (Rotations & Balance Factor Calculations)",
+          "Binary Heaps & Priority Queues (Min/Max Heap, Heapify)",
+          "Graph Representations (Adjacency Matrix & List)"
+        ]
+      },
+      {
+        id: "algo",
+        name: "Algorithms",
+        type: "Core",
+        icon: "fa-diagram-project",
+        subtopics: [
+          "Asymptotic Analysis (Big-O, Omega, Theta, Master Theorem)",
+          "Divide and Conquer (Merge Sort, Quick Sort, Binary Search)",
+          "Greedy Algorithms (Fractional Knapsack, Huffman, Activity Selection)",
+          "Dynamic Programming (LCS, 0/1 Knapsack, Matrix Chain)",
+          "Graph Search & Traversal: BFS & DFS",
+          "Minimum Spanning Trees (Kruskal's & Prim's)",
+          "Shortest Path Algorithms (Dijkstra, Bellman-Ford, Floyd-Warshall)"
+        ]
+      },
+      {
+        id: "dm",
+        name: "Discrete Mathematics",
+        type: "Math",
+        icon: "fa-shapes",
+        subtopics: [
+          "Propositional and First-Order Logic",
+          "Sets, Relations, Functions, Equivalence Relations",
+          "Partial Orders, Hasse Diagrams & Lattices",
+          "Monoids, Groups & Subgroups (Abstract Algebra)",
+          "Combinatorics: Counting, Permutations, Combinations",
+          "Recurrence Relations & Generating Functions",
+          "Graph Theory: Connectivity, Matching, Coloring, Eulerian/Hamiltonian"
+        ]
+      },
+      {
+        id: "em",
+        name: "Engineering Mathematics",
+        type: "Math",
+        icon: "fa-calculator",
+        subtopics: [
+          "Linear Algebra: Matrices, Determinants, System of Equations",
+          "Linear Algebra: Eigenvalues & Eigenvectors, LU Decomposition",
+          "Calculus: Limits, Continuity, Differentiability, Maxima/Minima",
+          "Calculus: Mean Value Theorems, Definite & Indefinite Integrals",
+          "Probability: Random Variables, Conditional Probability, Bayes Theorem",
+          "Probability Distributions: Uniform, Normal, Exponential, Poisson, Binomial",
+          "Statistics: Mean, Median, Mode, Standard Deviation"
+        ]
+      },
+      {
+        id: "dl",
+        name: "Digital Logic",
+        type: "Core",
+        icon: "fa-microchip",
+        subtopics: [
+          "Boolean Algebra, Minimization & K-Maps",
+          "Combinational Circuits: Adders, Multiplexers, Decoders",
+          "Sequential Circuits: Latches, Flip-Flops, Counters",
+          "Registers and Shift Registers",
+          "Number Representations, Fixed & Floating-Point (IEEE-754)"
+        ]
+      },
+      {
+        id: "coa",
+        name: "Computer Organization & Architecture",
+        type: "Core",
+        icon: "fa-server",
+        subtopics: [
+          "Machine Instructions & Addressing Modes",
+          "ALU, Data Path & Control Unit (Hardwired & Microprogrammed)",
+          "Instruction Pipelining, Hazards (Data, Structural, Control)",
+          "Memory Hierarchy: Cache Organization & Replacement Policies",
+          "Main Memory, Virtual Memory & TLB",
+          "I/O Interfaces, Interrupts & DMA"
+        ]
+      },
+      {
+        id: "toc",
+        name: "Theory of Computation",
+        type: "Core",
+        icon: "fa-network-wired",
+        subtopics: [
+          "Regular Languages, DFA, NFA, State Minimization",
+          "Regular Expressions & Regular Grammars",
+          "Context-Free Languages & Pushdown Automata (PDA)",
+          "Pumping Lemmas for Regular & Context-Free Languages",
+          "Turing Machines & Chomsky Hierarchy",
+          "Undecidability, Rice's Theorem & Halting Problem"
+        ]
+      },
+      {
+        id: "cd",
+        name: "Compiler Design",
+        type: "Core",
+        icon: "fa-terminal",
+        subtopics: [
+          "Lexical Analysis, Regular Expressions to DFA",
+          "Top-Down Parsing: LL(1), FIRST & FOLLOW",
+          "Bottom-Up Parsing: LR(0), SLR, CLR, LALR",
+          "Syntax Directed Translation (SDT): S & L Attributed",
+          "Intermediate Code Generation (Three-Address Code)",
+          "Code Optimization & Data Flow Analysis"
+        ]
+      },
+      {
+        id: "os",
+        name: "Operating Systems",
+        type: "Core",
+        icon: "fa-desktop",
+        subtopics: [
+          "System Calls, Processes, Threads & CPU Scheduling",
+          "Process Synchronization, Semaphores & Classical IPC",
+          "Deadlocks: Detection, Prevention & Banker's Algorithm",
+          "Memory Management, Paging & Page Replacement",
+          "Virtual Memory & Thrashing",
+          "File Systems & Disk Scheduling (FCFS, SSTF, SCAN, LOOK)"
+        ]
+      },
+      {
+        id: "dbms",
+        name: "Databases (DBMS)",
+        type: "Core",
+        icon: "fa-database",
+        subtopics: [
+          "ER-Model & Relational Model Mapping",
+          "Relational Algebra & Tuple Relational Calculus",
+          "SQL Queries, Joins, Aggregations & Constraints",
+          "Normalization (1NF, 2NF, 3NF, BCNF) & Dependencies",
+          "Transactions: ACID, Conflict & View Serializability",
+          "Concurrency Control: 2PL & Timestamp Ordering",
+          "B & B+ Tree Indexing"
+        ]
+      },
+      {
+        id: "cn",
+        name: "Computer Networks",
+        type: "Core",
+        icon: "fa-globe",
+        subtopics: [
+          "OSI & TCP/IP Layering Architecture",
+          "Data Link Layer: Framing, CRC, Flow Control (Sliding Window)",
+          "MAC Protocols: CSMA/CD, Ethernet",
+          "Network Layer: IPv4, IPv6, Subnetting, CIDR, Routing Protocols",
+          "Transport Layer: TCP, UDP, Congestion Control",
+          "Application Layer: DNS, SMTP, HTTP, FTP, Sockets"
+        ]
+      }
+    ];
+
+    // 3. APP STATE
+    let appState = {
+      theme: "dark",
+      wallpaper: "alpine",
+      activeCycle: {
+        name: "Month 1 Target",
+        core1: "cprog",
+        core2: "ds",
+        math: "dm",
+        durationDays: 30,
+        startDate: new Date().toISOString().slice(0, 10),
+        endDate: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10)
+      },
+      rollover: { core1: false, core2: false, math: false },
+      completedSubjects: [],
+      dailyCompletedSteps: {},
+      dailyLogs: [],
+      tests: [],
+      syllabusProgress: {},
+      streak: 0,
+      lastStreakDate: "",
+      hasConfiguredPassword: false
+    };
+
+    // 4. SUPABASE CLIENT & AUTH
+    let supabaseClient = null;
+    let currentUser = null;
+    let isAwaitingPasswordSetup = false;
+    
+    let supabaseUrl = ((window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.URL) || localStorage.getItem("gate2027_sp_url") || "https://kbxvildpgsciywtjpwmb.supabase.co").replace(/\/+$/, "");
+    let supabaseAnonKey = (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.ANON_KEY) || localStorage.getItem("gate2027_sp_key") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtieHZpbGRwZ3NjaXl3dGpwd21iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxMjc4NzYsImV4cCI6MjEwMjcwMzg3Nn0.ooE2Q00ZL_OEmvQwyMd_NZlIbpyV3ggNCEuHI5BjEr0";
+
+    function initSupabase() {
+      supabaseUrl = supabaseUrl.replace(/\/+$/, "");
+      if (supabaseUrl && supabaseAnonKey && window.supabase) {
+        try {
+          supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey, {
+            auth: {
+              persistSession: true,
+              autoRefreshToken: true,
+              detectSessionInUrl: true
+            }
+          });
+          checkSupabaseAuthSession();
+        } catch (err) {
+          console.error("Supabase init error", err);
+          updateCloudStatusBadge("error");
+        }
+      } else {
+        updateCloudStatusBadge("local");
+      }
+    }
+
+    async function checkSupabaseAuthSession() {
+      if (!supabaseClient) return;
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session && session.user) {
+          currentUser = session.user;
+          updateAuthUI(currentUser);
+          await loadDataFromSupabase();
+
+          if (window.location.hash.includes("access_token") || isAwaitingPasswordSetup) {
+            window.history.replaceState(null, null, window.location.pathname);
+            if (!appState.hasConfiguredPassword) {
+              openSetPasswordModal();
+            }
+          }
+        } else {
+          currentUser = null;
+          updateAuthUI(null);
+          updateCloudStatusBadge("ready");
+        }
+
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+          if (session && session.user) {
+            currentUser = session.user;
+            updateAuthUI(currentUser);
+            if (event === 'SIGNED_IN') {
+              await loadDataFromSupabase();
+              closeAuthModal();
+              if (isAwaitingPasswordSetup || !appState.hasConfiguredPassword) {
+                openSetPasswordModal();
+              }
+            }
+          } else {
+            currentUser = null;
+            updateAuthUI(null);
+            updateCloudStatusBadge("ready");
+          }
+        });
+      } catch (e) {
+        console.error("Session check error", e);
+      }
+    }
+
+    function openSetPasswordModal() {
+      document.getElementById("setPasswordRequiredModal").classList.remove("hidden");
+    }
+
+    async function handleSavePermanentPassword() {
+      const p1 = document.getElementById("postOtpNewPassword").value;
+      const p2 = document.getElementById("postOtpConfirmPassword").value;
+
+      if (!p1 || p1.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+      }
+      if (p1 !== p2) {
+        alert("Passwords do not match. Please re-enter.");
+        return;
+      }
+
+      try {
+        const { error } = await supabaseClient.auth.updateUser({ password: p1 });
+        if (error) throw error;
+
+        appState.hasConfiguredPassword = true;
+        isAwaitingPasswordSetup = false;
+        saveState();
+
+        document.getElementById("setPasswordRequiredModal").classList.add("hidden");
+        alert("🎉 Password successfully saved! You can now log in anytime with your Email & Password.");
+      } catch (err) {
+        alert("Failed to save password: " + err.message);
+      }
+    }
+
+    async function loadDataFromSupabase() {
+      if (!supabaseClient || !currentUser) return;
+      updateCloudStatusBadge("syncing");
+      try {
+        const { data } = await supabaseClient
+          .from('user_study_data')
+          .select('state_data')
+          .eq('user_id', currentUser.id)
+          .single();
+
+        if (data && data.state_data && Object.keys(data.state_data).length > 0) {
+          appState = { ...appState, ...data.state_data };
+          localStorage.setItem("gate2027_v11_state", JSON.stringify(appState));
+          if (appState.wallpaper) {
+            applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
+          }
+          renderAll();
+        } else {
+          await pushDataToSupabase();
+        }
+        updateCloudStatusBadge("synced");
+      } catch (err) {
+        console.error("Fetch data error", err);
+        updateCloudStatusBadge("synced");
+      }
+    }
+
+    let cloudSyncDebounce = null;
+    function pushDataToSupabase() {
+      if (!supabaseClient || !currentUser) return;
+      updateCloudStatusBadge("syncing");
+      clearTimeout(cloudSyncDebounce);
+      cloudSyncDebounce = setTimeout(async () => {
+        try {
+          const { error } = await supabaseClient
+            .from('user_study_data')
+            .upsert({
+              user_id: currentUser.id,
+              state_data: appState,
+              updated_at: new Date().toISOString()
+            });
+          if (error) throw error;
+          updateCloudStatusBadge("synced");
+        } catch (err) {
+          console.error("Cloud push error", err);
+          updateCloudStatusBadge("error");
+        }
+      }, 800);
+    }
+
+    function updateCloudStatusBadge(status) {
+      const dot = document.getElementById("cloudStatusDot");
+      const txt = document.getElementById("cloudStatusText");
+      if (!dot || !txt) return;
+
+      if (status === "synced") {
+        dot.className = "w-2 h-2 rounded-full bg-emerald-400";
+        txt.innerText = "Cloud Synced";
+      } else if (status === "syncing") {
+        dot.className = "w-2 h-2 rounded-full bg-amber-400 animate-pulse";
+        txt.innerText = "Syncing...";
+      } else if (status === "ready") {
+        dot.className = "w-2 h-2 rounded-full bg-blue-400";
+        txt.innerText = "Cloud Ready";
+      } else if (status === "error") {
+        dot.className = "w-2 h-2 rounded-full bg-red-400";
+        txt.innerText = "Sync Error";
+      } else {
+        dot.className = "w-2 h-2 rounded-full bg-slate-400";
+        txt.innerText = "Local Mode";
+      }
+    }
+
+    function updateAuthUI(user) {
+      const container = document.getElementById("authActionsContainer");
+      if (!container) return;
+
+      if (user) {
+        container.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] font-mono text-slate-300 truncate max-w-[120px] sm:max-w-[180px]">${user.email}</span>
+            <button onclick="handleSignOut()" class="px-2.5 py-1.5 rounded-full bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 text-xs transition font-semibold" title="Sign Out">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <button onclick="openAuthModal('login-password')" class="px-3.5 py-1.5 rounded-full bg-white text-slate-900 font-bold transition flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-user"></i> <span>Login / Sync</span>
+          </button>
+        `;
+      }
+    }
+
+    // 5. AUTH MODAL HANDLERS
+    function openAuthModal(initialView) {
+      switchAuthView(initialView);
+      document.getElementById("authModal").classList.remove("hidden");
+    }
+    function closeAuthModal() {
+      document.getElementById("authModal").classList.add("hidden");
+    }
+    function switchAuthView(view) {
+      const vPass = document.getElementById("authView-password");
+      const vOtp = document.getElementById("authView-otp");
+      const vForgot = document.getElementById("authView-forgot");
+      const subPass = document.getElementById("authSubtab-pass");
+      const subOtp = document.getElementById("authSubtab-otp");
+
+      vPass.classList.add("hidden");
+      vOtp.classList.add("hidden");
+      vForgot.classList.add("hidden");
+
+      if (view === 'login-password') {
+        vPass.classList.remove("hidden");
+        subPass.className = "pb-2 border-b-2 border-white text-white flex-1 text-center font-bold";
+        subOtp.className = "pb-2 border-b-2 border-transparent text-slate-400 hover:text-white flex-1 text-center";
+      } else if (view === 'login-otp') {
+        vOtp.classList.remove("hidden");
+        subOtp.className = "pb-2 border-b-2 border-white text-white flex-1 text-center font-bold";
+        subPass.className = "pb-2 border-b-2 border-transparent text-slate-400 hover:text-white flex-1 text-center";
+      } else if (view === 'forgot-password') {
+        vForgot.classList.remove("hidden");
+      }
+    }
+
+    async function handleEmailPasswordSignIn() {
+      const email = document.getElementById("authPassEmailInput").value.trim();
+      const password = document.getElementById("authPassPasswordInput").value;
+      if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+      }
+      try {
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        appState.hasConfiguredPassword = true;
+        closeAuthModal();
+      } catch (err) {
+        alert("Login Error: " + err.message);
+      }
+    }
+
+    async function handleEmailPasswordSignUp() {
+      const email = document.getElementById("authPassEmailInput").value.trim();
+      const password = document.getElementById("authPassPasswordInput").value;
+      if (!email || !password) {
+        alert("Please enter email and password to register.");
+        return;
+      }
+      try {
+        const { error } = await supabaseClient.auth.signUp({ email, password });
+        if (error) throw error;
+        appState.hasConfiguredPassword = true;
+        alert("Registration Successful! Please check your email inbox to confirm if required.");
+        closeAuthModal();
+      } catch (err) {
+        alert("Registration Error: " + err.message);
+      }
+    }
+
+    async function handleSendOtp() {
+      const email = document.getElementById("authOtpEmailInput").value.trim();
+      if (!email) {
+        alert("Please enter your email to receive an OTP.");
+        return;
+      }
+      try {
+        isAwaitingPasswordSetup = true;
+        const { error } = await supabaseClient.auth.signInWithOtp({ 
+          email,
+          options: {
+            emailRedirectTo: window.location.origin + window.location.pathname
+          }
+        });
+        if (error) throw error;
+        alert(`Sign-in link/code sent to ${email}!\n\nClick "Sign in" in your email OR enter the 6-digit code below.`);
+        document.getElementById("otpInputContainer").classList.remove("hidden");
+      } catch (err) {
+        alert("Error sending OTP: " + err.message);
+      }
+    }
+
+    async function handleVerifyOtpLogin() {
+      const email = document.getElementById("authOtpEmailInput").value.trim();
+      const token = document.getElementById("authOtpTokenInput").value.trim();
+      if (!email || !token) {
+        alert("Please enter both email and the OTP token received.");
+        return;
+      }
+      try {
+        const { error } = await supabaseClient.auth.verifyOtp({
+          email,
+          token,
+          type: 'email'
+        });
+        if (error) throw error;
+        closeAuthModal();
+        openSetPasswordModal();
+      } catch (err) {
+        alert("OTP Verification Failed: " + err.message);
+      }
+    }
+
+    async function handleSendForgotOtp() {
+      const email = document.getElementById("authForgotEmailInput").value.trim();
+      if (!email) {
+        alert("Please enter your registered email address.");
+        return;
+      }
+      try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+        if (error) throw error;
+        alert(`Password reset OTP / token has been sent to ${email}.`);
+        document.getElementById("forgotPasswordFields").classList.remove("hidden");
+      } catch (err) {
+        alert("Reset Request Error: " + err.message);
+      }
+    }
+
+    async function handleConfirmResetPassword() {
+      const email = document.getElementById("authForgotEmailInput").value.trim();
+      const token = document.getElementById("authForgotOtpTokenInput").value.trim();
+      const newPassword = document.getElementById("authForgotNewPassInput").value;
+
+      if (!token || !newPassword) {
+        alert("Please enter both OTP code and your new password.");
+        return;
+      }
+      try {
+        const { error: verifyErr } = await supabaseClient.auth.verifyOtp({
+          email,
+          token,
+          type: 'recovery'
+        });
+        if (verifyErr) throw verifyErr;
+
+        const { error: updateErr } = await supabaseClient.auth.updateUser({ password: newPassword });
+        if (updateErr) throw updateErr;
+
+        appState.hasConfiguredPassword = true;
+        alert("Password updated successfully! You are now logged in.");
+        closeAuthModal();
+      } catch (err) {
+        alert("Password Reset Error: " + err.message);
+      }
+    }
+
+    async function handleSignOut() {
+      if (confirm("Are you sure you want to sign out? Your latest progress is safely stored.")) {
+        if (supabaseClient) {
+          await supabaseClient.auth.signOut();
+        }
+        currentUser = null;
+        updateAuthUI(null);
+        updateCloudStatusBadge("ready");
+      }
+    }
+
+    // 6. LOCAL STORAGE & PERSISTENCE
+    function loadState() {
+      const saved = localStorage.getItem("gate2027_v11_state");
+      if (saved) {
+        try {
+          appState = { ...appState, ...JSON.parse(saved) };
+          if (!appState.tests) appState.tests = [];
+        } catch (e) {
+          console.error("State parse error", e);
+        }
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem("gate2027_v11_state", JSON.stringify(appState));
+      pushDataToSupabase();
+      renderAll();
+    }
+
+    // 7. INITIALIZATION & DROPDOWNS
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      
+      // Apply saved or default wallpaper (alpine mountain)
+      if (appState.wallpaper && (WALLPAPERS[appState.wallpaper] || appState.wallpaper.startsWith("http"))) {
+        applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
+      } else {
+        applyWallpaper(WALLPAPERS.alpine);
+      }
+
+      applyTheme(appState.theme);
+      initGateCountdown();
+      populateDropdowns();
+      syncCycleConfigUI();
+      loadStepIntoTimer("core1");
+      renderAll();
+      initSupabase();
+
+      const todayIso = new Date().toISOString().slice(0, 10);
+      if (document.getElementById("topicTestDate")) document.getElementById("topicTestDate").value = todayIso;
+      if (document.getElementById("subjectTestDate")) document.getElementById("subjectTestDate").value = todayIso;
+      if (document.getElementById("mockTestDate")) document.getElementById("mockTestDate").value = todayIso;
+      if (document.getElementById("anTodayDateLabel")) {
+        document.getElementById("anTodayDateLabel").innerText = new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+      }
+    });
+
+    function applyTheme(theme) {
+      const html = document.documentElement;
+      const icon = document.getElementById("themeIcon");
+      if (!icon) return;
+      if (theme === "dark") {
+        html.classList.add("dark");
+        icon.className = "fa-solid fa-sun text-sm";
+      } else {
+        html.classList.remove("dark");
+        icon.className = "fa-solid fa-moon text-sm";
+      }
+      appState.theme = theme;
+    }
+
+    function toggleTheme() {
+      applyTheme(appState.theme === "dark" ? "light" : "dark");
+      saveState();
+    }
+
+    function initGateCountdown() {
+      const gateTarget = new Date("February 6, 2027 09:00:00").getTime();
+      function update() {
+        const now = new Date().getTime();
+        const diff = gateTarget - now;
+        const displayEl = document.getElementById("gateCountdownDisplay");
+        if (!displayEl) return;
+
+        if (diff <= 0) {
+          displayEl.innerText = "Exam Day!";
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        displayEl.innerText = `${days}d ${hours}h`;
+      }
+      update();
+      setInterval(update, 60000);
+    }
+
+    function getDaysRemaining(endDateStr) {
+      if (!endDateStr) return { days: 0, expired: true };
+      const end = new Date(endDateStr + "T23:59:59").getTime();
+      const now = new Date().getTime();
+      const diff = end - now;
+      if (diff <= 0) return { days: 0, expired: true };
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      return { days, expired: false };
+    }
+
+    function autoCalculateEndDate(days) {
+      const d = parseInt(days, 10) || 30;
+      const start = new Date(appState.activeCycle.startDate || Date.now());
+      const end = new Date(start.getTime() + d * 86400000);
+      const el = document.getElementById("cfgEndDateInput");
+      if (el) el.value = end.toISOString().slice(0, 10);
+    }
+
+    function populateDropdowns() {
+      const cores = SUBJECTS.filter(s => s.type === "Core");
+      const maths = SUBJECTS.filter(s => s.type === "Math");
+
+      const c1 = document.getElementById("cfgCore1Select");
+      const c2 = document.getElementById("cfgCore2Select");
+      const m = document.getElementById("cfgMathSelect");
+
+      if (c1) c1.innerHTML = cores.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+      if (c2) c2.innerHTML = cores.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+      if (m) m.innerHTML = maths.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+
+      const allSubjOptions = SUBJECTS.map(s => `<option value="${s.id}">${s.name} [${s.type}]</option>`).join("");
+      const topicSubjSelect = document.getElementById("topicTestSubjectSelect");
+      const subjectSubjSelect = document.getElementById("subjectTestSubjectSelect");
+
+      if (topicSubjSelect) {
+        topicSubjSelect.innerHTML = allSubjOptions;
+        updateTopicDropdownOptions();
+      }
+      if (subjectSubjSelect) {
+        subjectSubjSelect.innerHTML = allSubjOptions;
+      }
+
+      const mockChkContainer = document.getElementById("mockSubjectsCheckboxesList");
+      if (mockChkContainer) {
+        mockChkContainer.innerHTML = SUBJECTS.map(s => `
+          <label class="flex items-center gap-1.5 text-[11px] cursor-pointer">
+            <input type="checkbox" value="${s.name}" class="mock-subj-chk rounded accent-amber-500" />
+            <span class="truncate">${s.name}</span>
+          </label>
+        `).join("");
+      }
+    }
+
+    function updateTopicDropdownOptions() {
+      const subjId = document.getElementById("topicTestSubjectSelect").value;
+      const subj = SUBJECTS.find(s => s.id === subjId);
+      const topicSelect = document.getElementById("topicTestTopicSelect");
+      if (subj && topicSelect) {
+        topicSelect.innerHTML = subj.subtopics.map(t => `<option value="${t}">${t}</option>`).join("");
+      }
+    }
+
+    function toggleAllMockSubjects() {
+      const chks = document.querySelectorAll(".mock-subj-chk");
+      const allChecked = Array.from(chks).every(c => c.checked);
+      chks.forEach(c => c.checked = !allChecked);
+    }
+
+    // 8. ANALYTICS CALCULATION ENGINE
+    function renderAnalyticsHub() {
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const logs = appState.dailyLogs || [];
+
+      const totalMinutes = logs.reduce((a, c) => a + (c.minutes || 0), 0);
+      const totalQuestions = logs.reduce((a, c) => a + (c.questions || 0), 0);
+
+      const currentMonthKey = todayIso.slice(0, 7);
+      const thisMonthLogs = logs.filter(l => (l.date || "").startsWith(currentMonthKey));
+      const thisMonthMinutes = thisMonthLogs.reduce((a, c) => a + (c.minutes || 0), 0);
+      const thisMonthQuestions = thisMonthLogs.reduce((a, c) => a + (c.questions || 0), 0);
+
+      const elTotHours = document.getElementById("anTotalStudyHours");
+      const elThisMHours = document.getElementById("anThisMonthHoursPill");
+      const elTotQs = document.getElementById("anTotalQuestionsSolved");
+      const elThisMQs = document.getElementById("anThisMonthQsPill");
+      const elStreak = document.getElementById("anCurrentStreak");
+
+      if (elTotHours) elTotHours.innerHTML = `${(totalMinutes / 60).toFixed(1)} <span class="text-sm font-sans font-normal text-slate-400">Hours</span>`;
+      if (elThisMHours) elThisMHours.innerText = `${(thisMonthMinutes / 60).toFixed(1)}h logged this month`;
+      if (elTotQs) elTotQs.innerHTML = `${totalQuestions} <span class="text-sm font-sans font-normal text-slate-400">Qs</span>`;
+      if (elThisMQs) elThisMQs.innerText = `${thisMonthQuestions} questions this month`;
+      if (elStreak) elStreak.innerHTML = `${appState.streak || 0} <span class="text-sm font-sans font-normal text-slate-400">Days</span>`;
+
+      let totalCoreSubs = 0, doneCoreSubs = 0;
+      let totalMathSubs = 0, doneMathSubs = 0;
+
+      SUBJECTS.forEach(s => {
+        const isMath = s.type === "Math";
+        s.subtopics.forEach((_, idx) => {
+          if (isMath) totalMathSubs += 3;
+          else totalCoreSubs += 3;
+
+          const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
+          if (p.theory) { if (isMath) doneMathSubs++; else doneCoreSubs++; }
+          if (p.dpp) { if (isMath) doneMathSubs++; else doneCoreSubs++; }
+          if (p.pyq) { if (isMath) doneMathSubs++; else doneCoreSubs++; }
+        });
+      });
+
+      const totalAllSubs = totalCoreSubs + totalMathSubs;
+      const doneAllSubs = doneCoreSubs + doneMathSubs;
+      const overallPct = Math.round((doneAllSubs / (totalAllSubs || 1)) * 1000) / 10;
+      const corePct = Math.round((doneCoreSubs / (totalCoreSubs || 1)) * 1000) / 10;
+      const mathPct = Math.round((doneMathSubs / (totalMathSubs || 1)) * 1000) / 10;
+
+      const elSylPct = document.getElementById("anSyllabusPercent");
+      const elSylBar = document.getElementById("anSyllabusBar");
+      const elCorePct = document.getElementById("anCoreSyllabusPct");
+      const elCoreBar = document.getElementById("anCoreSyllabusBar");
+      const elMathPct = document.getElementById("anMathSyllabusPct");
+      const elMathBar = document.getElementById("anMathSyllabusBar");
+
+      if (elSylPct) elSylPct.innerText = `${overallPct}%`;
+      if (elSylBar) elSylBar.style.width = `${overallPct}%`;
+      if (elCorePct) elCorePct.innerText = `${corePct}%`;
+      if (elCoreBar) elCoreBar.style.width = `${corePct}%`;
+      if (elMathPct) elMathPct.innerText = `${mathPct}%`;
+      if (elMathBar) elMathBar.style.width = `${mathPct}%`;
+
+      const todayLogs = logs.filter(l => l.date === todayIso);
+      const todayMins = todayLogs.reduce((a, c) => a + (c.minutes || 0), 0);
+      const todayQs = todayLogs.reduce((a, c) => a + (c.questions || 0), 0);
+      const todayStepsDone = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+
+      const targetMins = 330;
+      const targetQs = 30;
+
+      const timePctToday = Math.min(100, Math.round((todayMins / targetMins) * 100));
+      const qsPctToday = Math.min(100, Math.round((todayQs / targetQs) * 100));
+      const stepsPctToday = Math.min(100, Math.round((todayStepsDone / 5) * 100));
+
+      const elTodayHours = document.getElementById("anTodayHoursVal");
+      const elTodayTimePct = document.getElementById("anTodayTimePct");
+      const elTodayTimeBar = document.getElementById("anTodayTimeBar");
+      const elTodayQs = document.getElementById("anTodayQsVal");
+      const elTodayQsPct = document.getElementById("anTodayQsPct");
+      const elTodayQsBar = document.getElementById("anTodayQsBar");
+      const elTodaySteps = document.getElementById("anTodayStepsVal");
+      const elTodayStepsPct = document.getElementById("anTodayStepsPct");
+      const elTodayStepsBar = document.getElementById("anTodayStepsBar");
+
+      if (elTodayHours) elTodayHours.innerText = `${Math.floor(todayMins / 60)}h ${todayMins % 60}m`;
+      if (elTodayTimePct) elTodayTimePct.innerText = `${timePctToday}%`;
+      if (elTodayTimeBar) elTodayTimeBar.style.width = `${timePctToday}%`;
+
+      if (elTodayQs) elTodayQs.innerText = `${todayQs} Qs`;
+      if (elTodayQsPct) elTodayQsPct.innerText = `${qsPctToday}%`;
+      if (elTodayQsBar) elTodayQsBar.style.width = `${qsPctToday}%`;
+
+      if (elTodaySteps) elTodaySteps.innerText = `${todayStepsDone}/5 Done`;
+      if (elTodayStepsPct) elTodayStepsPct.innerText = `${stepsPctToday}%`;
+      if (elTodayStepsBar) elTodayStepsBar.style.width = `${stepsPctToday}%`;
+
+      const barsContainer = document.getElementById("an7DayBarsContainer");
+      if (barsContainer) {
+        barsContainer.innerHTML = "";
+        let weekTotalMins = 0;
+        const days = [];
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          days.push(d.toISOString().slice(0, 10));
+        }
+
+        const dayMinsArr = days.map(dStr => {
+          const dayM = logs.filter(l => l.date === dStr).reduce((a, c) => a + (c.minutes || 0), 0);
+          weekTotalMins += dayM;
+          return { date: dStr, mins: dayM };
+        });
+
+        const maxM = Math.max(120, ...dayMinsArr.map(x => x.mins));
+
+        dayMinsArr.forEach(item => {
+          const dt = new Date(item.date);
+          const dayName = dt.toLocaleDateString(undefined, { weekday: 'narrow' });
+          const barHeightPct = Math.max(6, Math.round((item.mins / maxM) * 100));
+          const isToday = item.date === todayIso;
+
+          const barCol = document.createElement("div");
+          barCol.className = "flex flex-col items-center justify-end h-full gap-1.5 group relative";
+          barCol.innerHTML = `
+            <div class="absolute -top-7 opacity-0 group-hover:opacity-100 transition bg-slate-900 text-white text-[10px] font-mono px-1.5 py-0.5 rounded shadow whitespace-nowrap z-10">
+              ${Math.floor(item.mins / 60)}h ${item.mins % 60}m
+            </div>
+            <div class="w-full max-w-[28px] rounded-t-lg transition-all duration-300 ${isToday ? 'bg-accent-blue shadow-lg shadow-blue-500/30' : (item.mins > 0 ? 'bg-white/40 hover:bg-white/60' : 'bg-white/10')}" style="height: ${barHeightPct}%"></div>
+            <span class="text-[10px] font-bold ${isToday ? 'text-accent-blue' : 'text-slate-400'}">${dayName}</span>
+          `;
+          barsContainer.appendChild(barCol);
+        });
+
+        const el7DayTotal = document.getElementById("an7DayTotalHours");
+        if (el7DayTotal) el7DayTotal.innerText = `${(weekTotalMins / 60).toFixed(1)}h Total (Past 7 Days)`;
+      }
+
+      const activeContainer = document.getElementById("anActiveCycleSubjectsList");
+      const nameLabel = document.getElementById("anActiveCycleNameLabel");
+      const daysLeftBadge = document.getElementById("anActiveCycleDaysLeftBadge");
+
+      if (nameLabel) nameLabel.innerText = appState.activeCycle.name || "Monthly Target";
+      const remaining = getDaysRemaining(appState.activeCycle.endDate);
+      if (daysLeftBadge) {
+        daysLeftBadge.innerText = remaining.expired ? "Expired" : `${remaining.days} Days Left`;
+      }
+
+      if (activeContainer) {
+        activeContainer.innerHTML = "";
+        const slots = [
+          { slot: "Core 1", id: appState.activeCycle.core1 },
+          { slot: "Core 2", id: appState.activeCycle.core2 },
+          { slot: "Math", id: appState.activeCycle.math }
+        ];
+
+        slots.forEach(item => {
+          const subj = SUBJECTS.find(s => s.id === item.id) || { name: "Not Selected", subtopics: [] };
+          let subDone = 0;
+          subj.subtopics.forEach((_, idx) => {
+            const p = appState.syllabusProgress[`${subj.id}_${idx}`] || {};
+            if (p.theory) subDone++;
+            if (p.dpp) subDone++;
+            if (p.pyq) subDone++;
+          });
+          const pct = Math.round((subDone / ((subj.subtopics.length * 3) || 1)) * 100);
+          const subjMins = logs.filter(l => l.subjectId === item.id || l.title === subj.name).reduce((a, c) => a + (c.minutes || 0), 0);
+
+          const row = document.createElement("div");
+          row.className = "p-3 rounded-xl bg-white/5 border border-white/10 space-y-1.5";
+          row.innerHTML = `
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-white truncate max-w-[200px]">${item.slot}: ${subj.name}</span>
+              <span class="font-mono font-bold text-accent-blue">${pct}%</span>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-white h-1.5 rounded-full" style="width: ${pct}%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400">
+              <span>Time: ${(subjMins / 60).toFixed(1)} hrs</span>
+              <span>${subDone} / ${subj.subtopics.length * 3} topics</span>
+            </div>
+          `;
+          activeContainer.appendChild(row);
+        });
+      }
+
+      const monthHistoryContainer = document.getElementById("anMonthlyHistoryList");
+      if (monthHistoryContainer) {
+        const monthMap = {};
+        logs.forEach(l => {
+          const mKey = (l.date || "").slice(0, 7);
+          if (!mKey) return;
+          if (!monthMap[mKey]) monthMap[mKey] = { minutes: 0, questions: 0 };
+          monthMap[mKey].minutes += (l.minutes || 0);
+          monthMap[mKey].questions += (l.questions || 0);
+        });
+
+        const sortedMonths = Object.keys(monthMap).sort().reverse();
+        if (sortedMonths.length === 0) {
+          monthHistoryContainer.innerHTML = `<p class="text-slate-400 italic text-center py-4">No monthly sessions recorded yet.</p>`;
+        } else {
+          monthHistoryContainer.innerHTML = sortedMonths.map(mKey => {
+            const [y, m] = mKey.split("-");
+            const dateObj = new Date(parseInt(y), parseInt(m) - 1, 1);
+            const monthStr = dateObj.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+            const mData = monthMap[mKey];
+
+            return `
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center">
+                <div>
+                  <h4 class="font-bold text-white">${monthStr}</h4>
+                  <span class="text-[10px] text-slate-400 font-medium">${mData.questions} Questions Solved</span>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono font-bold text-sm text-accent-purple">${(mData.minutes / 60).toFixed(1)} Hours</span>
+                  <p class="text-[10px] text-slate-400">${mData.minutes} mins total</p>
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
+      }
+
+      const subjDistContainer = document.getElementById("anSubjectDistributionGrid");
+      if (subjDistContainer) {
+        subjDistContainer.innerHTML = "";
+
+        SUBJECTS.forEach(subj => {
+          let subDone = 0;
+          subj.subtopics.forEach((_, idx) => {
+            const p = appState.syllabusProgress[`${subj.id}_${idx}`] || {};
+            if (p.theory) subDone++;
+            if (p.dpp) subDone++;
+            if (p.pyq) subDone++;
+          });
+          const pct = Math.round((subDone / ((subj.subtopics.length * 3) || 1)) * 100);
+          const subjMins = logs.filter(l => l.subjectId === subj.id || l.title === subj.name).reduce((a, c) => a + (c.minutes || 0), 0);
+          const subjQs = logs.filter(l => l.subjectId === subj.id || l.title === subj.name).reduce((a, c) => a + (c.questions || 0), 0);
+
+          const card = document.createElement("div");
+          card.className = "p-4 rounded-xl bg-white/5 border border-white/10 space-y-2.5";
+          card.innerHTML = `
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${subj.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : 'bg-blue-500/20 text-accent-blue'}">${subj.type}</span>
+                <h4 class="font-bold text-xs sm:text-sm text-white mt-1 truncate max-w-[180px]">${subj.name}</h4>
+              </div>
+              <span class="font-mono font-bold text-xs ${pct >= 75 ? 'text-emerald-400' : (pct >= 40 ? 'text-accent-blue' : 'text-slate-400')}">${pct}%</span>
+            </div>
+
+            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-white h-1.5 rounded-full" style="width: ${pct}%"></div>
+            </div>
+
+            <div class="flex justify-between items-center text-[10px] text-slate-400 pt-1 border-t border-white/10">
+              <span><i class="fa-solid fa-clock mr-1 text-slate-400"></i> ${(subjMins / 60).toFixed(1)}h</span>
+              <span><i class="fa-solid fa-pen mr-1 text-slate-400"></i> ${subjQs} Qs</span>
+              <span>${subDone}/${subj.subtopics.length * 3} topics</span>
+            </div>
+          `;
+          subjDistContainer.appendChild(card);
+        });
+      }
+
+      const tests = appState.tests || [];
+      const topicTests = tests.filter(t => t.type === 'topic');
+      const subjTests = tests.filter(t => t.type === 'subject');
+      const mockTests = tests.filter(t => t.type === 'mock');
+
+      const avgT = topicTests.length ? (topicTests.reduce((a, c) => a + c.percentage, 0) / topicTests.length).toFixed(1) : "0.0";
+      const avgS = subjTests.length ? (subjTests.reduce((a, c) => a + c.percentage, 0) / subjTests.length).toFixed(1) : "0.0";
+      const avgM = mockTests.length ? (mockTests.reduce((a, c) => a + c.percentage, 0) / mockTests.length).toFixed(1) : "0.0";
+
+      const elDiagT = document.getElementById("anDiagTopicAvg");
+      const elDiagS = document.getElementById("anDiagSubjAvg");
+      const elDiagM = document.getElementById("anDiagMockAvg");
+
+      if (elDiagT) elDiagT.innerText = `${avgT}%`;
+      if (elDiagS) elDiagS.innerText = `${avgS}%`;
+      if (elDiagM) elDiagM.innerText = `${avgM}%`;
+    }
+
+    // 9. TESTS MODULE
+    let currentActiveTestForm = 'topic';
+    let currentTestFilter = 'all';
+
+    function openAddTestModal(type = 'topic') {
+      switchTestTypeForm(type);
+      document.getElementById("addTestModal").classList.remove("hidden");
+    }
+    function closeAddTestModal() {
+      document.getElementById("addTestModal").classList.add("hidden");
+    }
+    function switchTestTypeForm(type) {
+      currentActiveTestForm = type;
+      ['topic', 'subject', 'mock'].forEach(t => {
+        const form = document.getElementById(`form-test-${t}`);
+        const btn = document.getElementById(`testTypeBtn-${t}`);
+        if (t === type) {
+          form.classList.remove("hidden");
+          btn.className = "pb-2 border-b-2 border-white text-white flex-1 text-center font-bold";
+        } else {
+          form.classList.add("hidden");
+          btn.className = "pb-2 border-b-2 border-transparent text-slate-400 hover:text-white flex-1 text-center";
+        }
+      });
+    }
+
+    function saveNewTestResult() {
+      if (!appState.tests) appState.tests = [];
+
+      if (currentActiveTestForm === 'topic') {
+        const name = document.getElementById("topicTestName").value.trim() || "Topic-Wise Test";
+        const subjId = document.getElementById("topicTestSubjectSelect").value;
+        const subj = SUBJECTS.find(s => s.id === subjId);
+        const topic = document.getElementById("topicTestTopicSelect").value;
+        const total = parseFloat(document.getElementById("topicTestTotalMarks").value) || 25;
+        const scored = parseFloat(document.getElementById("topicTestScoredMarks").value) || 0;
+        const date = document.getElementById("topicTestDate").value || new Date().toISOString().slice(0, 10);
+        const notes = document.getElementById("topicTestNotes").value.trim();
+        const pct = Math.round((scored / total) * 1000) / 10;
+
+        appState.tests.unshift({
+          id: Date.now(),
+          type: 'topic',
+          name,
+          subjectId: subjId,
+          subjectName: subj ? subj.name : "",
+          topic,
+          totalMarks: total,
+          scoredMarks: scored,
+          percentage: pct,
+          date,
+          notes
+        });
+      } else if (currentActiveTestForm === 'subject') {
+        const name = document.getElementById("subjectTestName").value.trim() || "Subject-Wise Test";
+        const subjId = document.getElementById("subjectTestSubjectSelect").value;
+        const subj = SUBJECTS.find(s => s.id === subjId);
+        const total = parseFloat(document.getElementById("subjectTestTotalMarks").value) || 50;
+        const scored = parseFloat(document.getElementById("subjectTestScoredMarks").value) || 0;
+        const date = document.getElementById("subjectTestDate").value || new Date().toISOString().slice(0, 10);
+        const notes = document.getElementById("subjectTestNotes").value.trim();
+        const pct = Math.round((scored / total) * 1000) / 10;
+
+        appState.tests.unshift({
+          id: Date.now(),
+          type: 'subject',
+          name,
+          subjectId: subjId,
+          subjectName: subj ? subj.name : "",
+          totalMarks: total,
+          scoredMarks: scored,
+          percentage: pct,
+          date,
+          notes
+        });
+      } else if (currentActiveTestForm === 'mock') {
+        const name = document.getElementById("mockTestName").value.trim() || "Combined Mock Test";
+        const chks = document.querySelectorAll(".mock-subj-chk:checked");
+        const subjectsList = Array.from(chks).map(c => c.value);
+        const total = parseFloat(document.getElementById("mockTestTotalMarks").value) || 100;
+        const scored = parseFloat(document.getElementById("mockTestScoredMarks").value) || 0;
+        const date = document.getElementById("mockTestDate").value || new Date().toISOString().slice(0, 10);
+        const notes = document.getElementById("mockTestNotes").value.trim();
+        const pct = Math.round((scored / total) * 1000) / 10;
+
+        appState.tests.unshift({
+          id: Date.now(),
+          type: 'mock',
+          name,
+          subjectsList: subjectsList.length > 0 ? subjectsList : ["Combined Syllabus"],
+          totalMarks: total,
+          scoredMarks: scored,
+          percentage: pct,
+          date,
+          notes
+        });
+      }
+
+      closeAddTestModal();
+      saveState();
+    }
+
+    function deleteTestRecord(id) {
+      if (confirm("Delete this test evaluation record?")) {
+        appState.tests = appState.tests.filter(t => t.id !== id);
+        saveState();
+      }
+    }
+
+    function filterTestsList(filter) {
+      currentTestFilter = filter;
+      ['all', 'topic', 'subject', 'mock'].forEach(f => {
+        const btn = document.getElementById(`testFilter-${f}`);
+        if (btn) {
+          if (f === filter) {
+            btn.className = "px-3.5 py-1.5 rounded-xl bg-white text-slate-950 font-bold";
+          } else {
+            btn.className = "px-3.5 py-1.5 rounded-xl text-slate-300 hover:bg-white/10";
+          }
+        }
+      });
+      renderTestsSection();
+    }
+
+    function renderTestsSection() {
+      const container = document.getElementById("testsHistoryContainer");
+      const badge = document.getElementById("testsTabBadge");
+      if (!container) return;
+
+      const tests = appState.tests || [];
+      if (badge) badge.innerText = tests.length;
+
+      let displayed = tests;
+      if (currentTestFilter !== 'all') {
+        displayed = tests.filter(t => t.type === currentTestFilter);
+      }
+
+      if (displayed.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 text-slate-400">
+            <i class="fa-solid fa-file-signature text-3xl mb-2 opacity-50"></i>
+            <p class="text-xs font-semibold">No ${currentTestFilter !== 'all' ? currentTestFilter : ''} tests recorded yet.</p>
+            <p class="text-[11px] opacity-70">Click "Log Test Result" above to record your score & analysis!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = displayed.map(t => {
+        let typeBadge = "";
+        let detailLine = "";
+
+        if (t.type === 'topic') {
+          typeBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-accent-blue border border-blue-500/30">TOPIC TEST</span>`;
+          detailLine = `<span class="font-semibold text-white">${t.subjectName}</span> &bull; <span class="text-slate-300">${t.topic}</span>`;
+        } else if (t.type === 'subject') {
+          typeBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-accent-emerald border border-emerald-500/30">SUBJECT TEST</span>`;
+          detailLine = `<span class="font-semibold text-white">${t.subjectName}</span> (Full Subject)`;
+        } else {
+          typeBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-accent-amber border border-amber-500/30">COMBINED MOCK</span>`;
+          const subjs = t.subjectsList ? t.subjectsList.join(", ") : "Combined Syllabus";
+          detailLine = `<span class="text-slate-300 truncate max-w-sm block">${subjs}</span>`;
+        }
+
+        const scoreColor = t.percentage >= 75 ? 'text-emerald-400' : (t.percentage >= 50 ? 'text-amber-400' : 'text-rose-400');
+        const scoreBg = t.percentage >= 75 ? 'bg-emerald-500/10 border-emerald-500/30' : (t.percentage >= 50 ? 'bg-amber-500/10 border-amber-500/30' : 'bg-rose-500/10 border-rose-500/30');
+
+        return `
+          <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                ${typeBadge}
+                <span class="text-[10px] text-slate-400 font-mono">${t.date}</span>
+              </div>
+              <h4 class="font-bold text-sm text-white">${t.name}</h4>
+              <p class="text-xs">${detailLine}</p>
+              ${t.notes ? `<p class="text-[11px] text-slate-400 italic"><i class="fa-regular fa-note-sticky mr-1"></i>${t.notes}</p>` : ''}
+            </div>
+
+            <div class="flex items-center gap-4 shrink-0">
+              <div class="text-right">
+                <div class="px-3.5 py-1.5 rounded-xl border ${scoreBg} flex items-center gap-2">
+                  <span class="font-mono font-bold text-sm ${scoreColor}">${t.scoredMarks} / ${t.totalMarks}</span>
+                  <span class="text-xs font-bold font-mono ${scoreColor}">(${t.percentage}%)</span>
+                </div>
+              </div>
+              <button onclick="deleteTestRecord(${t.id})" class="text-slate-400 hover:text-rose-400 text-xs p-1.5 transition" title="Delete record">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function syncCycleConfigUI() {
+      const c1 = document.getElementById("cfgCore1Select");
+      const c2 = document.getElementById("cfgCore2Select");
+      const m = document.getElementById("cfgMathSelect");
+      const name = document.getElementById("cfgCycleNameInput");
+      const dur = document.getElementById("cfgDurationDaysInput");
+      const end = document.getElementById("cfgEndDateInput");
+
+      if (c1) c1.value = appState.activeCycle.core1 || "cprog";
+      if (c2) c2.value = appState.activeCycle.core2 || "ds";
+      if (m) m.value = appState.activeCycle.math || "dm";
+      if (name) name.value = appState.activeCycle.name || "Month 1 Target";
+      if (dur) dur.value = appState.activeCycle.durationDays || 30;
+      if (end) end.value = appState.activeCycle.endDate || "";
+
+      const b1 = document.getElementById("c1RolloverBadge");
+      const b2 = document.getElementById("c2RolloverBadge");
+      const bm = document.getElementById("mathRolloverBadge");
+      const banner = document.getElementById("rolloverNoticeBanner");
+
+      if (b1) b1.classList.toggle("hidden", !appState.rollover.core1);
+      if (b2) b2.classList.toggle("hidden", !appState.rollover.core2);
+      if (bm) bm.classList.toggle("hidden", !appState.rollover.math);
+      
+      const hasRollover = appState.rollover.core1 || appState.rollover.core2 || appState.rollover.math;
+      if (banner) banner.classList.toggle("hidden", !hasRollover);
+    }
+
+    function saveActiveCycleConfig() {
+      appState.activeCycle = {
+        name: document.getElementById("cfgCycleNameInput").value || "Monthly Cycle",
+        core1: document.getElementById("cfgCore1Select").value,
+        core2: document.getElementById("cfgCore2Select").value,
+        math: document.getElementById("cfgMathSelect").value,
+        durationDays: parseInt(document.getElementById("cfgDurationDaysInput").value, 10) || 30,
+        startDate: new Date().toISOString().slice(0, 10),
+        endDate: document.getElementById("cfgEndDateInput").value
+      };
+      appState.rollover = { core1: false, core2: false, math: false };
+      saveState();
+      loadStepIntoTimer("core1");
+      switchTab('daily-flow');
+    }
+
+    // 10. MARK COMPLETED & REPLACE SUBJECT
+    let currentReplacingSlot = null;
+
+    function markSubjectCompletedFromHome(slotKey) {
+      const subjId = appState.activeCycle[slotKey];
+      const subj = SUBJECTS.find(s => s.id === subjId);
+      if (!subj) return;
+
+      if (!confirm(`Mark "${subj.name}" as Completed?\n\nIt will be moved to the Completed Subjects Archive and you can load a new subject into this slot.`)) {
+        return;
+      }
+
+      const logs = appState.dailyLogs.filter(l => l.stepKey === slotKey || l.title === subj.name);
+      const totalM = logs.reduce((a, c) => a + c.minutes, 0);
+      const totalQ = logs.reduce((a, c) => a + c.questions, 0);
+
+      subj.subtopics.forEach((_, idx) => {
+        appState.syllabusProgress[`${subj.id}_${idx}`] = { theory: true, dpp: true, pyq: true };
+      });
+
+      if (!appState.completedSubjects.some(c => c.id === subjId)) {
+        appState.completedSubjects.unshift({
+          id: subjId,
+          name: subj.name,
+          type: subj.type,
+          dateCompleted: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+          totalMins: totalM,
+          totalQs: totalQ
+        });
+      }
+
+      saveState();
+
+      if (confirm(`"${subj.name}" marked complete! Would you like to select the next subject to study in this slot now?`)) {
+        openReplaceSubjectModal(slotKey);
+      }
+    }
+
+    function openReplaceSubjectModal(slotKey) {
+      currentReplacingSlot = slotKey;
+      const isMath = slotKey === "math";
+      const available = SUBJECTS.filter(s => {
+        if (isMath && s.type !== "Math") return false;
+        if (!isMath && s.type !== "Core") return false;
+        const isActive = (s.id === appState.activeCycle.core1 || s.id === appState.activeCycle.core2 || s.id === appState.activeCycle.math);
+        return !isActive;
+      });
+
+      const select = document.getElementById("replacementSubjectSelect");
+      if (available.length === 0) {
+        select.innerHTML = `<option value="">All ${isMath ? 'Math' : 'Core'} subjects are currently active or completed!</option>`;
+      } else {
+        select.innerHTML = available.map(s => {
+          const isDone = appState.completedSubjects.some(c => c.id === s.id);
+          return `<option value="${s.id}">${s.name} ${isDone ? '(Mastered)' : ''}</option>`;
+        }).join("");
+      }
+
+      document.getElementById("replaceModalSlotTag").innerText = `SELECT FOR ${slotKey.toUpperCase()}`;
+      document.getElementById("replaceSubjectModal").classList.remove("hidden");
+    }
+
+    function closeReplaceModal() {
+      document.getElementById("replaceSubjectModal").classList.add("hidden");
+      currentReplacingSlot = null;
+    }
+
+    function confirmReplaceSubject() {
+      const selectedId = document.getElementById("replacementSubjectSelect").value;
+      if (!selectedId || !currentReplacingSlot) return;
+
+      appState.activeCycle[currentReplacingSlot] = selectedId;
+      closeReplaceModal();
+      saveState();
+
+      if (currentStepKey === currentReplacingSlot) {
+        loadStepIntoTimer(currentReplacingSlot);
+      }
+    }
+
+    function reopenCompletedSubject(subjId) {
+      if (confirm("Move this subject back into Active/Uncompleted status?")) {
+        appState.completedSubjects = appState.completedSubjects.filter(c => c.id !== subjId);
+        saveState();
+      }
+    }
+
+    // 11. DAILY 5-STEP WORKFLOW & TIMER ENGINE
+    let currentStepKey = "core1";
+    let timerMode = "stopwatch";
+    let timerInterval = null;
+    let timerSeconds = 0;
+    let isTimerRunning = false;
+    let countdownTargetSeconds = 5400;
+
+    const STEPS_META = [
+      { key: "core1", label: "Step 1", title: "Core Subject 1 Slot", icon: "fa-book-open", type: "subject", defaultMinutes: 90 },
+      { key: "core2", label: "Step 2", title: "Core Subject 2 Slot", icon: "fa-code", type: "subject", defaultMinutes: 90 },
+      { key: "math", label: "Step 3", title: "Math Subject Slot", icon: "fa-calculator", type: "subject", defaultMinutes: 60 },
+      { key: "dpp", label: "Step 4", title: "Daily DPP Practice", icon: "fa-pen-to-square", type: "fixed", defaultMinutes: 45 },
+      { key: "rev", label: "Step 5", title: "1.5 Hr Daily Revision", icon: "fa-rotate", type: "fixed", defaultMinutes: 90 }
+    ];
+
+    function getStepName(stepKey) {
+      if (stepKey === "core1") {
+        return SUBJECTS.find(s => s.id === appState.activeCycle.core1)?.name || "Core Subject 1";
+      } else if (stepKey === "core2") {
+        return SUBJECTS.find(s => s.id === appState.activeCycle.core2)?.name || "Core Subject 2";
+      } else if (stepKey === "math") {
+        return SUBJECTS.find(s => s.id === appState.activeCycle.math)?.name || "Mathematics";
+      } else if (stepKey === "dpp") {
+        return "Daily DPP Practice (All Subjects)";
+      } else if (stepKey === "rev") {
+        return "Daily Revision (1.5 Hours)";
+      }
+      return "Study Session";
+    }
+
+    function loadStepIntoTimer(stepKey) {
+      if (isTimerRunning) {
+        if (!confirm("A timer is currently active. Switch steps and reset timer?")) return;
+        resetMainTimer();
+      }
+
+      currentStepKey = stepKey;
+      const meta = STEPS_META.find(s => s.key === stepKey);
+      const subjName = getStepName(stepKey);
+
+      const tag = document.getElementById("activeStepTag");
+      const title = document.getElementById("activeTimerTitle");
+      const sub = document.getElementById("activeTimerSubtitle");
+
+      if (tag) tag.innerText = `${meta.label.toUpperCase()} OF 5`;
+      if (title) title.innerText = subjName;
+      if (sub) sub.innerText = meta.title;
+
+      if (stepKey === "rev") {
+        setTimerMode("countdown");
+        setPresetMinutes(90);
+      } else if (stepKey === "dpp") {
+        setTimerMode("countdown");
+        setPresetMinutes(45);
+      } else {
+        setTimerMode("stopwatch");
+      }
+
+      renderStepsQueue();
+    }
+
+    function setTimerMode(mode) {
+      timerMode = mode;
+      resetMainTimer();
+
+      const btnSw = document.getElementById("modeBtnStopwatch");
+      const btnCd = document.getElementById("modeBtnCountdown");
+      const configDiv = document.getElementById("countdownDurationConfig");
+      const clock = document.getElementById("timerBigClock");
+
+      if (mode === "stopwatch") {
+        if (btnSw) btnSw.className = "px-3 py-1 rounded-lg bg-white/20 text-white shadow-xs";
+        if (btnCd) btnCd.className = "px-3 py-1 rounded-lg text-slate-400 hover:text-white";
+        if (configDiv) configDiv.classList.add("hidden");
+        if (clock) clock.innerText = "00:00:00";
+      } else {
+        if (btnCd) btnCd.className = "px-3 py-1 rounded-lg bg-white/20 text-white shadow-xs";
+        if (btnSw) btnSw.className = "px-3 py-1 rounded-lg text-slate-400 hover:text-white";
+        if (configDiv) configDiv.classList.remove("hidden");
+        if (clock) clock.innerText = formatSeconds(countdownTargetSeconds);
+      }
+    }
+
+    function setPresetMinutes(mins) {
+      countdownTargetSeconds = mins * 60;
+      timerSeconds = countdownTargetSeconds;
+      const clock = document.getElementById("timerBigClock");
+      if (clock) clock.innerText = formatSeconds(timerSeconds);
+    }
+
+    function setCustomMinutes(val) {
+      const mins = parseInt(val, 10);
+      if (mins && mins > 0) setPresetMinutes(mins);
+    }
+
+    function formatSeconds(sec) {
+      const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+      const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function toggleMainTimer() {
+      if (!isTimerRunning) startTimer();
+      else pauseTimer();
+    }
+
+    function startTimer() {
+      isTimerRunning = true;
+      const toggleText = document.getElementById("mainTimerToggleText");
+      const toggleIcon = document.getElementById("mainTimerToggleIcon");
+      const statusLabel = document.getElementById("timerStatusLabel");
+
+      if (toggleText) toggleText.innerText = "Pause Session";
+      if (toggleIcon) toggleIcon.className = "fa-solid fa-pause";
+      if (statusLabel) statusLabel.innerText = "SESSION RUNNING";
+
+      if (timerMode === "countdown" && timerSeconds <= 0) {
+        timerSeconds = countdownTargetSeconds;
+      }
+
+      timerInterval = setInterval(() => {
+        const clock = document.getElementById("timerBigClock");
+        if (timerMode === "stopwatch") {
+          timerSeconds++;
+          if (clock) clock.innerText = formatSeconds(timerSeconds);
+        } else {
+          timerSeconds--;
+          if (clock) clock.innerText = formatSeconds(timerSeconds);
+          if (timerSeconds <= 0) {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            playBeepChime();
+            alert(`Target duration complete for ${getStepName(currentStepKey)}!`);
+            openFinishSessionModal();
+          }
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      isTimerRunning = false;
+      clearInterval(timerInterval);
+      const toggleText = document.getElementById("mainTimerToggleText");
+      const toggleIcon = document.getElementById("mainTimerToggleIcon");
+      const statusLabel = document.getElementById("timerStatusLabel");
+
+      if (toggleText) toggleText.innerText = "Resume Session";
+      if (toggleIcon) toggleIcon.className = "fa-solid fa-play";
+      if (statusLabel) statusLabel.innerText = "PAUSED";
+    }
+
+    function resetMainTimer() {
+      isTimerRunning = false;
+      clearInterval(timerInterval);
+      timerSeconds = timerMode === "countdown" ? countdownTargetSeconds : 0;
+      const clock = document.getElementById("timerBigClock");
+      const toggleText = document.getElementById("mainTimerToggleText");
+      const toggleIcon = document.getElementById("mainTimerToggleIcon");
+      const statusLabel = document.getElementById("timerStatusLabel");
+
+      if (clock) clock.innerText = formatSeconds(timerSeconds);
+      if (toggleText) toggleText.innerText = "Start Session";
+      if (toggleIcon) toggleIcon.className = "fa-solid fa-play";
+      if (statusLabel) statusLabel.innerText = "READY TO START";
+    }
+
+    function openFinishSessionModal() {
+      let elapsedMins = 0;
+      if (timerMode === "stopwatch") {
+        elapsedMins = Math.max(1, Math.round(timerSeconds / 60));
+      } else {
+        elapsedMins = Math.max(1, Math.round((countdownTargetSeconds - timerSeconds) / 60));
+      }
+
+      const title = document.getElementById("modalSessionTitle");
+      const dur = document.getElementById("modalDurationInput");
+      const qs = document.getElementById("modalQuestionsInput");
+
+      if (title) title.innerText = getStepName(currentStepKey);
+      if (dur) dur.value = elapsedMins;
+      if (qs) qs.value = currentStepKey === "dpp" ? "20" : "0";
+
+      document.getElementById("finishSessionModal").classList.remove("hidden");
+    }
+
+    function closeFinishSessionModal() {
+      document.getElementById("finishSessionModal").classList.add("hidden");
+    }
+
+    function confirmFinishSession() {
+      const mins = parseInt(document.getElementById("modalDurationInput").value, 10) || 0;
+      const qs = parseInt(document.getElementById("modalQuestionsInput").value, 10) || 0;
+      const todayIso = new Date().toISOString().slice(0, 10);
+
+      appState.dailyLogs.unshift({
+        id: Date.now(),
+        date: todayIso,
+        stepKey: currentStepKey,
+        title: getStepName(currentStepKey),
+        minutes: mins,
+        questions: qs,
+        timeStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      });
+
+      appState.dailyCompletedSteps[`${todayIso}_${currentStepKey}`] = true;
+
+      const completedTodayCount = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+      if (completedTodayCount >= 3 && appState.lastStreakDate !== todayIso) {
+        appState.streak += 1;
+        appState.lastStreakDate = todayIso;
+      }
+
+      closeFinishSessionModal();
+      resetMainTimer();
+      saveState();
+
+      const nextStep = STEPS_META.find(s => !appState.dailyCompletedSteps[`${todayIso}_${s.key}`]);
+      if (nextStep) {
+        loadStepIntoTimer(nextStep.key);
+      }
+    }
+
+    function resetTodaySteps() {
+      if (confirm("Reset today's routine checkboxes? Logged times remain saved.")) {
+        const todayIso = new Date().toISOString().slice(0, 10);
+        STEPS_META.forEach(s => {
+          delete appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
+        });
+        saveState();
+        loadStepIntoTimer("core1");
+      }
+    }
+
+    // 12. RENDER ALL COMPONENTS
+    function renderAll() {
+      renderAnalyticsHub();
+      renderDashboardStats();
+      renderHomeActiveSubjects();
+      renderStepsQueue();
+      renderTodayLogsList();
+      renderCompletedSubjectsList();
+      renderTestsSection();
+      renderSyllabusMatrix();
+    }
+
+    function renderDashboardStats() {
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayLogs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
+
+      const doneCount = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+      const pct = Math.round((doneCount / 5) * 100);
+
+      const stepFrac = document.getElementById("dashDailyStepFraction");
+      const pctEl = document.getElementById("dashDailyProgressPercent");
+      const bar = document.getElementById("dashDailyProgressBar");
+
+      if (stepFrac) stepFrac.innerText = `${doneCount}/5 Done`;
+      if (pctEl) pctEl.innerText = `${pct}%`;
+      if (bar) bar.style.width = `${pct}%`;
+
+      const totalMinutes = todayLogs.reduce((acc, curr) => acc + curr.minutes, 0);
+      const timeEl = document.getElementById("dashTotalTimeToday");
+      const qsEl = document.getElementById("dashTotalQsToday");
+
+      if (timeEl) timeEl.innerText = `${Math.floor(totalMinutes / 60)}h ${totalMinutes % 60}m`;
+      if (qsEl) qsEl.innerText = `${todayLogs.reduce((acc, curr) => acc + curr.questions, 0)} Qs`;
+
+      const remaining = getDaysRemaining(appState.activeCycle.endDate);
+      const daysDisplay = document.getElementById("dashCycleDaysLeft");
+      if (daysDisplay) {
+        if (remaining.expired) {
+          daysDisplay.innerText = "Expired";
+          daysDisplay.className = "text-xl font-bold mt-2 font-mono text-red-400";
+        } else {
+          daysDisplay.innerText = `${remaining.days} Days`;
+          daysDisplay.className = "text-2xl font-bold mt-2 font-mono text-white";
+        }
+      }
+
+      const cycleNameBadge = document.getElementById("dashCycleNameBadge");
+      const cycleTitlePill = document.getElementById("activeCycleTitlePill");
+      const streakPill = document.getElementById("streakPill");
+
+      if (cycleNameBadge) cycleNameBadge.innerText = `${appState.activeCycle.name} (${remaining.days}d left)`;
+      if (cycleTitlePill) cycleTitlePill.innerText = appState.activeCycle.name;
+      if (streakPill) streakPill.innerHTML = `<i class="fa-solid fa-fire text-amber-400"></i> ${appState.streak} Day Streak`;
+    }
+
+    function renderHomeActiveSubjects() {
+      const container = document.getElementById("homeActiveSubjectsCardsGrid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const activeSlots = [
+        { slot: "Core 1", key: "core1", id: appState.activeCycle.core1 },
+        { slot: "Core 2", key: "core2", id: appState.activeCycle.core2 },
+        { slot: "Math", key: "math", id: appState.activeCycle.math }
+      ];
+
+      activeSlots.forEach(item => {
+        const subj = SUBJECTS.find(s => s.id === item.id) || { name: "Not selected", subtopics: [] };
+        const isMastered = (appState.completedSubjects || []).some(c => c.id === item.id);
+
+        let subDone = 0;
+        subj.subtopics.forEach((_, idx) => {
+          const p = appState.syllabusProgress[`${subj.id}_${idx}`] || {};
+          if (p.theory) subDone++;
+          if (p.dpp) subDone++;
+          if (p.pyq) subDone++;
+        });
+        const pct = Math.round((subDone / ((subj.subtopics.length * 3) || 1)) * 100);
+
+        const card = document.createElement("div");
+        card.className = "p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-between space-y-3";
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-300 uppercase tracking-wider">${item.slot}</span>
+              ${isMastered 
+                ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">Completed</span>'
+                : '<span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-accent-blue font-bold border border-blue-500/30">In Progress</span>'
+              }
+            </div>
+            <h4 class="font-bold text-sm text-white mt-1 truncate">${subj.name}</h4>
+            
+            <div class="pt-2">
+              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                <span>Syllabus Covered</span>
+                <span>${pct}%</span>
+              </div>
+              <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-white h-1.5 rounded-full" style="width: ${pct}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-2 border-t border-white/10 text-xs">
+            ${!isMastered ? `
+              <button onclick="markSubjectCompletedFromHome('${item.key}')" class="flex-1 py-1.5 px-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 font-bold rounded-xl border border-emerald-500/30 transition flex items-center justify-center gap-1.5 text-[11px]">
+                <i class="fa-solid fa-check"></i> Mark Complete
+              </button>
+            ` : `
+              <button onclick="reopenCompletedSubject('${subj.id}')" class="flex-1 py-1.5 px-2 bg-white/10 hover:bg-white/20 text-slate-300 font-bold rounded-xl transition text-[11px]">
+                Reopen
+              </button>
+            `}
+            <button onclick="openReplaceSubjectModal('${item.key}')" class="py-1.5 px-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition text-[11px]" title="Swap or load another subject into this slot">
+              <i class="fa-solid fa-plus mr-0.5"></i> Load Next
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderStepsQueue() {
+      const container = document.getElementById("stepsQueueContainer");
+      if (!container) return;
+      container.innerHTML = "";
+      const todayIso = new Date().toISOString().slice(0, 10);
+
+      STEPS_META.forEach(s => {
+        const isDone = !!appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
+        const isCurrent = currentStepKey === s.key;
+        const subjTitle = getStepName(s.key);
+
+        const card = document.createElement("div");
+        card.className = `p-3 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
+          isCurrent
+            ? 'bg-white/15 border-white shadow-lg'
+            : isDone
+            ? 'bg-emerald-500/10 border-emerald-500/20 opacity-85'
+            : 'bg-white/5 border-white/10 hover:border-white/30'
+        }`;
+
+        card.onclick = () => loadStepIntoTimer(s.key);
+
+        card.innerHTML = `
+          <div class="flex items-center gap-3 truncate">
+            <div class="w-8 h-8 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : 'bg-white/10 text-slate-300'} flex items-center justify-center text-xs font-bold shrink-0">
+              ${isDone ? '<i class="fa-solid fa-check"></i>' : s.label.replace('Step ', '')}
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${s.title}</span>
+                ${isCurrent ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-blue-500 text-white font-bold">LOADED</span>' : ''}
+              </div>
+              <p class="text-xs font-bold text-white truncate">${subjTitle}</p>
+            </div>
+          </div>
+
+          <div class="text-right shrink-0">
+            ${isDone 
+              ? '<span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/20">Completed</span>'
+              : `<span class="text-[10px] text-slate-400 font-mono px-2 py-0.5 rounded bg-white/10">~${s.defaultMinutes}m</span>`
+            }
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderTodayLogsList() {
+      const container = document.getElementById("todayCompletedSessionsList");
+      if (!container) return;
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const logs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
+
+      if (logs.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 italic text-center py-2 text-[11px]">No slots completed yet today. Start step 1 above!</p>`;
+        return;
+      }
+
+      container.innerHTML = logs.map(l => `
+        <div class="flex justify-between items-center py-1 border-b border-white/10">
+          <span class="truncate max-w-[170px] font-medium text-slate-200">${l.title}</span>
+          <div class="flex items-center gap-2 font-mono text-[11px]">
+            <span>${l.minutes}m</span>
+            ${l.questions > 0 ? `<span class="text-emerald-400 font-bold">+${l.questions} Qs</span>` : ''}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderCompletedSubjectsList() {
+      const container = document.getElementById("completedSubjectsListGrid");
+      const badge = document.getElementById("completedCountBadge");
+      const tabBadge = document.getElementById("completedTabBadge");
+      if (!container) return;
+      
+      const count = (appState.completedSubjects || []).length;
+      if (badge) badge.innerText = `${count} / 12 Subjects Mastered`;
+      if (tabBadge) tabBadge.innerText = count;
+
+      if (count === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-10 text-slate-400">
+            <i class="fa-solid fa-award text-3xl mb-2 opacity-50"></i>
+            <p class="text-xs font-semibold">No subjects marked complete yet.</p>
+            <p class="text-[11px] opacity-70">Finish your active subjects on the dashboard and click "Mark Complete"!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = appState.completedSubjects.map(c => `
+        <div class="p-4 rounded-xl bg-white/5 border border-emerald-500/30 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">MASTERED</span>
+              <span class="text-[10px] text-slate-400 font-mono">${c.dateCompleted}</span>
+            </div>
+            <h4 class="font-bold text-sm text-white mt-1">${c.name}</h4>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
+            <span class="text-emerald-400 font-semibold text-[11px]"><i class="fa-solid fa-check-double mr-1"></i> Syllabus Done</span>
+            <button onclick="reopenCompletedSubject('${c.id}')" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-slate-300 rounded-lg font-semibold text-[11px] transition">
+              Reopen
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderSyllabusMatrix() {
+      const container = document.getElementById("syllabusCardsGrid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      SUBJECTS.forEach(s => {
+        let totalChecks = s.subtopics.length * 3;
+        let checksDone = 0;
+
+        s.subtopics.forEach((_, idx) => {
+          const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
+          if (p.theory) checksDone++;
+          if (p.dpp) checksDone++;
+          if (p.pyq) checksDone++;
+        });
+
+        const pct = Math.round((checksDone / (totalChecks || 1)) * 100);
+
+        const card = document.createElement("div");
+        card.className = "bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl";
+        card.id = `sub-card-${s.id}`;
+
+        card.innerHTML = `
+          <div class="p-4 flex justify-between items-center cursor-pointer select-none" onclick="toggleSyllabusAccordion('${s.id}')">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${s.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : 'bg-blue-500/20 text-accent-blue'}">${s.type}</span>
+              <h3 class="font-bold text-sm sm:text-base text-white">${s.name}</h3>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-semibold text-slate-300">${pct}%</span>
+              <div class="w-20 bg-white/10 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-white h-1.5 rounded-full" style="width: ${pct}%"></div>
+              </div>
+              <i id="sub-chevron-${s.id}" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+            </div>
+          </div>
+
+          <div id="sub-body-${s.id}" class="hidden border-t border-white/10 bg-black/30 p-4 space-y-3 text-xs">
+            ${s.subtopics.map((top, idx) => {
+              const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
+              return `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10">
+                  <span class="font-medium text-slate-200">${top}</span>
+                  <div class="flex items-center gap-4 text-[11px]">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" onchange="toggleSyllabusProgressItem('${s.id}_${idx}', 'theory')" ${p.theory ? 'checked' : ''} class="w-3.5 h-3.5 rounded accent-blue-500" />
+                      <span class="${p.theory ? 'text-accent-blue font-bold' : 'text-slate-400'}">Theory</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" onchange="toggleSyllabusProgressItem('${s.id}_${idx}', 'dpp')" ${p.dpp ? 'checked' : ''} class="w-3.5 h-3.5 rounded accent-emerald-500" />
+                      <span class="${p.dpp ? 'text-accent-emerald font-bold' : 'text-slate-400'}">DPP</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" onchange="toggleSyllabusProgressItem('${s.id}_${idx}', 'pyq')" ${p.pyq ? 'checked' : ''} class="w-3.5 h-3.5 rounded accent-purple-500" />
+                      <span class="${p.pyq ? 'text-purple-400 font-bold' : 'text-slate-400'}">PYQs</span>
+                    </label>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleSyllabusAccordion(id) {
+      const body = document.getElementById(`sub-body-${id}`);
+      const chevron = document.getElementById(`sub-chevron-${id}`);
+      if (body) body.classList.toggle("hidden");
+      if (chevron) chevron.classList.toggle("rotate-180");
+    }
+
+    function toggleSyllabusProgressItem(key, field) {
+      if (!appState.syllabusProgress[key]) {
+        appState.syllabusProgress[key] = { theory: false, dpp: false, pyq: false };
+      }
+      appState.syllabusProgress[key][field] = !appState.syllabusProgress[key][field];
+      saveState();
+    }
+
+    function filterSyllabusList() {
+      const input = document.getElementById("syllabusSearchInput");
+      if (!input) return;
+      const q = input.value.toLowerCase();
+      SUBJECTS.forEach(s => {
+        const card = document.getElementById(`sub-card-${s.id}`);
+        if (!card) return;
+        const matchesSubj = s.name.toLowerCase().includes(q);
+        const matchesTopic = s.subtopics.some(t => t.toLowerCase().includes(q));
+        card.classList.toggle("hidden", !(matchesSubj || matchesTopic));
+      });
+    }
+
+    function openForceEndCycleModal() {
+      const container = document.getElementById("rolloverChecklistContainer");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const s1 = SUBJECTS.find(s => s.id === appState.activeCycle.core1);
+      const s2 = SUBJECTS.find(s => s.id === appState.activeCycle.core2);
+      const sm = SUBJECTS.find(s => s.id === appState.activeCycle.math);
+
+      const items = [
+        { key: "core1", subj: s1, label: "Core Subject 1" },
+        { key: "core2", subj: s2, label: "Core Subject 2" },
+        { key: "math", subj: sm, label: "Math Subject" }
+      ];
+
+      items.forEach(it => {
+        if (!it.subj) return;
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10";
+        div.innerHTML = `
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase">${it.label}</span>
+            <p class="text-xs font-bold text-white">${it.subj.name}</p>
+          </div>
+          <label class="flex items-center gap-2 text-xs cursor-pointer select-none">
+            <input type="checkbox" id="modal_chk_${it.key}" class="w-4 h-4 rounded accent-emerald-500" />
+            <span class="text-emerald-400 font-bold">Done</span>
+          </label>
+        `;
+        container.appendChild(div);
+      });
+
+      document.getElementById("forceEndCycleModal").classList.remove("hidden");
+    }
+
+    function closeForceEndCycleModal() {
+      document.getElementById("forceEndCycleModal").classList.add("hidden");
+    }
+
+    function confirmForceEndCycle() {
+      const c1Done = document.getElementById("modal_chk_core1")?.checked;
+      const c2Done = document.getElementById("modal_chk_core2")?.checked;
+      const mathDone = document.getElementById("modal_chk_math")?.checked;
+
+      appState.rollover = {
+        core1: !c1Done,
+        core2: !c2Done,
+        math: !mathDone
+      };
+
+      const now = new Date();
+      appState.activeCycle.name = "Next Cycle Slot";
+      appState.activeCycle.startDate = now.toISOString().slice(0, 10);
+      appState.activeCycle.endDate = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+
+      closeForceEndCycleModal();
+      syncCycleConfigUI();
+      saveState();
+      switchTab('cycle-setup');
+    }
+
+    // 13. TAB NAVIGATION & EXPORT
+    function switchTab(tabId) {
+      ['analytics', 'daily-flow', 'tests', 'completed', 'cycle-setup', 'syllabus'].forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        const view = document.getElementById(`view-${t}`);
+        if (!btn || !view) return;
+        if (t === tabId) {
+          btn.className = "tab-btn px-4 py-2 rounded-xl bg-white text-slate-950 shadow-md flex items-center gap-2 shrink-0 font-semibold transition";
+          view.classList.remove("hidden");
+        } else {
+          btn.className = "tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 font-semibold transition";
+          view.classList.add("hidden");
+        }
+      });
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `GATE_2027_StudyData_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
