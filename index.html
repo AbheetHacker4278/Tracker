@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GATE CS 2027 Command Center</title>
-<!-- High-Res Custom Browser Tab Logo (Favicon) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23121214'/%3E%3Cpath d='M50 20 L88 38 L50 56 L12 38 Z' fill='%236366f1'/%3E%3Cpath d='M24 46 L24 64 C24 76 76 76 76 64 L76 46 L50 58 Z' fill='%234f46e5'/%3E%3Ccircle cx='88' cy='52' r='4' fill='%23f59e0b'/%3E%3Cpath d='M88 52 L88 68' stroke='%23f59e0b' stroke-width='3'/%3E%3C/svg%3E">
+  
+  <!-- High-Res Custom Browser Tab Logo (Favicon) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23121214'/><path d='M50 20 L88 38 L50 56 L12 38 Z' fill='%236366f1'/><path d='M24 46 L24 64 C24 76 76 76 76 64 L76 46 L50 58 Z' fill='%234f46e5'/><circle cx='88' cy='52' r='4' fill='%23f59e0b'/><path d='M88 52 L88 68' stroke='%23f59e0b' stroke-width='3'/></svg>" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -43,7 +45,7 @@
     }
   </script>
 
-<style>
+  <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #121214; }
     .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -68,18 +70,18 @@
     }
   </style>
 </head>
-<body class="bg-[#121214] text-slate-100 min-h-screen flex flex-col relative antialiased selection:bg-indigo-500 selection:text-white">
+<body id="appBackground" class="bg-[#121214] text-slate-100 min-h-screen flex flex-col relative antialiased selection:bg-indigo-500 selection:text-white">
 
   <!-- TOP HEADER WALLPAPER ONLY -->
   <div id="topHeroWallpaper"></div>
   <div class="absolute top-0 left-0 right-0 h-[230px] bg-slate-950/30 pointer-events-none z-0"></div>
 
-  <!-- FLOATING TOP COMMAND HEADER (MATCHING REFERENCE IMAGE) -->
-  <header class="relative z-40 max-w-7xl mx-auto w-[96%] sm:w-full mt-3 sm:mt-4 px-4 sm:px-6 py-3 rounded-2xl bg-slate-900/85 dark:bg-[#15171e]/85 backdrop-blur-xl border border-white/10 dark:border-white/10 shadow-2xl flex flex-wrap justify-between items-center gap-3">
+  <!-- FLOATING TOP COMMAND HEADER -->
+  <header class="relative z-40 max-w-7xl mx-auto w-[96%] sm:w-full mt-3 sm:mt-4 px-4 sm:px-6 py-3 rounded-2xl bg-slate-900/85 dark:bg-[#15171e]/85 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-wrap justify-between items-center gap-3">
     
     <!-- Brand / Target -->
     <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl bg-slate-800/90 text-slate-100 dark:bg-zinc-800/90 dark:text-zinc-100 flex items-center justify-center font-bold text-base border border-white/10 shadow-inner">
+      <div class="w-9 h-9 rounded-xl bg-slate-800/90 text-slate-100 flex items-center justify-center font-bold text-base border border-white/10 shadow-inner">
         <i class="fa-solid fa-graduation-cap"></i>
       </div>
       <div>
@@ -104,25 +106,25 @@
         <span id="cloudStatusText" class="font-medium">Connecting...</span>
       </div>
 
-      <!-- User Email & Logout / Login Actions -->
+      <!-- User Email & Auth Action Container -->
       <div id="authActionsContainer" class="flex items-center gap-2">
-        <button onclick="openAuthModal('login-password')" class="px-3.5 py-1.5 rounded-full bg-white dark:bg-zinc-100 text-slate-900 font-bold transition flex items-center gap-1.5 shadow">
+        <button onclick="openAuthModal('login-password')" class="px-3.5 py-1.5 rounded-full bg-white text-slate-900 font-bold transition flex items-center gap-1.5 shadow">
           <i class="fa-solid fa-user"></i> <span>Login / Sync</span>
         </button>
       </div>
 
       <!-- Wallpaper Selector -->
-      <button onclick="openWallpaperModal()" class="p-2 rounded-xl bg-slate-950/60 dark:bg-black/50 hover:bg-slate-800 border border-white/10 text-slate-300 transition" title="Change Background Wallpaper">
+      <button onclick="openWallpaperModal()" class="p-2 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition" title="Change Background Wallpaper">
         <i class="fa-solid fa-image text-sm"></i>
       </button>
 
       <!-- Theme Toggle -->
-      <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-950/60 dark:bg-black/50 hover:bg-slate-800 border border-white/10 text-slate-300 transition">
+      <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition">
         <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
       </button>
 
       <!-- Backup JSON -->
-      <button onclick="exportData()" class="px-3 py-1.5 rounded-xl bg-slate-950/60 dark:bg-black/50 hover:bg-slate-800 border border-white/10 text-slate-300 transition font-medium hidden sm:flex items-center gap-1.5">
+      <button onclick="exportData()" class="px-3 py-1.5 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition font-medium hidden sm:flex items-center gap-1.5">
         <i class="fa-solid fa-download"></i> <span>Backup</span>
       </button>
 
@@ -134,7 +136,7 @@
 
     <!-- FLOATING SEGMENTED TABS BAR -->
     <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl border border-white/10 shadow-xl overflow-x-auto custom-scroll text-xs font-semibold">
-      <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn px-4 py-2 rounded-xl bg-white dark:bg-zinc-100 text-slate-950 shadow-md flex items-center gap-2 shrink-0 transition">
+      <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn px-4 py-2 rounded-xl bg-white text-slate-950 shadow-md flex items-center gap-2 shrink-0 transition">
         <i class="fa-solid fa-chart-pie text-accent-blue"></i> Analytics & Insights Hub
       </button>
       <button onclick="switchTab('daily-flow')" id="tab-daily-flow" class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
@@ -238,7 +240,7 @@
           <div class="space-y-3.5 text-xs">
             <div>
               <div class="flex justify-between items-center mb-1">
-                <span class="font-medium text-slate-300">Study Time: <b id="anTodayHoursVal" class="text-white">0h 0m</b> / 5h 30m target</span>
+                <span class="font-medium text-slate-300">Study Time: <b id="anTodayHoursVal" class="text-white">0h 0m</b> / 6h target</span>
                 <span id="anTodayTimePct" class="font-mono font-bold text-accent-blue">0%</span>
               </div>
               <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
@@ -258,7 +260,7 @@
 
             <div>
               <div class="flex justify-between items-center mb-1">
-                <span class="font-medium text-slate-300">Routine Steps: <b id="anTodayStepsVal" class="text-white">0/5 Done</b></span>
+                <span class="font-medium text-slate-300">8-Step Protocol Done: <b id="anTodayStepsVal" class="text-white">0/8 Done</b></span>
                 <span id="anTodayStepsPct" class="font-mono font-bold text-purple-400">0%</span>
               </div>
               <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
@@ -403,15 +405,16 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- TAB 2: DAILY ROUTINE, ACTIVE SLOTS & TIMER -->
+    <!-- TAB 2: DAILY ROUTINE, ACTIVE SLOTS & TIMER (MANDATORY PREVIOUS REVISION) -->
     <!-- ============================================================== -->
     <div id="view-daily-flow" class="hidden space-y-5">
       
+      <!-- TOP STATUS ROW -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Daily Routine Completed</span>
-            <span id="dashDailyStepFraction" class="text-xs font-mono font-bold text-accent-blue">0/5 Done</span>
+            <span id="dashDailyStepFraction" class="text-xs font-mono font-bold text-accent-blue">0/8 Done</span>
           </div>
           <h2 id="dashDailyProgressPercent" class="text-2xl font-bold mt-2 text-white">0%</h2>
           <div class="w-full bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
@@ -453,6 +456,7 @@
         </div>
       </div>
 
+      <!-- ACTIVE MONTH SUBJECTS CARDS -->
       <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/10 pb-3">
           <div>
@@ -469,23 +473,25 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="homeActiveSubjectsCardsGrid"></div>
       </div>
 
+      <!-- WORKFLOW & TIMER SPLIT (8-STEP PROTOCOL) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
+        <!-- LEFT: 8-STEP DAILY WORKFLOW QUEUE -->
         <div class="lg:col-span-5 space-y-4">
           <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl space-y-3">
             <div class="flex justify-between items-center border-b border-white/10 pb-3">
               <div>
                 <h2 class="text-sm font-bold flex items-center gap-2 text-white">
-                  <i class="fa-solid fa-list-ol text-accent-blue"></i> Daily 5-Step Execution Order
+                  <i class="fa-solid fa-list-ol text-accent-blue"></i> 8-Step Execution Order
                 </h2>
-                <p class="text-[11px] text-slate-400">Click any step to load it into the Focus Timer</p>
+                <p class="text-[11px] text-slate-400">Always revise yesterday's concepts before deep study!</p>
               </div>
               <button onclick="resetTodaySteps()" class="text-[10px] bg-white/10 hover:bg-white/20 px-2 py-1 rounded text-slate-300">
                 Reset Today
               </button>
             </div>
 
-            <div class="space-y-2.5" id="stepsQueueContainer"></div>
+            <div class="space-y-2 max-h-[460px] overflow-y-auto custom-scroll pr-1" id="stepsQueueContainer"></div>
           </div>
 
           <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl text-xs space-y-2">
@@ -497,11 +503,12 @@
           </div>
         </div>
 
+        <!-- RIGHT: FOCUS TIMER STATION -->
         <div class="lg:col-span-7 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between space-y-6">
           <div>
             <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/10 pb-3">
               <div>
-                <span id="activeStepTag" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-accent-blue uppercase tracking-wider">STEP 1 OF 5</span>
+                <span id="activeStepTag" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-accent-blue uppercase tracking-wider">STEP 1 OF 8</span>
                 <h3 id="activeTimerTitle" class="text-base sm:text-lg font-bold text-white mt-1">C Programming</h3>
                 <p id="activeTimerSubtitle" class="text-xs text-slate-400">Core Subject 1 Slot</p>
               </div>
@@ -519,11 +526,11 @@
             <div id="countdownDurationConfig" class="hidden mt-3 p-3 bg-black/30 rounded-xl border border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
               <span class="font-medium text-slate-300">Set Target Duration:</span>
               <div class="flex items-center gap-2">
+                <button onclick="setPresetMinutes(20)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">20m (Rev)</button>
                 <button onclick="setPresetMinutes(45)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">45m</button>
-                <button onclick="setPresetMinutes(60)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">60m</button>
-                <button onclick="setPresetMinutes(90)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">90m (1.5h)</button>
-                <button onclick="setPresetMinutes(120)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">120m</button>
-                <input type="number" id="customMinutesInput" min="5" placeholder="Custom min" onchange="setCustomMinutes(this.value)" class="w-24 px-2 py-1 bg-black/40 border border-white/10 rounded-lg text-xs" />
+                <button onclick="setPresetMinutes(70)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">70m</button>
+                <button onclick="setPresetMinutes(90)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">90m</button>
+                <input type="number" id="customMinutesInput" min="5" placeholder="Custom min" onchange="setCustomMinutes(this.value)" class="w-24 px-2 py-1 bg-black/40 border border-white/10 rounded-lg text-xs text-white" />
               </div>
             </div>
           </div>
@@ -546,7 +553,7 @@
               </button>
 
               <button onclick="openFinishSessionModal()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition flex items-center gap-2 shadow-lg">
-                <i class="fa-solid fa-flag-checkered"></i> End & Complete Slot
+                <i class="fa-solid fa-flag-checkered"></i> End & Complete Step
               </button>
             </div>
 
@@ -718,7 +725,6 @@
         <button onclick="closeWallpaperModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <!-- Presets Grid -->
       <div class="grid grid-cols-2 gap-3 text-xs">
         <button onclick="setWallpaperPreset('alpine')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-accent-blue flex items-center gap-2.5 text-left transition">
           <i class="fa-solid fa-mountain text-accent-blue text-base"></i>
@@ -919,17 +925,16 @@
     </div>
   </div>
 
-<!-- MODAL: AUTH -->
+  <!-- MODAL: AUTH -->
   <div id="authModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="relative bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl overflow-hidden">
       
-      <!-- AUTH LOADING SPINNER ANIMATION OVERLAY -->
+      <!-- AUTH LOADING SPINNER -->
       <div id="authLoadingOverlay" class="hidden absolute inset-0 z-30 bg-slate-950/90 dark:bg-[#121214]/95 backdrop-blur-sm flex flex-col items-center justify-center space-y-3">
         <div class="w-9 h-9 border-[3px] border-white/10 border-t-accent-blue rounded-full animate-spin"></div>
         <p id="authLoadingText" class="text-xs font-semibold text-white tracking-wide">Authenticating...</p>
       </div>
 
-      <!-- HEADER ROW -->
       <div class="flex justify-between items-start">
         <div>
           <h3 id="authModalHeaderTitle" class="text-base font-bold text-white">Account Login</h3>
@@ -938,13 +943,11 @@
         <button onclick="closeAuthModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <!-- SUBTABS -->
       <div class="flex border-b border-white/10 text-xs font-semibold">
         <button onclick="switchAuthView('login-password')" id="authSubtab-pass" class="pb-2 border-b-2 border-white text-white flex-1 text-center font-bold">Email & Password</button>
         <button onclick="switchAuthView('login-otp')" id="authSubtab-otp" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white flex-1 text-center">Sign In with OTP / Link</button>
       </div>
 
-      <!-- VIEW 1: PASSWORD -->
       <div id="authView-password" class="space-y-3 text-xs">
         <div>
           <label class="font-semibold text-slate-300">Email Address:</label>
@@ -964,7 +967,6 @@
         </div>
       </div>
 
-      <!-- VIEW 2: OTP -->
       <div id="authView-otp" class="hidden space-y-3 text-xs">
         <div>
           <label class="font-semibold text-slate-300">Email Address:</label>
@@ -981,7 +983,6 @@
         </div>
       </div>
 
-      <!-- VIEW 3: FORGOT PASSWORD -->
       <div id="authView-forgot" class="hidden space-y-3 text-xs">
         <div>
           <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">RESET PASSWORD VIA OTP</span>
@@ -1012,7 +1013,6 @@
           <button onclick="switchAuthView('login-password')" class="text-[11px] text-slate-400 hover:underline">Back to Password Login</button>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -1085,7 +1085,7 @@
 
   <!-- JAVASCRIPT APP LOGIC & SCENIC CONTROLLER -->
   <script>
-    // 1. ULTRA-HD (4K 3840px, Q=100) WALLPAPER COLLECTION
+    // 1. WALLPAPERS PRESET COLLECTION
     const WALLPAPERS = {
       alpine: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=3840&q=100",
       forest: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=3840&q=100",
@@ -1444,7 +1444,7 @@
 
         if (data && data.state_data && Object.keys(data.state_data).length > 0) {
           appState = { ...appState, ...data.state_data };
-          localStorage.setItem("gate2027_v11_state", JSON.stringify(appState));
+          localStorage.setItem("gate2027_v12_state", JSON.stringify(appState));
           if (appState.wallpaper) {
             applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
           }
@@ -1558,6 +1558,7 @@
         vForgot.classList.remove("hidden");
       }
     }
+
     function setAuthLoading(isLoading, text = "Authenticating...") {
       const overlay = document.getElementById("authLoadingOverlay");
       const label = document.getElementById("authLoadingText");
@@ -1627,7 +1628,7 @@
           }
         });
         if (error) throw error;
-        alert(`Sign-in link / code sent to ${email}!\n\nClick "Sign in" in your email OR enter the 6-digit code below.`);
+        alert(`Sign-in link/code sent to ${email}!\n\nClick "Sign in" in your email OR enter the 6-digit code below.`);
         document.getElementById("otpInputContainer").classList.remove("hidden");
       } catch (err) {
         alert("Error sending OTP: " + err.message);
@@ -1717,7 +1718,7 @@
 
     // 6. LOCAL STORAGE & PERSISTENCE
     function loadState() {
-      const saved = localStorage.getItem("gate2027_v11_state");
+      const saved = localStorage.getItem("gate2027_v12_state");
       if (saved) {
         try {
           appState = { ...appState, ...JSON.parse(saved) };
@@ -1729,7 +1730,7 @@
     }
 
     function saveState() {
-      localStorage.setItem("gate2027_v11_state", JSON.stringify(appState));
+      localStorage.setItem("gate2027_v12_state", JSON.stringify(appState));
       pushDataToSupabase();
       renderAll();
     }
@@ -1738,7 +1739,6 @@
     window.addEventListener("DOMContentLoaded", () => {
       loadState();
       
-      // Apply saved or default wallpaper (alpine mountain)
       if (appState.wallpaper && (WALLPAPERS[appState.wallpaper] || appState.wallpaper.startsWith("http"))) {
         applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
       } else {
@@ -1749,7 +1749,7 @@
       initGateCountdown();
       populateDropdowns();
       syncCycleConfigUI();
-      loadStepIntoTimer("core1");
+      loadStepIntoTimer("core1_prev");
       renderAll();
       initSupabase();
 
@@ -1935,12 +1935,12 @@
       const todayQs = todayLogs.reduce((a, c) => a + (c.questions || 0), 0);
       const todayStepsDone = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
 
-      const targetMins = 330;
+      const targetMins = 360; // 6 hours total daily target
       const targetQs = 30;
 
       const timePctToday = Math.min(100, Math.round((todayMins / targetMins) * 100));
       const qsPctToday = Math.min(100, Math.round((todayQs / targetQs) * 100));
-      const stepsPctToday = Math.min(100, Math.round((todayStepsDone / 5) * 100));
+      const stepsPctToday = Math.min(100, Math.round((todayStepsDone / 8) * 100));
 
       const elTodayHours = document.getElementById("anTodayHoursVal");
       const elTodayTimePct = document.getElementById("anTodayTimePct");
@@ -1960,7 +1960,7 @@
       if (elTodayQsPct) elTodayQsPct.innerText = `${qsPctToday}%`;
       if (elTodayQsBar) elTodayQsBar.style.width = `${qsPctToday}%`;
 
-      if (elTodaySteps) elTodaySteps.innerText = `${todayStepsDone}/5 Done`;
+      if (elTodaySteps) elTodaySteps.innerText = `${todayStepsDone}/8 Done`;
       if (elTodayStepsPct) elTodayStepsPct.innerText = `${stepsPctToday}%`;
       if (elTodayStepsBar) elTodayStepsBar.style.width = `${stepsPctToday}%`;
 
@@ -2033,7 +2033,7 @@
             if (p.pyq) subDone++;
           });
           const pct = Math.round((subDone / ((subj.subtopics.length * 3) || 1)) * 100);
-          const subjMins = logs.filter(l => l.subjectId === item.id || l.title === subj.name).reduce((a, c) => a + (c.minutes || 0), 0);
+          const subjMins = logs.filter(l => l.subjectId === item.id || (l.title && l.title.includes(subj.name))).reduce((a, c) => a + (c.minutes || 0), 0);
 
           const row = document.createElement("div");
           row.className = "p-3 rounded-xl bg-white/5 border border-white/10 space-y-1.5";
@@ -2104,8 +2104,8 @@
             if (p.pyq) subDone++;
           });
           const pct = Math.round((subDone / ((subj.subtopics.length * 3) || 1)) * 100);
-          const subjMins = logs.filter(l => l.subjectId === subj.id || l.title === subj.name).reduce((a, c) => a + (c.minutes || 0), 0);
-          const subjQs = logs.filter(l => l.subjectId === subj.id || l.title === subj.name).reduce((a, c) => a + (c.questions || 0), 0);
+          const subjMins = logs.filter(l => l.subjectId === subj.id || (l.title && l.title.includes(subj.name))).reduce((a, c) => a + (c.minutes || 0), 0);
+          const subjQs = logs.filter(l => l.subjectId === subj.id || (l.title && l.title.includes(subj.name))).reduce((a, c) => a + (c.questions || 0), 0);
 
           const card = document.createElement("div");
           card.className = "p-4 rounded-xl bg-white/5 border border-white/10 space-y-2.5";
@@ -2385,7 +2385,7 @@
       };
       appState.rollover = { core1: false, core2: false, math: false };
       saveState();
-      loadStepIntoTimer("core1");
+      loadStepIntoTimer("core1_prev");
       switchTab('daily-flow');
     }
 
@@ -2401,7 +2401,7 @@
         return;
       }
 
-      const logs = appState.dailyLogs.filter(l => l.stepKey === slotKey || l.title === subj.name);
+      const logs = appState.dailyLogs.filter(l => l.subjectId === subjId || (l.title && l.title.includes(subj.name)));
       const totalM = logs.reduce((a, c) => a + c.minutes, 0);
       const totalQ = logs.reduce((a, c) => a + c.questions, 0);
 
@@ -2463,10 +2463,7 @@
       appState.activeCycle[currentReplacingSlot] = selectedId;
       closeReplaceModal();
       saveState();
-
-      if (currentStepKey === currentReplacingSlot) {
-        loadStepIntoTimer(currentReplacingSlot);
-      }
+      loadStepIntoTimer(`${currentReplacingSlot}_prev`);
     }
 
     function reopenCompletedSubject(subjId) {
@@ -2476,35 +2473,51 @@
       }
     }
 
-    // 11. DAILY 5-STEP WORKFLOW & TIMER ENGINE
-    let currentStepKey = "core1";
+    // ==============================================================
+    // 11. 8-STEP GUIDED PROTOCOL WITH MANDATORY PREVIOUS-DAY REVISION
+    // ==============================================================
+    let currentStepKey = "core1_prev";
     let timerMode = "stopwatch";
     let timerInterval = null;
     let timerSeconds = 0;
     let isTimerRunning = false;
-    let countdownTargetSeconds = 5400;
+    let countdownTargetSeconds = 1200; // default 20m for revision
 
     const STEPS_META = [
-      { key: "core1", label: "Step 1", title: "Core Subject 1 Slot", icon: "fa-book-open", type: "subject", defaultMinutes: 90 },
-      { key: "core2", label: "Step 2", title: "Core Subject 2 Slot", icon: "fa-code", type: "subject", defaultMinutes: 90 },
-      { key: "math", label: "Step 3", title: "Math Subject Slot", icon: "fa-calculator", type: "subject", defaultMinutes: 60 },
-      { key: "dpp", label: "Step 4", title: "Daily DPP Practice", icon: "fa-pen-to-square", type: "fixed", defaultMinutes: 45 },
-      { key: "rev", label: "Step 5", title: "1.5 Hr Daily Revision", icon: "fa-rotate", type: "fixed", defaultMinutes: 90 }
+      { key: "core1_prev", label: "Step 1", title: "Yesterday's Concept Revision", subType: "prev_rev", slotKey: "core1", defaultMinutes: 20, icon: "fa-rotate-left" },
+      { key: "core1_main", label: "Step 2", title: "Main Concept Study & Practice", subType: "main_study", slotKey: "core1", defaultMinutes: 70, icon: "fa-book-open" },
+      { key: "core2_prev", label: "Step 3", title: "Yesterday's Concept Revision", subType: "prev_rev", slotKey: "core2", defaultMinutes: 20, icon: "fa-rotate-left" },
+      { key: "core2_main", label: "Step 4", title: "Main Concept Study & Practice", subType: "main_study", slotKey: "core2", defaultMinutes: 70, icon: "fa-code" },
+      { key: "math_prev",  label: "Step 5", title: "Yesterday's Formula & Problem Revision", subType: "prev_rev", slotKey: "math", defaultMinutes: 15, icon: "fa-rotate-left" },
+      { key: "math_main",  label: "Step 6", title: "Main Math Study & Problem Solving", subType: "main_study", slotKey: "math", defaultMinutes: 45, icon: "fa-calculator" },
+      { key: "dpp",        label: "Step 7", title: "Daily DPP Practice (All 3 Subjects)", subType: "fixed", defaultMinutes: 45, icon: "fa-pen-to-square" },
+      { key: "rev",        label: "Step 8", title: "1.5 Hr Comprehensive Master Revision", subType: "fixed", defaultMinutes: 90, icon: "fa-rotate" }
     ];
 
     function getStepName(stepKey) {
-      if (stepKey === "core1") {
-        return SUBJECTS.find(s => s.id === appState.activeCycle.core1)?.name || "Core Subject 1";
-      } else if (stepKey === "core2") {
-        return SUBJECTS.find(s => s.id === appState.activeCycle.core2)?.name || "Core Subject 2";
-      } else if (stepKey === "math") {
-        return SUBJECTS.find(s => s.id === appState.activeCycle.math)?.name || "Mathematics";
-      } else if (stepKey === "dpp") {
-        return "Daily DPP Practice (All Subjects)";
-      } else if (stepKey === "rev") {
-        return "Daily Revision (1.5 Hours)";
+      const step = STEPS_META.find(s => s.key === stepKey);
+      if (!step) return "Study Session";
+
+      if (step.slotKey) {
+        const subjId = appState.activeCycle[step.slotKey];
+        const subjName = SUBJECTS.find(s => s.id === subjId)?.name || "Subject";
+        if (step.subType === "prev_rev") {
+          return `[Prev-Day Rev] ${subjName}`;
+        }
+        return `[Deep Study] ${subjName}`;
       }
+
+      if (stepKey === "dpp") return "Daily DPP Practice (All Subjects)";
+      if (stepKey === "rev") return "1.5 Hr Master Revision";
       return "Study Session";
+    }
+
+    function getStepSubjectId(stepKey) {
+      const step = STEPS_META.find(s => s.key === stepKey);
+      if (step && step.slotKey) {
+        return appState.activeCycle[step.slotKey];
+      }
+      return stepKey;
     }
 
     function loadStepIntoTimer(stepKey) {
@@ -2521,11 +2534,14 @@
       const title = document.getElementById("activeTimerTitle");
       const sub = document.getElementById("activeTimerSubtitle");
 
-      if (tag) tag.innerText = `${meta.label.toUpperCase()} OF 5`;
+      if (tag) tag.innerText = `${meta.label.toUpperCase()} OF 8`;
       if (title) title.innerText = subjName;
       if (sub) sub.innerText = meta.title;
 
-      if (stepKey === "rev") {
+      if (meta.subType === "prev_rev") {
+        setTimerMode("countdown");
+        setPresetMinutes(meta.defaultMinutes);
+      } else if (stepKey === "rev") {
         setTimerMode("countdown");
         setPresetMinutes(90);
       } else if (stepKey === "dpp") {
@@ -2671,11 +2687,13 @@
       const mins = parseInt(document.getElementById("modalDurationInput").value, 10) || 0;
       const qs = parseInt(document.getElementById("modalQuestionsInput").value, 10) || 0;
       const todayIso = new Date().toISOString().slice(0, 10);
+      const subjId = getStepSubjectId(currentStepKey);
 
       appState.dailyLogs.unshift({
         id: Date.now(),
         date: todayIso,
         stepKey: currentStepKey,
+        subjectId: subjId,
         title: getStepName(currentStepKey),
         minutes: mins,
         questions: qs,
@@ -2685,7 +2703,7 @@
       appState.dailyCompletedSteps[`${todayIso}_${currentStepKey}`] = true;
 
       const completedTodayCount = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
-      if (completedTodayCount >= 3 && appState.lastStreakDate !== todayIso) {
+      if (completedTodayCount >= 4 && appState.lastStreakDate !== todayIso) {
         appState.streak += 1;
         appState.lastStreakDate = todayIso;
       }
@@ -2707,7 +2725,7 @@
           delete appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
         });
         saveState();
-        loadStepIntoTimer("core1");
+        loadStepIntoTimer("core1_prev");
       }
     }
 
@@ -2728,13 +2746,13 @@
       const todayLogs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
 
       const doneCount = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
-      const pct = Math.round((doneCount / 5) * 100);
+      const pct = Math.round((doneCount / 8) * 100);
 
       const stepFrac = document.getElementById("dashDailyStepFraction");
       const pctEl = document.getElementById("dashDailyProgressPercent");
       const bar = document.getElementById("dashDailyProgressBar");
 
-      if (stepFrac) stepFrac.innerText = `${doneCount}/5 Done`;
+      if (stepFrac) stepFrac.innerText = `${doneCount}/8 Done`;
       if (pctEl) pctEl.innerText = `${pct}%`;
       if (bar) bar.style.width = `${pct}%`;
 
@@ -2843,11 +2861,12 @@
         const isDone = !!appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
         const isCurrent = currentStepKey === s.key;
         const subjTitle = getStepName(s.key);
+        const isPrevRev = s.subType === "prev_rev";
 
         const card = document.createElement("div");
-        card.className = `p-3 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
+        card.className = `p-2.5 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
           isCurrent
-            ? 'bg-white/15 border-white shadow-lg'
+            ? 'bg-white/15 border-white shadow-lg ring-1 ring-white/20'
             : isDone
             ? 'bg-emerald-500/10 border-emerald-500/20 opacity-85'
             : 'bg-white/5 border-white/10 hover:border-white/30'
@@ -2856,14 +2875,14 @@
         card.onclick = () => loadStepIntoTimer(s.key);
 
         card.innerHTML = `
-          <div class="flex items-center gap-3 truncate">
-            <div class="w-8 h-8 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : 'bg-white/10 text-slate-300'} flex items-center justify-center text-xs font-bold shrink-0">
-              ${isDone ? '<i class="fa-solid fa-check"></i>' : s.label.replace('Step ', '')}
+          <div class="flex items-center gap-2.5 truncate">
+            <div class="w-7 h-7 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : (isPrevRev ? 'bg-amber-500/20 text-accent-amber border border-amber-500/30' : 'bg-white/10 text-slate-300')} flex items-center justify-center text-xs font-bold shrink-0">
+              ${isDone ? '<i class="fa-solid fa-check"></i>' : (isPrevRev ? '<i class="fa-solid fa-rotate-left"></i>' : s.label.replace('Step ', ''))}
             </div>
             <div class="truncate">
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${s.title}</span>
-                ${isCurrent ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-blue-500 text-white font-bold">LOADED</span>' : ''}
+              <div class="flex items-center gap-1.5">
+                <span class="text-[9px] font-bold uppercase tracking-wider ${isPrevRev ? 'text-amber-400' : 'text-slate-400'}">${s.title}</span>
+                ${isCurrent ? '<span class="text-[8px] px-1 rounded bg-blue-500 text-white font-bold">LOADED</span>' : ''}
               </div>
               <p class="text-xs font-bold text-white truncate">${subjTitle}</p>
             </div>
@@ -2871,8 +2890,8 @@
 
           <div class="text-right shrink-0">
             ${isDone 
-              ? '<span class="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/20">Completed</span>'
-              : `<span class="text-[10px] text-slate-400 font-mono px-2 py-0.5 rounded bg-white/10">~${s.defaultMinutes}m</span>`
+              ? '<span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/20">Done</span>'
+              : `<span class="text-[9px] text-slate-400 font-mono px-1.5 py-0.5 rounded bg-white/10">~${s.defaultMinutes}m</span>`
             }
           </div>
         `;
