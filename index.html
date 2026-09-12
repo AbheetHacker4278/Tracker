@@ -51,6 +51,47 @@
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
     .dark .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
     .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+  /* ============================================================== */
+    /* MARVEL SUPERHERO THEME PALETTES & ACCENTS                     */
+    /* ============================================================== */
+    /* 1. IRON MAN (Stark Arc Reactor Cyan & Hot-Rod Crimson/Gold) */
+    [data-theme="ironman"] {
+      --theme-accent: #06b6d4;
+      --theme-glow: rgba(6, 182, 212, 0.4);
+      --theme-border: rgba(225, 29, 72, 0.35);
+    }
+    [data-theme="ironman"] .text-accent-blue { color: #06b6d4 !important; }
+    [data-theme="ironman"] .bg-accent-blue { background-color: #06b6d4 !important; }
+    [data-theme="ironman"] #topHeroWallpaper { filter: drop-shadow(0 0 20px rgba(225, 29, 72, 0.3)); }
+
+    /* 2. SPIDER-MAN (Web-Slinger Electric Crimson & Web Blue) */
+    [data-theme="spiderman"] {
+      --theme-accent: #ef4444;
+      --theme-glow: rgba(239, 68, 68, 0.4);
+      --theme-border: rgba(59, 130, 246, 0.35);
+    }
+    [data-theme="spiderman"] .text-accent-blue { color: #ef4444 !important; }
+    [data-theme="spiderman"] .bg-accent-blue { background-color: #ef4444 !important; }
+
+    /* 3. CAPTAIN AMERICA (Vibranium Stealth Navy & Silver Star) */
+    [data-theme="captain"] {
+      --theme-accent: #3b82f6;
+      --theme-glow: rgba(59, 130, 246, 0.4);
+      --theme-border: rgba(225, 29, 72, 0.3);
+    }
+    [data-theme="captain"] .text-accent-blue { color: #60a5fa !important; }
+    [data-theme="captain"] .bg-accent-blue { background-color: #2563eb !important; }
+
+    /* 4. TVA (Loki / Time Variance Authority 70s Retro Amber & Bronze) */
+    [data-theme="tva"] {
+      --theme-accent: #f59e0b;
+      --theme-glow: rgba(245, 158, 11, 0.4);
+      --theme-border: rgba(217, 119, 6, 0.35);
+    }
+    [data-theme="tva"] .text-accent-blue { color: #f59e0b !important; }
+    [data-theme="tva"] .bg-accent-blue { background-color: #d97706 !important; }
+    [data-theme="tva"] .text-amber-400 { color: #fbbf24 !important; }
     
     /* Top Header Wallpaper Banner Only (Smooth Bottom Fade) */
     #topHeroWallpaper {
@@ -771,38 +812,79 @@
         <button onclick="closeWallpaperModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div class="grid grid-cols-2 gap-3 text-xs">
-        <button onclick="setWallpaperPreset('alpine')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-accent-blue flex items-center gap-2.5 text-left transition">
-          <i class="fa-solid fa-mountain text-accent-blue text-base"></i>
-          <div>
-            <p class="font-bold text-white">Alpine Lake Reflection</p>
-            <span class="text-[10px] text-slate-400">Reference Theme</span>
-          </div>
-        </button>
+<!-- Marvel Superhero Themes Section -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-mask text-rose-400"></i> Marvel Superhero Editions
+        </span>
+        <div class="grid grid-cols-2 gap-2.5 text-xs">
+          <!-- Iron Man -->
+          <button onclick="applyMarvelTheme('ironman')" class="p-3 rounded-xl bg-red-950/30 border border-red-500/30 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2.5 text-left transition group">
+            <div class="w-8 h-8 rounded-lg bg-red-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white group-hover:text-cyan-400 transition">Iron Man (Mark 85)</p>
+              <span class="text-[10px] text-cyan-300/80">Arc Cyan & Crimson</span>
+            </div>
+          </button>
 
-        <button onclick="setWallpaperPreset('forest')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-accent-emerald flex items-center gap-2.5 text-left transition">
-          <i class="fa-solid fa-tree text-accent-emerald text-base"></i>
-          <div>
-            <p class="font-bold text-white">Misty Pine Forest</p>
-            <span class="text-[10px] text-slate-400">Calm Evergreen</span>
-          </div>
-        </button>
+          <!-- Spider-Man -->
+          <button onclick="applyMarvelTheme('spiderman')" class="p-3 rounded-xl bg-blue-950/30 border border-red-500/30 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/20 flex items-center gap-2.5 text-left transition group">
+            <div class="w-8 h-8 rounded-lg bg-red-600/30 text-red-400 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-spider"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white group-hover:text-red-400 transition">Spider-Man (Web)</p>
+              <span class="text-[10px] text-red-300/80">Electric Red & Blue</span>
+            </div>
+          </button>
 
-        <button onclick="setWallpaperPreset('night')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-purple-400 flex items-center gap-2.5 text-left transition">
-          <i class="fa-solid fa-moon text-purple-400 text-base"></i>
-          <div>
-            <p class="font-bold text-white">Stargazer Peaks</p>
-            <span class="text-[10px] text-slate-400">Night Atmosphere</span>
-          </div>
-        </button>
+          <!-- Captain America -->
+          <button onclick="applyMarvelTheme('captain')" class="p-3 rounded-xl bg-slate-900 border border-blue-500/30 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2.5 text-left transition group">
+            <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white group-hover:text-blue-400 transition">Captain America</p>
+              <span class="text-[10px] text-blue-300/80">Vibranium Stealth</span>
+            </div>
+          </button>
 
-        <button onclick="setWallpaperPreset('solid')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-amber-400 flex items-center gap-2.5 text-left transition">
-          <i class="fa-solid fa-palette text-amber-400 text-base"></i>
-          <div>
-            <p class="font-bold text-white">Solid Matte Studio</p>
-            <span class="text-[10px] text-slate-400">Minimalist Dark</span>
-          </div>
-        </button>
+          <!-- TVA / Loki -->
+          <button onclick="applyMarvelTheme('tva')" class="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2.5 text-left transition group">
+            <div class="w-8 h-8 rounded-lg bg-amber-600/30 text-amber-400 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-hourglass"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white group-hover:text-amber-400 transition">TVA (Time Variance)</p>
+              <span class="text-[10px] text-amber-300/80">Retro Timeline Amber</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Classic Scenery Section -->
+      <div class="space-y-2 pt-2 border-t border-white/10">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-mountain text-slate-400"></i> Nature & Minimalist
+        </span>
+        <div class="grid grid-cols-2 gap-2.5 text-xs">
+          <button onclick="setWallpaperPreset('alpine')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/30 flex items-center gap-2.5 text-left transition">
+            <i class="fa-solid fa-mountain text-slate-300 text-sm"></i>
+            <div>
+              <p class="font-bold text-white">Alpine Lake (Default)</p>
+              <span class="text-[10px] text-slate-400">Original Scenery</span>
+            </div>
+          </button>
+          <button onclick="setWallpaperPreset('solid')" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/30 flex items-center gap-2.5 text-left transition">
+            <i class="fa-solid fa-palette text-slate-300 text-sm"></i>
+            <div>
+              <p class="font-bold text-white">Solid Matte Dark</p>
+              <span class="text-[10px] text-slate-400">Minimal Studio</span>
+            </div>
+          </button>
+        </div>
       </div>
 
       <div class="space-y-2 text-xs">
@@ -1137,6 +1219,49 @@
       forest: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=3840&q=100",
       night: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=3840&q=100",
       solid: ""
+    };
+
+// 2. MARVEL SUPERHERO THEMES DATASET (HIGH-RES CURATED BANNERS)
+    const MARVEL_THEMES = {
+      ironman: {
+        banner: "https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=3840&q=100",
+        name: "Iron Man"
+      },
+      spiderman: {
+        banner: "https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?auto=format&fit=crop&w=3840&q=100",
+        name: "Spider-Man"
+      },
+      captain: {
+        banner: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=3840&q=100",
+        name: "Captain America"
+      },
+      tva: {
+        banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=3840&q=100",
+        name: "TVA / Time Variance"
+      }
+    };
+
+    function applyMarvelTheme(themeKey) {
+      const theme = MARVEL_THEMES[themeKey];
+      if (!theme) return;
+
+      // Apply data-theme attribute on <html> to activate Marvel accents
+      document.documentElement.setAttribute("data-theme", themeKey);
+
+      // Set the matching high-res Marvel banner
+      applyWallpaper(theme.banner);
+
+      appState.marvelTheme = themeKey;
+      saveState();
+      closeWallpaperModal();
+    }
+
+    // Also update setWallpaperPreset to clear Marvel theme when choosing Alpine/Solid
+    const originalSetWallpaperPreset = setWallpaperPreset;
+    setWallpaperPreset = function(key) {
+      document.documentElement.removeAttribute("data-theme");
+      appState.marvelTheme = null;
+      originalSetWallpaperPreset(key);
     };
 
     function applyWallpaper(url) {
@@ -1787,6 +1912,9 @@
       
       if (appState.wallpaper && (WALLPAPERS[appState.wallpaper] || appState.wallpaper.startsWith("http"))) {
         applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
+      } 
+      if (appState.marvelTheme) {
+              document.documentElement.setAttribute("data-theme", appState.marvelTheme);
       } else {
         applyWallpaper(WALLPAPERS.alpine);
       }
