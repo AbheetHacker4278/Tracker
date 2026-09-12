@@ -45,69 +45,89 @@
     }
   </script>
 
-  <style>
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #121214; }
+<style>
+    body { 
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      background-color: #0d0e12; 
+    }
     .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .dark .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 
-  /* ============================================================== */
-    /* MARVEL SUPERHERO THEME PALETTES & ACCENTS                     */
-    /* ============================================================== */
-    /* 1. IRON MAN (Stark Arc Reactor Cyan & Hot-Rod Crimson/Gold) */
-    [data-theme="ironman"] {
-      --theme-accent: #06b6d4;
-      --theme-glow: rgba(6, 182, 212, 0.4);
-      --theme-border: rgba(225, 29, 72, 0.35);
-    }
-    [data-theme="ironman"] .text-accent-blue { color: #06b6d4 !important; }
-    [data-theme="ironman"] .bg-accent-blue { background-color: #06b6d4 !important; }
-    [data-theme="ironman"] #topHeroWallpaper { filter: drop-shadow(0 0 20px rgba(225, 29, 72, 0.3)); }
-
-    /* 2. SPIDER-MAN (Web-Slinger Electric Crimson & Web Blue) */
-    [data-theme="spiderman"] {
-      --theme-accent: #ef4444;
-      --theme-glow: rgba(239, 68, 68, 0.4);
-      --theme-border: rgba(59, 130, 246, 0.35);
-    }
-    [data-theme="spiderman"] .text-accent-blue { color: #ef4444 !important; }
-    [data-theme="spiderman"] .bg-accent-blue { background-color: #ef4444 !important; }
-
-    /* 3. CAPTAIN AMERICA (Vibranium Stealth Navy & Silver Star) */
-    [data-theme="captain"] {
-      --theme-accent: #3b82f6;
-      --theme-glow: rgba(59, 130, 246, 0.4);
-      --theme-border: rgba(225, 29, 72, 0.3);
-    }
-    [data-theme="captain"] .text-accent-blue { color: #60a5fa !important; }
-    [data-theme="captain"] .bg-accent-blue { background-color: #2563eb !important; }
-
-    /* 4. TVA (Loki / Time Variance Authority 70s Retro Amber & Bronze) */
-    [data-theme="tva"] {
-      --theme-accent: #f59e0b;
-      --theme-glow: rgba(245, 158, 11, 0.4);
-      --theme-border: rgba(217, 119, 6, 0.35);
-    }
-    [data-theme="tva"] .text-accent-blue { color: #f59e0b !important; }
-    [data-theme="tva"] .bg-accent-blue { background-color: #d97706 !important; }
-    [data-theme="tva"] .text-amber-400 { color: #fbbf24 !important; }
-    
-    /* Top Header Wallpaper Banner Only (Smooth Bottom Fade) */
+    /* Top Header Wallpaper Banner with Cinematic Fade */
     #topHeroWallpaper {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 230px;
+      height: 240px;
       background-size: cover !important;
-      background-position: center 35% !important;
+      background-position: center 30% !important;
       background-repeat: no-repeat !important;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
-      transition: background-image 0.4s ease-in-out;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+      transition: background-image 0.5s ease;
       pointer-events: none;
       z-index: 0;
+    }
+
+    /* Tactile Glassmorphism Card Style */
+    .glass-card {
+      background: rgba(20, 22, 28, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    /* Ambient Timer Glow when Running */
+    .timer-glow {
+      position: relative;
+    }
+    .timer-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 120px;
+      background: radial-gradient(circle, var(--theme-glow, rgba(59, 130, 246, 0.22)) 0%, transparent 70%);
+      filter: blur(30px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .timer-running .timer-glow::before {
+      opacity: 1;
+      animation: pulse-glow 3s infinite alternate;
+    }
+    @keyframes pulse-glow {
+      0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.6; }
+      100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    }
+
+    /* MARVEL THEME ACCENTS */
+    [data-theme="ironman"] {
+      --theme-glow: rgba(6, 182, 212, 0.35);
+      --theme-accent: #06b6d4;
+    }
+    [data-theme="spiderman"] {
+      --theme-glow: rgba(239, 68, 68, 0.35);
+      --theme-accent: #ef4444;
+    }
+    [data-theme="captain"] {
+      --theme-glow: rgba(59, 130, 246, 0.35);
+      --theme-accent: #3b82f6;
+    }
+    [data-theme="tva"] {
+      --theme-glow: rgba(245, 158, 11, 0.35);
+      --theme-accent: #f59e0b;
     }
   </style>
 </head>
@@ -497,125 +517,157 @@
         </div>
       </div>
 
-      <!-- ACTIVE MONTH SUBJECTS CARDS -->
-      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl space-y-4">
-        <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/10 pb-3">
-          <div>
-            <h2 class="text-base font-bold flex items-center gap-2 text-white">
-              <i class="fa-solid fa-layer-group text-accent-blue"></i> Active Cycle Subjects (2 Core + 1 Math)
-            </h2>
-            <p class="text-xs text-slate-400">Finish a subject early? Mark it complete to send it to the Completed Archive and load a new subject into the cycle!</p>
+<!-- ACTIVE MONTH SUBJECTS CARDS (COMPACT & BALANCED) -->
+      <div class="glass-card p-5 rounded-2xl space-y-3">
+        <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/[0.08] pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-accent-blue flex items-center justify-center text-xs">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+              <h2 class="text-sm font-bold text-white tracking-tight">Active Cycle Focus <span class="text-slate-400 font-normal">(2 Core + 1 Math)</span></h2>
+            </div>
           </div>
-          <div class="text-xs font-mono font-bold text-slate-300" id="activeCycleTitlePill">
-            Cycle Slot
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.08] text-slate-300" id="activeCycleTitlePill">
+              Cycle Slot
+            </span>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="homeActiveSubjectsCardsGrid"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5" id="homeActiveSubjectsCardsGrid">
+          <!-- Rendered dynamically -->
+        </div>
       </div>
 
       <!-- WORKFLOW & TIMER SPLIT (8-STEP PROTOCOL) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <!-- 8-STEP WORKFLOW & FOCUS TIMER CONSOLE (BALANCED HEIGHT) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         
-        <!-- LEFT: 8-STEP DAILY WORKFLOW QUEUE -->
-        <div class="lg:col-span-5 space-y-4">
-          <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl space-y-3">
-            <div class="flex justify-between items-center border-b border-white/10 pb-3">
-              <div>
-                <h2 class="text-sm font-bold flex items-center gap-2 text-white">
-                  <i class="fa-solid fa-list-ol text-accent-blue"></i> 8-Step Execution Order
-                </h2>
-                <p class="text-[11px] text-slate-400">Always revise yesterday's concepts before deep study!</p>
+        <!-- LEFT: 8-STEP GUIDED QUEUE (5 COLS) -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          
+          <div class="glass-card p-5 rounded-2xl flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <div class="flex justify-between items-center border-b border-white/[0.08] pb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-md bg-white/[0.06] text-accent-blue flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-list-check"></i>
+                  </div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-wider">8-Step Protocol</h2>
+                </div>
+                <button onclick="resetTodaySteps()" class="text-[10px] font-medium bg-white/[0.06] hover:bg-white/[0.12] text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-white/[0.06] transition">
+                  Reset Today
+                </button>
               </div>
-              <button onclick="resetTodaySteps()" class="text-[10px] bg-white/10 hover:bg-white/20 px-2 py-1 rounded text-slate-300">
-                Reset Today
-              </button>
+              <p class="text-[11px] text-slate-400 mt-1.5">Always revise yesterday's concepts before deep study!</p>
             </div>
 
-            <div class="space-y-2 max-h-[460px] overflow-y-auto custom-scroll pr-1" id="stepsQueueContainer"></div>
+            <!-- Scrollable steps queue -->
+            <div class="space-y-2 max-h-[380px] overflow-y-auto custom-scroll pr-1 flex-1" id="stepsQueueContainer">
+              <!-- Populated dynamically -->
+            </div>
           </div>
 
-          <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl text-xs space-y-2">
-            <div class="flex justify-between items-center font-bold text-white">
-              <span>Today's Completed Session Logs</span>
-              <span id="streakPill" class="text-amber-400 font-mono"><i class="fa-solid fa-fire"></i> 0 Day Streak</span>
+          <!-- Bottom Today Log Summary Card -->
+          <div class="glass-card p-4 rounded-2xl text-xs space-y-2">
+            <div class="flex justify-between items-center font-bold">
+              <span class="text-white text-[11px] flex items-center gap-1.5">
+                <i class="fa-solid fa-calendar-day text-slate-400"></i> Today's Activity Log
+              </span>
+              <span id="streakPill" class="text-amber-400 font-mono text-[11px] px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
+                <i class="fa-solid fa-fire"></i> 0 Day Streak
+              </span>
             </div>
-            <div id="todayCompletedSessionsList" class="space-y-1.5 max-h-40 overflow-y-auto custom-scroll pr-1 text-slate-300"></div>
+            <div id="todayCompletedSessionsList" class="space-y-1.5 max-h-32 overflow-y-auto custom-scroll pr-1 text-slate-300">
+              <!-- Populated dynamically -->
+            </div>
           </div>
+
         </div>
 
-        <!-- RIGHT: FOCUS TIMER STATION -->
-        <div class="lg:col-span-7 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between space-y-6">
-          <div>
-            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/10 pb-3">
+        <!-- RIGHT: INTERACTIVE FOCUS TIMER CONSOLE (7 COLS) -->
+        <div id="mainTimerCard" class="lg:col-span-7 glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between space-y-6 relative overflow-hidden">
+          
+          <!-- Timer Header -->
+          <div class="relative z-10">
+            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/[0.08] pb-3.5">
               <div>
-                <span id="activeStepTag" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-accent-blue uppercase tracking-wider">STEP 1 OF 8</span>
-                <h3 id="activeTimerTitle" class="text-base sm:text-lg font-bold text-white mt-1">C Programming</h3>
-                <p id="activeTimerSubtitle" class="text-xs text-slate-400">Core Subject 1 Slot</p>
+                <span id="activeStepTag" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/15 text-accent-blue border border-blue-500/25 uppercase tracking-wider">
+                  STEP 1 OF 8
+                </span>
+                <h3 id="activeTimerTitle" class="text-base sm:text-lg font-bold text-white mt-1.5 tracking-tight truncate">
+                  Digital Logic
+                </h3>
+                <p id="activeTimerSubtitle" class="text-xs text-slate-400 mt-0.5">Yesterday's Concept Revision</p>
               </div>
 
-              <div class="flex items-center bg-black/40 p-1 rounded-xl border border-white/10 text-xs font-semibold">
-                <button id="modeBtnStopwatch" onclick="setTimerMode('stopwatch')" class="px-3 py-1 rounded-lg bg-white/20 text-white shadow-xs">
+              <!-- Mode Switcher -->
+              <div class="flex items-center bg-black/50 p-1 rounded-xl border border-white/[0.08] text-xs font-medium">
+                <button id="modeBtnStopwatch" onclick="setTimerMode('stopwatch')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">
                   Stopwatch
                 </button>
-                <button id="modeBtnCountdown" onclick="setTimerMode('countdown')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">
+                <button id="modeBtnCountdown" onclick="setTimerMode('countdown')" class="px-3 py-1 rounded-lg bg-white/[0.15] text-white shadow-xs font-semibold transition">
                   Countdown
                 </button>
               </div>
             </div>
 
-            <div id="countdownDurationConfig" class="hidden mt-3 p-3 bg-black/30 rounded-xl border border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
-              <span class="font-medium text-slate-300">Set Target Duration:</span>
-              <div class="flex items-center gap-2">
-                <button onclick="setPresetMinutes(20)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">20m (Rev)</button>
-                <button onclick="setPresetMinutes(45)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">45m</button>
-                <button onclick="setPresetMinutes(70)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">70m</button>
-                <button onclick="setPresetMinutes(90)" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg border border-white/10 font-mono">90m</button>
-                <input type="number" id="customMinutesInput" min="5" placeholder="Custom min" onchange="setCustomMinutes(this.value)" class="w-24 px-2 py-1 bg-black/40 border border-white/10 rounded-lg text-xs text-white" />
+            <!-- Target Duration Preset Pills -->
+            <div id="countdownDurationConfig" class="mt-3.5 p-3 rounded-xl bg-black/40 border border-white/[0.06] flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span class="text-slate-400 font-medium">Duration:</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="setPresetMinutes(20)" class="px-2.5 py-1 bg-white/[0.06] hover:bg-white/[0.14] text-slate-200 rounded-lg border border-white/[0.08] font-mono transition">20m</button>
+                <button onclick="setPresetMinutes(45)" class="px-2.5 py-1 bg-white/[0.06] hover:bg-white/[0.14] text-slate-200 rounded-lg border border-white/[0.08] font-mono transition">45m</button>
+                <button onclick="setPresetMinutes(70)" class="px-2.5 py-1 bg-white/[0.06] hover:bg-white/[0.14] text-slate-200 rounded-lg border border-white/[0.08] font-mono transition">70m</button>
+                <button onclick="setPresetMinutes(90)" class="px-2.5 py-1 bg-white/[0.06] hover:bg-white/[0.14] text-slate-200 rounded-lg border border-white/[0.08] font-mono transition">90m</button>
+                <input type="number" id="customMinutesInput" min="5" placeholder="Custom" onchange="setCustomMinutes(this.value)" class="w-20 px-2.5 py-1 bg-black/60 border border-white/[0.1] rounded-lg text-xs text-white focus:outline-none focus:border-accent-blue" />
               </div>
             </div>
           </div>
 
-          <div class="py-4 text-center">
-            <div id="timerBigClock" class="text-6xl sm:text-7xl md:text-8xl font-mono font-extrabold tracking-tight text-white select-none drop-shadow-md">
-              00:00:00
+          <!-- Digital Clock Display with Ambient Glow -->
+          <div class="py-6 text-center timer-glow relative z-10">
+            <div id="timerBigClock" class="text-6xl sm:text-7xl md:text-8xl font-mono font-extrabold tracking-tight text-white select-none drop-shadow-[0_4px_24px_rgba(255,255,255,0.12)]">
+              00:20:00
             </div>
-            <p id="timerStatusLabel" class="text-xs font-semibold text-slate-400 mt-2 tracking-widest uppercase">READY TO START</p>
+            <p id="timerStatusLabel" class="text-[11px] font-bold text-slate-400 mt-3 tracking-[0.25em] uppercase">
+              READY TO START
+            </p>
           </div>
 
-        <!-- Controls (Single Non-Repeating Set) -->
-          <div class="space-y-3">
-            <div class="flex flex-wrap items-center justify-center gap-3">
-              <!-- 1. Start / Pause -->
-              <button id="mainTimerToggleBtn" onclick="toggleMainTimer()" class="px-7 py-3 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-sm transition flex items-center gap-2 shadow-lg">
+          <!-- Tactile Control Buttons -->
+          <div class="space-y-3 relative z-10">
+            <div class="flex flex-wrap items-center justify-center gap-2.5">
+              
+              <!-- Start / Pause Button -->
+              <button id="mainTimerToggleBtn" onclick="toggleMainTimer()" class="px-6 py-3 rounded-xl bg-white hover:bg-slate-200 active:scale-[0.98] text-slate-950 font-bold text-xs sm:text-sm transition flex items-center gap-2 shadow-[0_4px_16px_rgba(255,255,255,0.2)]">
                 <i class="fa-solid fa-play" id="mainTimerToggleIcon"></i> <span id="mainTimerToggleText">Start Session</span>
               </button>
               
-              <!-- 2. Reset -->
-              <button onclick="resetMainTimer()" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold text-white transition">
+              <!-- Reset Button -->
+              <button onclick="resetMainTimer()" class="px-4 py-3 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] active:scale-[0.98] border border-white/[0.08] text-xs font-semibold text-white transition">
                 <i class="fa-solid fa-rotate-left mr-1"></i> Reset
               </button>
 
-              <!-- 3. Float (PiP) -->
-              <button onclick="toggleFloatingPipTimer()" id="pipFloatBtn" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold text-accent-blue transition flex items-center gap-1.5" title="Pop out floating timer over other tabs and apps">
+              <!-- Float Button -->
+              <button onclick="toggleFloatingPipTimer()" id="pipFloatBtn" class="px-4 py-3 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 active:scale-[0.98] border border-blue-500/30 text-xs font-semibold text-accent-blue transition flex items-center gap-1.5" title="Pop out floating timer over other tabs and apps">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Float</span>
               </button>
 
-              <!-- 4. End & Complete Step -->
-              <button onclick="openFinishSessionModal()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition flex items-center gap-2 shadow-lg">
+              <!-- End Step Button -->
+              <button onclick="openFinishSessionModal()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold text-xs transition flex items-center gap-2 shadow-[0_4px_16px_rgba(16,185,129,0.3)]">
                 <i class="fa-solid fa-flag-checkered"></i> End & Complete Step
               </button>
             </div>
 
             <p class="text-[11px] text-center text-slate-400">
-              Ending the timer will prompt you to log questions solved and advance to the next step.
+              Ending the timer prompts you to log questions and advances to the next step.
             </p>
           </div>
         </div>
 
       </div>
-
-    </div>
 
     <!-- ============================================================== -->
     <!-- TAB 3: TESTS & MOCKS -->
@@ -2773,9 +2825,20 @@
     }
 
     function toggleMainTimer() {
-      if (!isTimerRunning) startTimer();
-      else pauseTimer();
+      if (!isTimerRunning) {
+        startTimer();
+        document.getElementById("mainTimerCard")?.classList.add("timer-running");
+      } else {
+        pauseTimer();
+        document.getElementById("mainTimerCard")?.classList.remove("timer-running");
+      }
     }
+
+    const originalResetTimer = resetMainTimer;
+    resetMainTimer = function() {
+      originalResetTimer();
+      document.getElementById("mainTimerCard")?.classList.remove("timer-running");
+    };
 
     function startTimer() {
       isTimerRunning = true;
@@ -2994,7 +3057,7 @@
       if (streakPill) streakPill.innerHTML = `<i class="fa-solid fa-fire text-amber-400"></i> ${appState.streak} Day Streak`;
     }
 
-    function renderHomeActiveSubjects() {
+function renderHomeActiveSubjects() {
       const container = document.getElementById("homeActiveSubjectsCardsGrid");
       if (!container) return;
       container.innerHTML = "";
@@ -3019,40 +3082,40 @@
         const pct = Math.round((subDone / ((subj.subtopics.length * 3) || 1)) * 100);
 
         const card = document.createElement("div");
-        card.className = "p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-between space-y-3";
+        card.className = "p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-white/[0.16] transition flex flex-col justify-between space-y-3";
         card.innerHTML = `
           <div>
             <div class="flex justify-between items-center text-xs">
-              <span class="font-bold text-slate-300 uppercase tracking-wider">${item.slot}</span>
+              <span class="font-bold text-slate-400 uppercase tracking-wider text-[10px]">${item.slot}</span>
               ${isMastered 
-                ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">Completed</span>'
-                : '<span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-accent-blue font-bold border border-blue-500/30">In Progress</span>'
+                ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/25">Completed</span>'
+                : '<span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/15 text-accent-blue font-bold border border-blue-500/25">In Progress</span>'
               }
             </div>
-            <h4 class="font-bold text-sm text-white mt-1 truncate">${subj.name}</h4>
+            <h4 class="font-bold text-sm text-white mt-1.5 truncate">${subj.name}</h4>
             
             <div class="pt-2">
               <div class="flex justify-between text-[11px] text-slate-400 mb-1">
                 <span>Syllabus Covered</span>
-                <span>${pct}%</span>
+                <span class="font-mono font-bold text-slate-200">${pct}%</span>
               </div>
               <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
-                <div class="bg-white h-1.5 rounded-full" style="width: ${pct}%"></div>
+                <div class="bg-white h-1.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
               </div>
             </div>
           </div>
 
-          <div class="flex items-center gap-2 pt-2 border-t border-white/10 text-xs">
+          <div class="flex items-center gap-2 pt-2 border-t border-white/[0.08] text-xs">
             ${!isMastered ? `
-              <button onclick="markSubjectCompletedFromHome('${item.key}')" class="flex-1 py-1.5 px-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 font-bold rounded-xl border border-emerald-500/30 transition flex items-center justify-center gap-1.5 text-[11px]">
+              <button onclick="markSubjectCompletedFromHome('${item.key}')" class="flex-1 py-1.5 px-2 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 font-bold rounded-lg border border-emerald-500/30 transition flex items-center justify-center gap-1.5 text-[11px]">
                 <i class="fa-solid fa-check"></i> Mark Complete
               </button>
             ` : `
-              <button onclick="reopenCompletedSubject('${subj.id}')" class="flex-1 py-1.5 px-2 bg-white/10 hover:bg-white/20 text-slate-300 font-bold rounded-xl transition text-[11px]">
+              <button onclick="reopenCompletedSubject('${subj.id}')" class="flex-1 py-1.5 px-2 bg-white/[0.08] hover:bg-white/[0.15] text-slate-300 font-bold rounded-lg transition text-[11px]">
                 Reopen
               </button>
             `}
-            <button onclick="openReplaceSubjectModal('${item.key}')" class="py-1.5 px-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition text-[11px]" title="Swap or load another subject into this slot">
+            <button onclick="openReplaceSubjectModal('${item.key}')" class="py-1.5 px-2.5 bg-white/[0.08] hover:bg-white/[0.15] text-slate-200 font-bold rounded-lg transition text-[11px]" title="Swap or load another subject into this slot">
               <i class="fa-solid fa-plus mr-0.5"></i> Load Next
             </button>
           </div>
@@ -3074,34 +3137,34 @@
         const isPrevRev = s.subType === "prev_rev";
 
         const card = document.createElement("div");
-        card.className = `p-2.5 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
+        card.className = `p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-between gap-3 ${
           isCurrent
-            ? 'bg-white/15 border-white shadow-lg ring-1 ring-white/20'
+            ? 'bg-white/[0.12] border-white/40 shadow-lg ring-1 ring-white/30'
             : isDone
-            ? 'bg-emerald-500/10 border-emerald-500/20 opacity-85'
-            : 'bg-white/5 border-white/10 hover:border-white/30'
+            ? 'bg-emerald-500/[0.06] border-emerald-500/20 opacity-80'
+            : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.07] hover:border-white/[0.15]'
         }`;
 
         card.onclick = () => loadStepIntoTimer(s.key);
 
         card.innerHTML = `
           <div class="flex items-center gap-2.5 truncate">
-            <div class="w-7 h-7 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : (isPrevRev ? 'bg-amber-500/20 text-accent-amber border border-amber-500/30' : 'bg-white/10 text-slate-300')} flex items-center justify-center text-xs font-bold shrink-0">
+            <div class="w-7 h-7 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : (isPrevRev ? 'bg-amber-500/20 text-accent-amber border border-amber-500/30' : 'bg-white/[0.08] text-slate-300')} flex items-center justify-center text-xs font-bold shrink-0">
               ${isDone ? '<i class="fa-solid fa-check"></i>' : (isPrevRev ? '<i class="fa-solid fa-rotate-left"></i>' : s.label.replace('Step ', ''))}
             </div>
             <div class="truncate">
               <div class="flex items-center gap-1.5">
                 <span class="text-[9px] font-bold uppercase tracking-wider ${isPrevRev ? 'text-amber-400' : 'text-slate-400'}">${s.title}</span>
-                ${isCurrent ? '<span class="text-[8px] px-1 rounded bg-blue-500 text-white font-bold">LOADED</span>' : ''}
+                ${isCurrent ? '<span class="text-[8px] px-1.5 py-0.2 rounded bg-blue-500 text-white font-bold animate-pulse">ACTIVE</span>' : ''}
               </div>
-              <p class="text-xs font-bold text-white truncate">${subjTitle}</p>
+              <p class="text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'} truncate">${subjTitle}</p>
             </div>
           </div>
 
           <div class="text-right shrink-0">
             ${isDone 
-              ? '<span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/20">Done</span>'
-              : `<span class="text-[9px] text-slate-400 font-mono px-1.5 py-0.5 rounded bg-white/10">~${s.defaultMinutes}m</span>`
+              ? '<span class="text-[9px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">Done</span>'
+              : `<span class="text-[9px] text-slate-400 font-mono px-2 py-0.5 rounded-md bg-white/[0.06]">~${s.defaultMinutes}m</span>`
             }
           </div>
         `;
