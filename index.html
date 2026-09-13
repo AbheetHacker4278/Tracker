@@ -45,14 +45,14 @@
     }
   </script>
 
-<style>
+  <style>
     body { 
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
       background-color: #0d0e12; 
     }
     .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
+    .dark .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
     .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 
     /* Top Header Wallpaper Banner with Cinematic Fade */
@@ -135,7 +135,7 @@
 
   <!-- TOP HEADER WALLPAPER ONLY -->
   <div id="topHeroWallpaper"></div>
-  <div class="absolute top-0 left-0 right-0 h-[230px] bg-slate-950/30 pointer-events-none z-0"></div>
+  <div class="absolute top-0 left-0 right-0 h-[240px] bg-slate-950/30 pointer-events-none z-0"></div>
 
   <!-- FLOATING TOP COMMAND HEADER -->
   <header class="relative z-40 max-w-7xl mx-auto w-[96%] sm:w-full mt-3 sm:mt-4 px-4 sm:px-6 py-3 rounded-2xl bg-slate-900/85 dark:bg-[#15171e]/85 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-wrap justify-between items-center gap-3">
@@ -153,7 +153,6 @@
 
     <!-- Right Controls Pill Group -->
     <div class="flex items-center gap-2 sm:gap-3 text-xs">
-      
       <!-- GATE 2027 Live Countdown Badge -->
       <div class="flex items-center gap-2 bg-slate-950/60 dark:bg-black/50 px-3.5 py-1.5 rounded-full border border-white/10 shadow-inner">
         <i class="fa-regular fa-clock text-amber-400"></i>
@@ -188,7 +187,6 @@
       <button onclick="exportData()" class="px-3 py-1.5 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition font-medium hidden sm:flex items-center gap-1.5">
         <i class="fa-solid fa-download"></i> <span>Backup</span>
       </button>
-
     </div>
   </header>
 
@@ -224,8 +222,7 @@
       
       <!-- HERO KPI ROW -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Total Study Time</span>
             <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs">
@@ -238,7 +235,7 @@
           </div>
         </div>
 
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">DPP / PYQ Questions</span>
             <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-accent-emerald flex items-center justify-center text-xs">
@@ -251,7 +248,7 @@
           </div>
         </div>
 
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Syllabus Completion</span>
             <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-accent-purple flex items-center justify-center text-xs">
@@ -266,7 +263,7 @@
           </div>
         </div>
 
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-xl flex flex-col justify-between">
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Study Streak</span>
             <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-accent-amber flex items-center justify-center text-xs">
@@ -278,14 +275,11 @@
             <p class="text-[11px] text-accent-amber font-semibold mt-1">Consistent daily preparation</p>
           </div>
         </div>
-
       </div>
 
       <!-- ROW 1: DAILY TARGETS & 7-DAY ACTIVITY HEAT-STRIP -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        
-        <!-- Daily Goal vs Actual Card (5 cols) -->
-        <div class="lg:col-span-5 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+        <div class="lg:col-span-5 glass-card p-6 rounded-2xl space-y-4">
           <div class="flex justify-between items-center border-b border-white/10 pb-3">
             <div>
               <h3 class="text-sm font-bold flex items-center gap-2 text-white">
@@ -331,29 +325,24 @@
           </div>
         </div>
 
-        <!-- 7-Day Study Velocity Chart (7 cols) -->
-        <div class="lg:col-span-7 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4 flex flex-col justify-between">
+        <div class="lg:col-span-7 glass-card p-6 rounded-2xl space-y-4 flex flex-col justify-between">
           <div class="flex justify-between items-center border-b border-white/10 pb-3">
             <div>
               <h3 class="text-sm font-bold flex items-center gap-2 text-white">
                 <i class="fa-solid fa-chart-column text-accent-blue"></i> 7-Day Study Time Velocity
               </h3>
-              <p class="text-[11px] text-slate-400">Minutes studied each day over the past week</p>
+              <p class="text-[11px] text-slate-400">Click any bar to view logged sessions on that day</p>
             </div>
             <span id="an7DayTotalHours" class="text-xs font-mono font-bold text-slate-300">0h Total</span>
           </div>
 
-          <div class="grid grid-cols-7 gap-2 items-end h-40 pt-4" id="an7DayBarsContainer">
-            <!-- Populated dynamically -->
-          </div>
+          <div class="grid grid-cols-7 gap-2 items-end h-40 pt-4" id="an7DayBarsContainer"></div>
         </div>
-
       </div>
 
       <!-- ROW 2: MONTHLY GOALS & ACTIVE CYCLE PROGRESS -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        
-        <div class="lg:col-span-6 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+        <div class="lg:col-span-6 glass-card p-6 rounded-2xl space-y-4">
           <div class="flex justify-between items-center border-b border-white/10 pb-3">
             <div>
               <h3 class="text-sm font-bold flex items-center gap-2 text-white">
@@ -364,12 +353,10 @@
             <span id="anActiveCycleDaysLeftBadge" class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-amber-500/20 text-accent-amber border border-amber-500/30">-- Days Left</span>
           </div>
 
-          <div class="space-y-3" id="anActiveCycleSubjectsList">
-            <!-- Populated dynamically -->
-          </div>
+          <div class="space-y-3" id="anActiveCycleSubjectsList"></div>
         </div>
 
-        <div class="lg:col-span-6 bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+        <div class="lg:col-span-6 glass-card p-6 rounded-2xl space-y-4">
           <div class="flex justify-between items-center border-b border-white/10 pb-3">
             <div>
               <h3 class="text-sm font-bold flex items-center gap-2 text-white">
@@ -379,15 +366,12 @@
             </div>
           </div>
 
-          <div id="anMonthlyHistoryList" class="space-y-2.5 max-h-48 overflow-y-auto custom-scroll pr-1 text-xs">
-            <!-- Populated dynamically -->
-          </div>
+          <div id="anMonthlyHistoryList" class="space-y-2.5 max-h-48 overflow-y-auto custom-scroll pr-1 text-xs"></div>
         </div>
-
       </div>
 
       <!-- ROW 3: ALL 12 SUBJECTS DISTRIBUTION -->
-      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-5">
+      <div class="glass-card p-6 rounded-2xl space-y-5">
         <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/10 pb-3">
           <div>
             <h3 class="text-sm font-bold flex items-center gap-2 text-white">
@@ -397,15 +381,12 @@
           </div>
         </div>
 
-        <div id="anSubjectDistributionGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Populated dynamically -->
-        </div>
+        <div id="anSubjectDistributionGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
 
       <!-- ROW 4: SYLLABUS SPLIT & TEST DIAGNOSTICS -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+        <div class="glass-card p-6 rounded-2xl space-y-4">
           <div class="flex justify-between items-center border-b border-white/10 pb-3">
             <h3 class="text-sm font-bold flex items-center gap-2 text-white">
               <i class="fa-solid fa-book-bookmark text-accent-emerald"></i> Core CS vs. Mathematics Mastery
@@ -435,7 +416,7 @@
           </div>
         </div>
 
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl space-y-4">
+        <div class="glass-card p-6 rounded-2xl space-y-4">
           <div class="flex justify-between items-center border-b border-white/10 pb-3">
             <h3 class="text-sm font-bold flex items-center gap-2 text-white">
               <i class="fa-solid fa-chart-line text-accent-amber"></i> Test Series & Mock Accuracy Diagnostic
@@ -460,19 +441,18 @@
             </div>
           </div>
         </div>
-
       </div>
 
-    </div>
+    </div> <!-- END OF #view-analytics -->
 
     <!-- ============================================================== -->
-    <!-- TAB 2: DAILY ROUTINE, ACTIVE SLOTS & TIMER (MANDATORY PREVIOUS REVISION) -->
+    <!-- TAB 2: DAILY ROUTINE, ACTIVE SLOTS & TIMER -->
     <!-- ============================================================== -->
     <div id="view-daily-flow" class="hidden space-y-5">
       
       <!-- TOP STATUS ROW -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+        <div class="glass-card p-4 rounded-2xl">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Daily Routine Completed</span>
             <span id="dashDailyStepFraction" class="text-xs font-mono font-bold text-accent-blue">0/8 Done</span>
@@ -483,7 +463,7 @@
           </div>
         </div>
 
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+        <div class="glass-card p-4 rounded-2xl">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Today's Study Time</span>
             <div class="w-7 h-7 rounded bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs">
@@ -494,7 +474,7 @@
           <p class="text-[11px] text-slate-400 mt-1">Across all logged sessions</p>
         </div>
 
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+        <div class="glass-card p-4 rounded-2xl">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Questions Solved Today</span>
             <div class="w-7 h-7 rounded bg-emerald-500/20 text-accent-emerald flex items-center justify-center text-xs">
@@ -505,7 +485,7 @@
           <p class="text-[11px] text-slate-400 mt-1">DPP & subject practice</p>
         </div>
 
-        <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl">
+        <div class="glass-card p-4 rounded-2xl">
           <div class="flex justify-between items-start">
             <span class="text-xs text-slate-400 font-medium">Active Cycle Time Left</span>
             <div class="w-7 h-7 rounded bg-amber-500/20 text-accent-amber flex items-center justify-center text-xs">
@@ -517,7 +497,7 @@
         </div>
       </div>
 
-<!-- ACTIVE MONTH SUBJECTS CARDS (COMPACT & BALANCED) -->
+      <!-- ACTIVE MONTH SUBJECTS CARDS -->
       <div class="glass-card p-5 rounded-2xl space-y-3">
         <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/[0.08] pb-3">
           <div class="flex items-center gap-2.5">
@@ -535,18 +515,14 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5" id="homeActiveSubjectsCardsGrid">
-          <!-- Rendered dynamically -->
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5" id="homeActiveSubjectsCardsGrid"></div>
       </div>
 
-      <!-- WORKFLOW & TIMER SPLIT (8-STEP PROTOCOL) -->
-      <!-- 8-STEP WORKFLOW & FOCUS TIMER CONSOLE (BALANCED HEIGHT) -->
+      <!-- 8-STEP WORKFLOW & FOCUS TIMER CONSOLE -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         
-        <!-- LEFT: 8-STEP GUIDED QUEUE (5 COLS) -->
+        <!-- LEFT: 8-STEP GUIDED QUEUE -->
         <div class="lg:col-span-5 flex flex-col gap-4">
-          
           <div class="glass-card p-5 rounded-2xl flex-1 flex flex-col justify-between space-y-3">
             <div>
               <div class="flex justify-between items-center border-b border-white/[0.08] pb-3">
@@ -563,13 +539,9 @@
               <p class="text-[11px] text-slate-400 mt-1.5">Always revise yesterday's concepts before deep study!</p>
             </div>
 
-            <!-- Scrollable steps queue -->
-            <div class="space-y-2 max-h-[380px] overflow-y-auto custom-scroll pr-1 flex-1" id="stepsQueueContainer">
-              <!-- Populated dynamically -->
-            </div>
+            <div class="space-y-2 max-h-[380px] overflow-y-auto custom-scroll pr-1 flex-1" id="stepsQueueContainer"></div>
           </div>
 
-          <!-- Bottom Today Log Summary Card -->
           <div class="glass-card p-4 rounded-2xl text-xs space-y-2">
             <div class="flex justify-between items-center font-bold">
               <span class="text-white text-[11px] flex items-center gap-1.5">
@@ -579,17 +551,12 @@
                 <i class="fa-solid fa-fire"></i> 0 Day Streak
               </span>
             </div>
-            <div id="todayCompletedSessionsList" class="space-y-1.5 max-h-32 overflow-y-auto custom-scroll pr-1 text-slate-300">
-              <!-- Populated dynamically -->
-            </div>
+            <div id="todayCompletedSessionsList" class="space-y-1.5 max-h-32 overflow-y-auto custom-scroll pr-1 text-slate-300"></div>
           </div>
-
         </div>
 
-        <!-- RIGHT: INTERACTIVE FOCUS TIMER CONSOLE (7 COLS) -->
+        <!-- RIGHT: INTERACTIVE FOCUS TIMER CONSOLE -->
         <div id="mainTimerCard" class="lg:col-span-7 glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between space-y-6 relative overflow-hidden">
-          
-          <!-- Timer Header -->
           <div class="relative z-10">
             <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/[0.08] pb-3.5">
               <div>
@@ -602,7 +569,6 @@
                 <p id="activeTimerSubtitle" class="text-xs text-slate-400 mt-0.5">Yesterday's Concept Revision</p>
               </div>
 
-              <!-- Mode Switcher -->
               <div class="flex items-center bg-black/50 p-1 rounded-xl border border-white/[0.08] text-xs font-medium">
                 <button id="modeBtnStopwatch" onclick="setTimerMode('stopwatch')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">
                   Stopwatch
@@ -613,7 +579,6 @@
               </div>
             </div>
 
-            <!-- Target Duration Preset Pills -->
             <div id="countdownDurationConfig" class="mt-3.5 p-3 rounded-xl bg-black/40 border border-white/[0.06] flex flex-wrap items-center justify-between gap-2 text-xs">
               <span class="text-slate-400 font-medium">Duration:</span>
               <div class="flex items-center gap-1.5">
@@ -626,7 +591,6 @@
             </div>
           </div>
 
-          <!-- Digital Clock Display with Ambient Glow -->
           <div class="py-6 text-center timer-glow relative z-10">
             <div id="timerBigClock" class="text-6xl sm:text-7xl md:text-8xl font-mono font-extrabold tracking-tight text-white select-none drop-shadow-[0_4px_24px_rgba(255,255,255,0.12)]">
               00:20:00
@@ -636,26 +600,20 @@
             </p>
           </div>
 
-          <!-- Tactile Control Buttons -->
           <div class="space-y-3 relative z-10">
             <div class="flex flex-wrap items-center justify-center gap-2.5">
-              
-              <!-- Start / Pause Button -->
               <button id="mainTimerToggleBtn" onclick="toggleMainTimer()" class="px-6 py-3 rounded-xl bg-white hover:bg-slate-200 active:scale-[0.98] text-slate-950 font-bold text-xs sm:text-sm transition flex items-center gap-2 shadow-[0_4px_16px_rgba(255,255,255,0.2)]">
                 <i class="fa-solid fa-play" id="mainTimerToggleIcon"></i> <span id="mainTimerToggleText">Start Session</span>
               </button>
               
-              <!-- Reset Button -->
               <button onclick="resetMainTimer()" class="px-4 py-3 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] active:scale-[0.98] border border-white/[0.08] text-xs font-semibold text-white transition">
                 <i class="fa-solid fa-rotate-left mr-1"></i> Reset
               </button>
 
-              <!-- Float Button -->
               <button onclick="toggleFloatingPipTimer()" id="pipFloatBtn" class="px-4 py-3 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 active:scale-[0.98] border border-blue-500/30 text-xs font-semibold text-accent-blue transition flex items-center gap-1.5" title="Pop out floating timer over other tabs and apps">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Float</span>
               </button>
 
-              <!-- End Step Button -->
               <button onclick="openFinishSessionModal()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold text-xs transition flex items-center gap-2 shadow-[0_4px_16px_rgba(16,185,129,0.3)]">
                 <i class="fa-solid fa-flag-checkered"></i> End & Complete Step
               </button>
@@ -669,11 +627,13 @@
 
       </div>
 
+    </div> <!-- ⭐️ FIXED: PROPER CLOSING DIV FOR #view-daily-flow ⭐️ -->
+
     <!-- ============================================================== -->
     <!-- TAB 3: TESTS & MOCKS -->
     <!-- ============================================================== -->
     <div id="view-tests" class="hidden space-y-5">
-      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl space-y-6">
+      <div class="glass-card p-6 sm:p-7 rounded-2xl space-y-6">
         <div class="flex flex-wrap justify-between items-center gap-4 border-b border-white/10 pb-4">
           <div>
             <h2 class="text-lg font-bold flex items-center gap-2 text-white">
@@ -701,7 +661,7 @@
     <!-- TAB 4: COMPLETED ARCHIVE -->
     <!-- ============================================================== -->
     <div id="view-completed" class="hidden space-y-5">
-      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl space-y-6">
+      <div class="glass-card p-6 sm:p-7 rounded-2xl space-y-6">
         <div class="flex flex-wrap justify-between items-center gap-4 border-b border-white/10 pb-4">
           <div>
             <h2 class="text-lg font-bold flex items-center gap-2 text-white">
@@ -719,10 +679,10 @@
     </div>
 
     <!-- ============================================================== -->
-    <!-- TAB 5: MONTHLY SETUP -->
+    <!-- TAB 5: MONTHLY 2+1 SETUP & CARRYOVER -->
     <!-- ============================================================== -->
     <div id="view-cycle-setup" class="hidden space-y-5">
-      <div class="bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl space-y-6">
+      <div class="glass-card p-6 sm:p-7 rounded-2xl space-y-6">
         <div class="flex flex-wrap justify-between items-start gap-4">
           <div>
             <h2 class="text-lg font-bold text-white">Configure Active 2+1 Monthly Target Cycle</h2>
@@ -812,7 +772,9 @@
 
   </main>
 
-<!-- MODAL: 7-DAY LOGGED DATA FOR CLICKED DATE -->
+  <!-- ============================================================== -->
+  <!-- MODAL: 7-DAY LOGGED DATA FOR CLICKED DATE -->
+  <!-- ============================================================== -->
   <div id="dayLogsDetailModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
       <div class="flex justify-between items-start border-b border-white/10 pb-3">
@@ -823,7 +785,6 @@
         <button onclick="closeDayLogsDetailModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <!-- Quick Metrics for the selected date -->
       <div class="grid grid-cols-2 gap-2 text-xs">
         <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
           <span class="text-slate-400 text-[10px]">Total Study Time</span>
@@ -835,12 +796,9 @@
         </div>
       </div>
 
-      <!-- Session list for the selected date -->
       <div class="space-y-1.5">
         <span class="text-xs font-semibold text-slate-300">Sessions on this date:</span>
-        <div id="dayModalSessionsList" class="space-y-1.5 max-h-56 overflow-y-auto custom-scroll pr-1 text-xs">
-          <!-- Populated dynamically -->
-        </div>
+        <div id="dayModalSessionsList" class="space-y-1.5 max-h-56 overflow-y-auto custom-scroll pr-1 text-xs"></div>
       </div>
 
       <div class="flex justify-end pt-2 border-t border-white/10">
@@ -864,13 +822,11 @@
         <button onclick="closeWallpaperModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-<!-- Marvel Superhero Themes Section -->
       <div class="space-y-2">
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i class="fa-solid fa-mask text-rose-400"></i> Marvel Superhero Editions
         </span>
         <div class="grid grid-cols-2 gap-2.5 text-xs">
-          <!-- Iron Man -->
           <button onclick="applyMarvelTheme('ironman')" class="p-3 rounded-xl bg-red-950/30 border border-red-500/30 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-red-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-microchip"></i>
@@ -881,7 +837,6 @@
             </div>
           </button>
 
-          <!-- Spider-Man -->
           <button onclick="applyMarvelTheme('spiderman')" class="p-3 rounded-xl bg-blue-950/30 border border-red-500/30 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-red-600/30 text-red-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-spider"></i>
@@ -892,7 +847,6 @@
             </div>
           </button>
 
-          <!-- Captain America -->
           <button onclick="applyMarvelTheme('captain')" class="p-3 rounded-xl bg-slate-900 border border-blue-500/30 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-shield-halved"></i>
@@ -903,7 +857,6 @@
             </div>
           </button>
 
-          <!-- TVA / Loki -->
           <button onclick="applyMarvelTheme('tva')" class="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-amber-600/30 text-amber-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-hourglass"></i>
@@ -916,7 +869,6 @@
         </div>
       </div>
 
-      <!-- Classic Scenery Section -->
       <div class="space-y-2 pt-2 border-t border-white/10">
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i class="fa-solid fa-mountain text-slate-400"></i> Nature & Minimalist
@@ -1263,7 +1215,7 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT APP LOGIC & SCENIC CONTROLLER -->
+  <!-- JAVASCRIPT ENGINE -->
   <script>
     // 1. WALLPAPERS PRESET COLLECTION
     const WALLPAPERS = {
@@ -1273,7 +1225,7 @@
       solid: ""
     };
 
-// 2. MARVEL SUPERHERO THEMES DATASET (HIGH-RES CURATED BANNERS)
+    // 2. MARVEL SUPERHERO THEMES DATASET
     const MARVEL_THEMES = {
       ironman: {
         banner: "https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=3840&q=100",
@@ -1297,24 +1249,12 @@
       const theme = MARVEL_THEMES[themeKey];
       if (!theme) return;
 
-      // Apply data-theme attribute on <html> to activate Marvel accents
       document.documentElement.setAttribute("data-theme", themeKey);
-
-      // Set the matching high-res Marvel banner
       applyWallpaper(theme.banner);
-
       appState.marvelTheme = themeKey;
       saveState();
       closeWallpaperModal();
     }
-
-    // Also update setWallpaperPreset to clear Marvel theme when choosing Alpine/Solid
-    const originalSetWallpaperPreset = setWallpaperPreset;
-    setWallpaperPreset = function(key) {
-      document.documentElement.removeAttribute("data-theme");
-      appState.marvelTheme = null;
-      originalSetWallpaperPreset(key);
-    };
 
     function applyWallpaper(url) {
       const banner = document.getElementById("topHeroWallpaper");
@@ -1334,6 +1274,8 @@
       document.getElementById("wallpaperModal").classList.add("hidden");
     }
     function setWallpaperPreset(key) {
+      document.documentElement.removeAttribute("data-theme");
+      appState.marvelTheme = null;
       applyWallpaper(WALLPAPERS[key]);
       saveState();
       closeWallpaperModal();
@@ -1347,7 +1289,7 @@
       }
     }
 
-    // 2. OFFICIAL GATE CS SUBJECTS DATA (C & DS ARE SEPARATE)
+    // 3. OFFICIAL GATE CS SUBJECTS DATA (C & DS ARE SEPARATE)
     const SUBJECTS = [
       {
         id: "cprog",
@@ -1527,7 +1469,7 @@
       }
     ];
 
-    // 3. APP STATE
+    // 4. APP STATE
     let appState = {
       theme: "dark",
       wallpaper: "alpine",
@@ -1551,7 +1493,7 @@
       hasConfiguredPassword: false
     };
 
-    // 4. SUPABASE CLIENT & AUTH
+    // 5. SUPABASE CLIENT & AUTH
     let supabaseClient = null;
     let currentUser = null;
     let isAwaitingPasswordSetup = false;
@@ -1667,7 +1609,7 @@
 
         if (data && data.state_data && Object.keys(data.state_data).length > 0) {
           appState = { ...appState, ...data.state_data };
-          localStorage.setItem("gate2027_v12_state", JSON.stringify(appState));
+          localStorage.setItem("gate2027_v13_state", JSON.stringify(appState));
           if (appState.wallpaper) {
             applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
           }
@@ -1750,7 +1692,7 @@
       }
     }
 
-    // 5. AUTH MODAL HANDLERS
+    // 6. AUTH MODAL HANDLERS
     function openAuthModal(initialView) {
       switchAuthView(initialView);
       document.getElementById("authModal").classList.remove("hidden");
@@ -1939,9 +1881,9 @@
       }
     }
 
-    // 6. LOCAL STORAGE & PERSISTENCE
+    // 7. LOCAL STORAGE & PERSISTENCE
     function loadState() {
-      const saved = localStorage.getItem("gate2027_v12_state");
+      const saved = localStorage.getItem("gate2027_v13_state");
       if (saved) {
         try {
           appState = { ...appState, ...JSON.parse(saved) };
@@ -1953,22 +1895,23 @@
     }
 
     function saveState() {
-      localStorage.setItem("gate2027_v12_state", JSON.stringify(appState));
+      localStorage.setItem("gate2027_v13_state", JSON.stringify(appState));
       pushDataToSupabase();
       renderAll();
     }
 
-    // 7. INITIALIZATION & DROPDOWNS
+    // 8. INITIALIZATION & DROPDOWNS
     window.addEventListener("DOMContentLoaded", () => {
       loadState();
       
       if (appState.wallpaper && (WALLPAPERS[appState.wallpaper] || appState.wallpaper.startsWith("http"))) {
         applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
-      } 
-      if (appState.marvelTheme) {
-              document.documentElement.setAttribute("data-theme", appState.marvelTheme);
       } else {
         applyWallpaper(WALLPAPERS.alpine);
+      }
+
+      if (appState.marvelTheme) {
+        document.documentElement.setAttribute("data-theme", appState.marvelTheme);
       }
 
       applyTheme(appState.theme);
@@ -2095,7 +2038,7 @@
       chks.forEach(c => c.checked = !allChecked);
     }
 
-    // 8. ANALYTICS CALCULATION ENGINE
+    // 9. ANALYTICS CALCULATION ENGINE
     function renderAnalyticsHub() {
       const todayIso = new Date().toISOString().slice(0, 10);
       const logs = appState.dailyLogs || [];
@@ -2161,7 +2104,7 @@
       const todayQs = todayLogs.reduce((a, c) => a + (c.questions || 0), 0);
       const todayStepsDone = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
 
-      const targetMins = 360; // 6 hours total daily target
+      const targetMins = 360;
       const targetQs = 30;
 
       const timePctToday = Math.min(100, Math.round((todayMins / targetMins) * 100));
@@ -2190,7 +2133,6 @@
       if (elTodayStepsPct) elTodayStepsPct.innerText = `${stepsPctToday}%`;
       if (elTodayStepsBar) elTodayStepsBar.style.width = `${stepsPctToday}%`;
 
-// 4. 7-DAY STUDY VELOCITY (CLICKABLE BAR CHART)
       const barsContainer = document.getElementById("an7DayBarsContainer");
       if (barsContainer) {
         barsContainer.innerHTML = "";
@@ -2379,7 +2321,7 @@
       if (elDiagM) elDiagM.innerText = `${avgM}%`;
     }
 
-    // 9. TESTS MODULE
+    // 10. TESTS & MOCKS MODULE
     let currentActiveTestForm = 'topic';
     let currentTestFilter = 'all';
 
@@ -2618,7 +2560,7 @@
       switchTab('daily-flow');
     }
 
-    // 10. MARK COMPLETED & REPLACE SUBJECT
+    // 11. MARK COMPLETED & REPLACE SUBJECT
     let currentReplacingSlot = null;
 
     function markSubjectCompletedFromHome(slotKey) {
@@ -2702,15 +2644,13 @@
       }
     }
 
-    // ==============================================================
-    // 11. 8-STEP GUIDED PROTOCOL WITH MANDATORY PREVIOUS-DAY REVISION
-    // ==============================================================
+    // 12. 8-STEP GUIDED PROTOCOL WITH MANDATORY PREVIOUS-DAY REVISION
     let currentStepKey = "core1_prev";
     let timerMode = "stopwatch";
     let timerInterval = null;
     let timerSeconds = 0;
     let isTimerRunning = false;
-    let countdownTargetSeconds = 1200; // default 20m for revision
+    let countdownTargetSeconds = 1200;
 
     const STEPS_META = [
       { key: "core1_prev", label: "Step 1", title: "Yesterday's Concept Revision", subType: "prev_rev", slotKey: "core1", defaultMinutes: 20, icon: "fa-rotate-left" },
@@ -2834,11 +2774,21 @@
       }
     }
 
-    const originalResetTimer = resetMainTimer;
-    resetMainTimer = function() {
-      originalResetTimer();
+    function resetMainTimer() {
+      isTimerRunning = false;
+      clearInterval(timerInterval);
+      timerSeconds = timerMode === "countdown" ? countdownTargetSeconds : 0;
+      const clock = document.getElementById("timerBigClock");
+      const toggleText = document.getElementById("mainTimerToggleText");
+      const toggleIcon = document.getElementById("mainTimerToggleIcon");
+      const statusLabel = document.getElementById("timerStatusLabel");
+
+      if (clock) clock.innerText = formatSeconds(timerSeconds);
+      if (toggleText) toggleText.innerText = "Start Session";
+      if (toggleIcon) toggleIcon.className = "fa-solid fa-play";
+      if (statusLabel) statusLabel.innerText = "READY TO START";
       document.getElementById("mainTimerCard")?.classList.remove("timer-running");
-    };
+    }
 
     function startTimer() {
       isTimerRunning = true;
@@ -2885,22 +2835,6 @@
       if (statusLabel) statusLabel.innerText = "PAUSED";
     }
 
-    function resetMainTimer() {
-      isTimerRunning = false;
-      clearInterval(timerInterval);
-      timerSeconds = timerMode === "countdown" ? countdownTargetSeconds : 0;
-      const clock = document.getElementById("timerBigClock");
-      const toggleText = document.getElementById("mainTimerToggleText");
-      const toggleIcon = document.getElementById("mainTimerToggleIcon");
-      const statusLabel = document.getElementById("timerStatusLabel");
-
-      if (clock) clock.innerText = formatSeconds(timerSeconds);
-      if (toggleText) toggleText.innerText = "Start Session";
-      if (toggleIcon) toggleIcon.className = "fa-solid fa-play";
-      if (statusLabel) statusLabel.innerText = "READY TO START";
-    }
-
-// Enhanced Audio Chime (Runs smoothly on all browsers)
     function playBeepChime() {
       try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -2912,7 +2846,6 @@
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         
-        // Two-tone success chime (D5 -> A5)
         osc.type = "sine";
         osc.frequency.setValueAtTime(587.33, ctx.currentTime);
         osc.frequency.setValueAtTime(880, ctx.currentTime + 0.15);
@@ -2929,9 +2862,7 @@
       }
     }
 
-    // Modal Handler: Plays chime immediately when countdown ends OR when ended manually
     function openFinishSessionModal() {
-      // 🔔 Play chime sound upon completing the session
       playBeepChime();
 
       let elapsedMins = 0;
@@ -3002,7 +2933,7 @@
       }
     }
 
-    // 12. RENDER ALL COMPONENTS
+    // 13. RENDER ALL COMPONENTS
     function renderAll() {
       renderAnalyticsHub();
       renderDashboardStats();
@@ -3057,7 +2988,7 @@
       if (streakPill) streakPill.innerHTML = `<i class="fa-solid fa-fire text-amber-400"></i> ${appState.streak} Day Streak`;
     }
 
-function renderHomeActiveSubjects() {
+    function renderHomeActiveSubjects() {
       const container = document.getElementById("homeActiveSubjectsCardsGrid");
       if (!container) return;
       container.innerHTML = "";
@@ -3391,9 +3322,10 @@ function renderHomeActiveSubjects() {
       switchTab('cycle-setup');
     }
 
-    // 13. TAB NAVIGATION & EXPORT
+    // 14. TAB NAVIGATION & EXPORT
     function switchTab(tabId) {
-      ['analytics', 'daily-flow', 'tests', 'completed', 'cycle-setup', 'syllabus'].forEach(t => {
+      const tabs = ['analytics', 'daily-flow', 'tests', 'completed', 'cycle-setup', 'syllabus'];
+      tabs.forEach(t => {
         const btn = document.getElementById(`tab-${t}`);
         const view = document.getElementById(`view-${t}`);
         if (!btn || !view) return;
@@ -3405,6 +3337,12 @@ function renderHomeActiveSubjects() {
           view.classList.add("hidden");
         }
       });
+
+      if (tabId === 'analytics') renderAnalyticsHub();
+      if (tabId === 'tests') renderTestsSection();
+      if (tabId === 'completed') renderCompletedSubjectsList();
+      if (tabId === 'syllabus') renderSyllabusMatrix();
+      if (tabId === 'cycle-setup') syncCycleConfigUI();
     }
 
     function exportData() {
@@ -3417,7 +3355,7 @@ function renderHomeActiveSubjects() {
       URL.revokeObjectURL(url);
     }
 
-// MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
+    // 15. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
     function showDayDetailLogs(dateStr) {
       const modal = document.getElementById("dayLogsDetailModal");
       if (!modal) return;
@@ -3461,10 +3399,7 @@ function renderHomeActiveSubjects() {
       if (modal) modal.classList.add("hidden");
     }
 
-
-// ==============================================================
-    // FLOATING PICTURE-IN-PICTURE (PiP) TIMER ENGINE
-    // ==============================================================
+    // 16. FLOATING PICTURE-IN-PICTURE (PiP) TIMER ENGINE
     let pipWindow = null;
 
     async function toggleFloatingPipTimer() {
@@ -3473,7 +3408,6 @@ function renderHomeActiveSubjects() {
         return;
       }
 
-      // If already open, close it
       if (pipWindow) {
         pipWindow.close();
         pipWindow = null;
@@ -3481,13 +3415,11 @@ function renderHomeActiveSubjects() {
       }
 
       try {
-        // Open a native always-on-top floating window
         pipWindow = await window.documentPictureInPicture.requestWindow({
           width: 320,
           height: 190
         });
 
-        // Inject font, styles & icons into the floating window
         const faLink = document.createElement("link");
         faLink.rel = "stylesheet";
         faLink.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
@@ -3561,7 +3493,6 @@ function renderHomeActiveSubjects() {
         `;
         pipWindow.document.head.appendChild(style);
 
-        // Render controls inside the floating PiP window
         pipWindow.document.body.innerHTML = `
           <div>
             <div class="title-bar">
@@ -3580,7 +3511,6 @@ function renderHomeActiveSubjects() {
           </div>
         `;
 
-        // Attach PiP window button actions to the main app controls
         pipWindow.document.getElementById("pipToggleBtn").onclick = () => toggleMainTimer();
         pipWindow.document.getElementById("pipResetBtn").onclick = () => resetMainTimer();
         pipWindow.document.getElementById("pipEndBtn").onclick = () => {
@@ -3588,7 +3518,6 @@ function renderHomeActiveSubjects() {
           openFinishSessionModal();
         };
 
-        // Handle PiP close event
         pipWindow.addEventListener("pagehide", () => {
           pipWindow = null;
         });
@@ -3598,21 +3527,18 @@ function renderHomeActiveSubjects() {
       }
     }
 
-    // Synchronize the floating PiP clock with the main timer every second
     const originalStartTimer = startTimer;
     startTimer = function() {
       originalStartTimer();
       updatePipContent();
     };
 
-    // Auto-pop out PiP when you minimize or switch away from the Command Center tab
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && isTimerRunning && !pipWindow && ('documentPictureInPicture' in window)) {
         toggleFloatingPipTimer();
       }
     });
 
-    // Helper to keep the PiP window updated
     function updatePipContent() {
       if (!pipWindow || !pipWindow.document) return;
       const clock = pipWindow.document.getElementById("pipClock");
@@ -3628,7 +3554,6 @@ function renderHomeActiveSubjects() {
       if (tag) tag.innerText = document.getElementById("activeStepTag")?.innerText || "STEP";
     }
 
-    // Hook updatePipContent into the existing timer tick
     setInterval(() => {
       if (pipWindow) updatePipContent();
     }, 1000);
