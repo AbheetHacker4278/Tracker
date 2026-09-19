@@ -485,15 +485,24 @@
           <p class="text-[11px] text-slate-400 mt-1">DPP & subject practice</p>
         </div>
 
-        <div class="glass-card p-4 rounded-2xl">
-          <div class="flex justify-between items-start">
-            <span class="text-xs text-slate-400 font-medium">Active Cycle Time Left</span>
-            <div class="w-7 h-7 rounded bg-amber-500/20 text-accent-amber flex items-center justify-center text-xs">
-              <i class="fa-solid fa-hourglass-half"></i>
+        <!-- Active Cycle Time Left Card with Dynamic Next Cycle Continue Button -->
+        <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start">
+              <span class="text-xs text-slate-400 font-medium">Active Cycle Time Left</span>
+              <div class="w-7 h-7 rounded bg-amber-500/20 text-accent-amber flex items-center justify-center text-xs">
+                <i class="fa-solid fa-hourglass-half"></i>
+              </div>
             </div>
+            <h2 id="dashCycleDaysLeft" class="text-2xl font-bold mt-2 font-mono text-white">-- Days</h2>
+            <p id="dashCycleNameBadge" class="text-[11px] text-slate-400 mt-1 truncate">Monthly Slot</p>
           </div>
-          <h2 id="dashCycleDaysLeft" class="text-2xl font-bold mt-2 font-mono text-white">-- Days</h2>
-          <p id="dashCycleNameBadge" class="text-[11px] text-slate-400 mt-1 truncate">Monthly Slot</p>
+          <!-- Revealed when expired -->
+          <div id="dashCycleExpiredBtnContainer" class="hidden mt-2">
+            <button onclick="handleCycleExpiredAction()" class="w-full py-1.5 px-2 text-[10px] font-bold rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 flex items-center justify-center gap-1.5 transition shadow-sm">
+              <i class="fa-solid fa-forward-step"></i> Already Loaded &bull; Continue Next Cycle
+            </button>
+          </div>
         </div>
       </div>
 
@@ -627,7 +636,7 @@
 
       </div>
 
-    </div> <!-- ⭐️ FIXED: PROPER CLOSING DIV FOR #view-daily-flow ⭐️ -->
+    </div> <!-- END OF #view-daily-flow -->
 
     <!-- ============================================================== -->
     <!-- TAB 3: TESTS & MOCKS -->
@@ -1198,19 +1207,21 @@
     </div>
   </div>
 
-  <!-- MODAL: FORCE END CYCLE -->
+  <!-- MODAL: FORCE END CYCLE / ROLLOVER -->
   <div id="forceEndCycleModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
       <div>
-        <h3 class="text-base font-bold text-white">End Current Cycle Early</h3>
-        <p class="text-xs text-slate-400 mt-1">Check which subjects you have fully finished. Unchecked subjects will be carried over to your next cycle.</p>
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-forward-step text-amber-400"></i> Next Cycle & Rollover Setup
+        </h3>
+        <p class="text-xs text-slate-400 mt-1">Select subjects you completed. Incomplete subjects will automatically carry over into your newly renewed cycle.</p>
       </div>
 
       <div class="space-y-2.5" id="rolloverChecklistContainer"></div>
 
       <div class="flex justify-end gap-3 pt-3 border-t border-white/10">
         <button onclick="closeForceEndCycleModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white">Cancel</button>
-        <button onclick="confirmForceEndCycle()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 text-xs font-bold">Confirm & Roll Incomplete</button>
+        <button onclick="confirmForceEndCycle()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-xs">Confirm & Start Next Cycle</button>
       </div>
     </div>
   </div>
@@ -1609,7 +1620,7 @@
 
         if (data && data.state_data && Object.keys(data.state_data).length > 0) {
           appState = { ...appState, ...data.state_data };
-          localStorage.setItem("gate2027_v13_state", JSON.stringify(appState));
+          localStorage.setItem("gate2027_v14_state", JSON.stringify(appState));
           if (appState.wallpaper) {
             applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
           }
@@ -1883,7 +1894,7 @@
 
     // 7. LOCAL STORAGE & PERSISTENCE
     function loadState() {
-      const saved = localStorage.getItem("gate2027_v13_state");
+      const saved = localStorage.getItem("gate2027_v14_state");
       if (saved) {
         try {
           appState = { ...appState, ...JSON.parse(saved) };
@@ -1895,7 +1906,7 @@
     }
 
     function saveState() {
-      localStorage.setItem("gate2027_v13_state", JSON.stringify(appState));
+      localStorage.setItem("gate2027_v14_state", JSON.stringify(appState));
       pushDataToSupabase();
       renderAll();
     }
@@ -2183,7 +2194,11 @@
       if (nameLabel) nameLabel.innerText = appState.activeCycle.name || "Monthly Target";
       const remaining = getDaysRemaining(appState.activeCycle.endDate);
       if (daysLeftBadge) {
-        daysLeftBadge.innerText = remaining.expired ? "Expired" : `${remaining.days} Days Left`;
+        if (remaining.expired) {
+          daysLeftBadge.innerHTML = `<button onclick="handleCycleExpiredAction()" class="text-amber-400 hover:underline flex items-center gap-1 font-bold">Expired &bull; Continue Next Cycle <i class="fa-solid fa-arrow-right"></i></button>`;
+        } else {
+          daysLeftBadge.innerText = `${remaining.days} Days Left`;
+        }
       }
 
       if (activeContainer) {
@@ -2969,13 +2984,17 @@
 
       const remaining = getDaysRemaining(appState.activeCycle.endDate);
       const daysDisplay = document.getElementById("dashCycleDaysLeft");
+      const expiredBtnContainer = document.getElementById("dashCycleExpiredBtnContainer");
+
       if (daysDisplay) {
         if (remaining.expired) {
           daysDisplay.innerText = "Expired";
-          daysDisplay.className = "text-xl font-bold mt-2 font-mono text-red-400";
+          daysDisplay.className = "text-xl font-bold mt-1 font-mono text-red-400";
+          if (expiredBtnContainer) expiredBtnContainer.classList.remove("hidden");
         } else {
           daysDisplay.innerText = `${remaining.days} Days`;
           daysDisplay.className = "text-2xl font-bold mt-2 font-mono text-white";
+          if (expiredBtnContainer) expiredBtnContainer.classList.add("hidden");
         }
       }
 
@@ -3261,6 +3280,11 @@
       });
     }
 
+    // Dynamic Expired Continuation Trigger
+    function handleCycleExpiredAction() {
+      openForceEndCycleModal();
+    }
+
     function openForceEndCycleModal() {
       const container = document.getElementById("rolloverChecklistContainer");
       if (!container) return;
@@ -3314,12 +3338,13 @@
       const now = new Date();
       appState.activeCycle.name = "Next Cycle Slot";
       appState.activeCycle.startDate = now.toISOString().slice(0, 10);
-      appState.activeCycle.endDate = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+      const durDays = parseInt(appState.activeCycle.durationDays, 10) || 30;
+      appState.activeCycle.endDate = new Date(Date.now() + durDays * 86400000).toISOString().slice(0, 10);
 
       closeForceEndCycleModal();
       syncCycleConfigUI();
       saveState();
-      switchTab('cycle-setup');
+      switchTab('daily-flow');
     }
 
     // 14. TAB NAVIGATION & EXPORT
