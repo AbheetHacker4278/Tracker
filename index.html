@@ -3113,7 +3113,7 @@
 
           <div class="text-right shrink-0">
             ${isDone 
-              ? '<span class="text-[9px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">Done</span>'
+              ? '<span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">Done</span>'
               : `<span class="text-[9px] text-slate-400 font-mono px-2 py-0.5 rounded-md bg-white/[0.06]">~${s.defaultMinutes}m</span>`
             }
           </div>
@@ -3280,9 +3280,18 @@
       });
     }
 
-    // Dynamic Expired Continuation Trigger
+    // CONTINUATION WITH EXISTING LOADED SUBJECTS (PRESERVING STREAK & SUBJECTS)
     function handleCycleExpiredAction() {
-      openForceEndCycleModal();
+      const now = new Date();
+      const durDays = parseInt(appState.activeCycle.durationDays, 10) || 30;
+      
+      // Update cycle timeline directly from today without resetting loaded subjects or streak
+      appState.activeCycle.startDate = now.toISOString().slice(0, 10);
+      appState.activeCycle.endDate = new Date(Date.now() + durDays * 86400000).toISOString().slice(0, 10);
+      
+      syncCycleConfigUI();
+      saveState();
+      renderAll();
     }
 
     function openForceEndCycleModal() {
@@ -3381,6 +3390,7 @@
     }
 
     // 15. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
+// 15. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
     function showDayDetailLogs(dateStr) {
       const modal = document.getElementById("dayLogsDetailModal");
       if (!modal) return;
