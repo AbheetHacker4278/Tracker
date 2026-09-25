@@ -126,6 +126,107 @@
       animation: gradient-text-anim 7s ease infinite;
     }
 
+/* ============================================================== */
+    /* MISS MINUTES WALKING ANIMATION & ANALOG CLOCK                  */
+    /* ============================================================== */
+    .mm-walk-stage {
+      position: relative;
+      width: 100%;
+      height: 125px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 4px;
+      pointer-events: none;
+    }
+
+    /* Automatic Back-and-Forth Walking Translation */
+    .mm-stroller {
+      position: absolute;
+      width: 110px;
+      height: 125px;
+      animation: mm-stroll-path 12s ease-in-out infinite;
+      filter: drop-shadow(0 6px 14px rgba(245, 158, 11, 0.4));
+    }
+
+    @keyframes mm-stroll-path {
+      0%   { transform: translateX(-150px) scaleX(1); }
+      48%  { transform: translateX(150px) scaleX(1); }
+      50%  { transform: translateX(150px) scaleX(-1); }
+      98%  { transform: translateX(-150px) scaleX(-1); }
+      100% { transform: translateX(-150px) scaleX(1); }
+    }
+
+    /* Bobbing up and down while walking */
+    .mm-body-bob {
+      animation: mm-bob-cycle 0.5s ease-in-out infinite alternate;
+    }
+    @keyframes mm-bob-cycle {
+      0%   { transform: translateY(0px); }
+      100% { transform: translateY(-4px); }
+    }
+
+    /* Cartoon Leg Swing Cycle */
+    .mm-leg-left {
+      transform-origin: 48px 84px;
+      animation: mm-leg-left-swing 0.5s ease-in-out infinite alternate;
+    }
+    .mm-leg-right {
+      transform-origin: 72px 84px;
+      animation: mm-leg-right-swing 0.5s ease-in-out infinite alternate;
+    }
+    @keyframes mm-leg-left-swing {
+      0%   { transform: rotate(-24deg); }
+      100% { transform: rotate(24deg); }
+    }
+    @keyframes mm-leg-right-swing {
+      0%   { transform: rotate(24deg); }
+      100% { transform: rotate(-24deg); }
+    }
+
+    /* Cartoon Arm Swing Cycle */
+    .mm-arm-left {
+      transform-origin: 30px 55px;
+      animation: mm-arm-swing 0.5s ease-in-out infinite alternate-reverse;
+    }
+    .mm-arm-right {
+      transform-origin: 90px 55px;
+      animation: mm-arm-swing 0.5s ease-in-out infinite alternate;
+    }
+    @keyframes mm-arm-swing {
+      0%   { transform: rotate(-16deg); }
+      100% { transform: rotate(16deg); }
+    }
+
+    /* Real-Time Analog Clock Hands on Miss Minutes */
+    .mm-hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: 50% 100%;
+      border-radius: 4px;
+      transition: transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+    }
+    .mm-hand-hour {
+      width: 3px;
+      height: 14px;
+      background: #18110b;
+      margin-left: -1.5px;
+    }
+    .mm-hand-minute {
+      width: 2px;
+      height: 20px;
+      background: #18110b;
+      margin-left: -1px;
+    }
+    .mm-hand-second {
+      width: 1.5px;
+      height: 22px;
+      background: #dc2626;
+      margin-left: -0.75px;
+    }
+
     /* MARVEL & THEME ACCENTS */
     [data-theme="ironman"] {
       --theme-glow: rgba(6, 182, 212, 0.35);
@@ -677,11 +778,81 @@
             </div>
           </div>
 
-          <div class="py-6 text-center timer-glow relative z-10">
+<!-- Digital & Animated Walking Miss Minutes Analog Display -->
+          <div class="py-2 text-center timer-glow relative z-10">
+            
+            <!-- WALKING MISS MINUTES STAGE -->
+            <div class="mm-walk-stage">
+              <div class="mm-stroller">
+                <div class="mm-body-bob relative">
+                  
+                  <svg viewBox="0 0 120 125" width="105" height="110" style="overflow: visible;">
+                    <!-- Swinging Left Arm with White Glove -->
+                    <g class="mm-arm-left">
+                      <path d="M25 58 C10 46 14 30 18 24" fill="none" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+                      <circle cx="18" cy="22" r="6" fill="#ffffff" stroke="#1f140e" stroke-width="1.8"/>
+                      <path d="M18 16 L18 8" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- Swinging Right Arm with White Glove -->
+                    <g class="mm-arm-right">
+                      <path d="M95 58 C110 68 114 82 108 88" fill="none" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+                      <circle cx="108" cy="88" r="6" fill="#ffffff" stroke="#1f140e" stroke-width="1.8"/>
+                    </g>
+
+                    <!-- Walking Legs with Yellow Boots -->
+                    <g class="mm-leg-left">
+                      <path d="M48 84 L46 108" stroke="#1f140e" stroke-width="3" stroke-linecap="round"/>
+                      <ellipse cx="40" cy="110" rx="9" ry="5" fill="#f59e0b" stroke="#1f140e" stroke-width="1.8"/>
+                    </g>
+                    <g class="mm-leg-right">
+                      <path d="M72 84 L74 108" stroke="#1f140e" stroke-width="3" stroke-linecap="round"/>
+                      <ellipse cx="80" cy="110" rx="9" ry="5" fill="#f59e0b" stroke="#1f140e" stroke-width="1.8"/>
+                    </g>
+
+                    <!-- Main Clock Face (Miss Minutes Dial) -->
+                    <circle cx="60" cy="55" r="38" fill="#f97316" stroke="#1f140e" stroke-width="3.5"/>
+                    <circle cx="60" cy="55" r="35" fill="#fb923c" opacity="0.4"/>
+
+                    <!-- Hour Tick Marks -->
+                    <line x1="60" y1="21" x2="60" y2="26" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="94" y1="55" x2="89" y2="55" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="60" y1="89" x2="60" y2="84" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="26" y1="55" x2="31" y2="55" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
+
+                    <!-- Cartoon Eyes with Eyelashes -->
+                    <ellipse cx="48" cy="43" rx="8" ry="12" fill="#ffffff" stroke="#1f140e" stroke-width="2"/>
+                    <ellipse cx="50" cy="43" rx="4.5" ry="7" fill="#1f140e"/>
+                    <circle cx="51" cy="40" r="1.8" fill="#ffffff"/>
+                    <path d="M43 32 L40 28 M48 31 L48 26 M53 32 L56 28" stroke="#1f140e" stroke-width="1.6" stroke-linecap="round"/>
+
+                    <ellipse cx="72" cy="43" rx="8" ry="12" fill="#ffffff" stroke="#1f140e" stroke-width="2"/>
+                    <ellipse cx="74" cy="43" rx="4.5" ry="7" fill="#1f140e"/>
+                    <circle cx="75" cy="40" r="1.8" fill="#ffffff"/>
+                    <path d="M68 32 L65 28 M73 31 L73 26 M78 32 L81 28" stroke="#1f140e" stroke-width="1.6" stroke-linecap="round"/>
+
+                    <!-- Sweet Smile -->
+                    <path d="M46 66 Q60 80 74 66" fill="#ffffff" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M52 71 Q60 80 68 71" fill="#dc2626"/>
+                  </svg>
+
+                  <!-- Real-Time Analog Clock Hands Overlay on Miss Minutes -->
+                  <div style="position: absolute; top: 29px; left: 34px; width: 52px; height: 52px; pointer-events: none;">
+                    <div class="mm-hand mm-hand-hour" id="mainMmHourHand"></div>
+                    <div class="mm-hand mm-hand-minute" id="mainMmMinuteHand"></div>
+                    <div class="mm-hand mm-hand-second" id="mainMmSecondHand"></div>
+                    <div style="position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; background: #18110b; border-radius: 50%; transform: translate(-50%, -50%);"></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Digital Clock Display -->
             <div id="timerBigClock" class="text-6xl sm:text-7xl md:text-8xl font-mono font-extrabold tracking-tight text-white select-none drop-shadow-[0_4px_24px_rgba(255,255,255,0.12)]">
               00:20:00
             </div>
-            <p id="timerStatusLabel" class="text-[11px] font-bold text-slate-400 mt-3 tracking-[0.25em] uppercase">
+            <p id="timerStatusLabel" class="text-[11px] font-bold text-slate-400 mt-2 tracking-[0.25em] uppercase">
               READY TO START
             </p>
           </div>
@@ -3921,6 +4092,28 @@
       if (mHand) mHand.style.transform = `rotate(${mDeg}deg)`;
       if (sHand) sHand.style.transform = `rotate(${sDeg}deg)`;
     }
+
+    // Update Analog Hands on Main Timer's Walking Miss Minutes
+    function updateMainMissMinutesAnalog() {
+      const totalSec = typeof timerSeconds !== 'undefined' ? timerSeconds : 0;
+      const sDeg = (totalSec % 60) * 6;
+      const mDeg = ((Math.floor(totalSec / 60) % 60) * 6) + (totalSec % 60) * 0.1;
+      const hDeg = ((Math.floor(totalSec / 3600) % 12) * 30) + ((Math.floor(totalSec / 60) % 60) * 0.5);
+
+      const hHand = document.getElementById("mainMmHourHand");
+      const mHand = document.getElementById("mainMmMinuteHand");
+      const sHand = document.getElementById("mainMmSecondHand");
+
+      if (hHand) hHand.style.transform = `rotate(${hDeg}deg)`;
+      if (mHand) mHand.style.transform = `rotate(${mDeg}deg)`;
+      if (sHand) sHand.style.transform = `rotate(${sDeg}deg)`;
+    }
+
+    // Call it inside the 1-second interval loop
+    setInterval(() => {
+      updateMainMissMinutesAnalog();
+      if (pipWindow) updatePipContent();
+    }, 1000);
 
     setInterval(() => {
       if (pipWindow) updatePipContent();
