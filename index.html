@@ -112,22 +112,91 @@
       100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
     }
 
-    /* MARVEL THEME ACCENTS */
+    /* ANIMATED GRADIENT TEXT */
+    @keyframes gradient-text-anim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animated-gradient-text {
+      background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6, #fbbf24, #34d399, #60a5fa);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 7s ease infinite;
+    }
+
+    /* MARVEL & THEME ACCENTS */
     [data-theme="ironman"] {
       --theme-glow: rgba(6, 182, 212, 0.35);
       --theme-accent: #06b6d4;
     }
+    [data-theme="ironman"] .animated-gradient-text {
+      background: linear-gradient(90deg, #06b6d4, #f59e0b, #ef4444, #eab308, #06b6d4);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
+    }
+
     [data-theme="spiderman"] {
       --theme-glow: rgba(239, 68, 68, 0.35);
       --theme-accent: #ef4444;
     }
+    [data-theme="spiderman"] .animated-gradient-text {
+      background: linear-gradient(90deg, #ef4444, #3b82f6, #f87171, #60a5fa, #ef4444);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
+    }
+
     [data-theme="captain"] {
       --theme-glow: rgba(59, 130, 246, 0.35);
       --theme-accent: #3b82f6;
     }
+    [data-theme="captain"] .animated-gradient-text {
+      background: linear-gradient(90deg, #3b82f6, #ffffff, #ef4444, #60a5fa, #3b82f6);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
+    }
+
     [data-theme="tva"] {
       --theme-glow: rgba(245, 158, 11, 0.35);
       --theme-accent: #f59e0b;
+    }
+    [data-theme="tva"] .animated-gradient-text {
+      background: linear-gradient(90deg, #f59e0b, #ea580c, #d97706, #fbbf24, #f59e0b);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
+    }
+
+    [data-theme="cyberpunk"] {
+      --theme-glow: rgba(236, 72, 153, 0.35);
+      --theme-accent: #ec4899;
+    }
+    [data-theme="cyberpunk"] .animated-gradient-text {
+      background: linear-gradient(90deg, #ec4899, #06b6d4, #a855f7, #f43f5e, #ec4899);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
+    }
+
+    [data-theme="matrix"] {
+      --theme-glow: rgba(16, 185, 129, 0.35);
+      --theme-accent: #10b981;
+    }
+    [data-theme="matrix"] .animated-gradient-text {
+      background: linear-gradient(90deg, #10b981, #34d399, #059669, #6ee7b7, #10b981);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
     }
   </style>
 </head>
@@ -140,42 +209,50 @@
   <!-- FLOATING TOP COMMAND HEADER -->
   <header class="relative z-40 max-w-7xl mx-auto w-[96%] sm:w-full mt-3 sm:mt-4 px-4 sm:px-6 py-3 rounded-2xl bg-slate-900/85 dark:bg-[#15171e]/85 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-wrap justify-between items-center gap-3">
     
-    <!-- Brand / Target -->
+    <!-- Brand / Target with Animated Gradient Text -->
     <div class="flex items-center gap-3">
       <div class="w-9 h-9 rounded-xl bg-slate-800/90 text-slate-100 flex items-center justify-center font-bold text-base border border-white/10 shadow-inner">
         <i class="fa-solid fa-graduation-cap"></i>
       </div>
       <div>
-        <h1 class="font-bold text-sm sm:text-base leading-tight tracking-tight text-white">GATE CS 2027 Command Center</h1>
+        <h1 class="font-bold text-sm sm:text-base leading-tight tracking-tight animated-gradient-text">GATE CS 2027 Command Center</h1>
         <p class="text-[11px] text-slate-400">Target: AIR Top 100 &bull; IIT / IISc</p>
       </div>
     </div>
 
     <!-- Right Controls Pill Group -->
-    <div class="flex items-center gap-2 sm:gap-3 text-xs">
+    <div class="flex items-center gap-2 sm:gap-2.5 text-xs">
+      
+      <!-- Live Indian Standard Time (IST) Clock -->
+      <div class="flex items-center gap-1.5 bg-slate-950/60 dark:bg-black/50 px-3 py-1.5 rounded-full border border-white/10 text-slate-300 shadow-inner">
+        <i class="fa-solid fa-clock text-accent-blue"></i>
+        <span class="text-slate-400 font-semibold text-[11px]">IST:</span>
+        <span id="istClockDisplay" class="font-mono font-bold text-white tracking-wider text-[11px]">--:--:--</span>
+      </div>
+
       <!-- GATE 2027 Live Countdown Badge -->
-      <div class="flex items-center gap-2 bg-slate-950/60 dark:bg-black/50 px-3.5 py-1.5 rounded-full border border-white/10 shadow-inner">
-        <i class="fa-regular fa-clock text-amber-400"></i>
-        <span class="text-slate-400">GATE 2027:</span>
-        <span id="gateCountdownDisplay" class="font-mono font-bold text-white">Calculating...</span>
+      <div class="flex items-center gap-1.5 bg-slate-950/60 dark:bg-black/50 px-3 py-1.5 rounded-full border border-white/10 shadow-inner">
+        <i class="fa-regular fa-hourglass text-amber-400"></i>
+        <span class="text-slate-400 text-[11px]">GATE:</span>
+        <span id="gateCountdownDisplay" class="font-mono font-bold text-white text-[11px]">Calculating...</span>
       </div>
 
       <!-- Cloud Sync Status Pill -->
-      <div id="cloudStatusPill" class="flex items-center gap-2 bg-slate-950/60 dark:bg-black/50 px-3.5 py-1.5 rounded-full border border-white/10 text-slate-300">
+      <div id="cloudStatusPill" class="flex items-center gap-1.5 bg-slate-950/60 dark:bg-black/50 px-3 py-1.5 rounded-full border border-white/10 text-slate-300">
         <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-blue-500"></span>
-        <span id="cloudStatusText" class="font-medium">Connecting...</span>
+        <span id="cloudStatusText" class="font-medium text-[11px]">Connecting...</span>
       </div>
 
       <!-- User Email & Auth Action Container -->
       <div id="authActionsContainer" class="flex items-center gap-2">
-        <button onclick="openAuthModal('login-password')" class="px-3.5 py-1.5 rounded-full bg-white text-slate-900 font-bold transition flex items-center gap-1.5 shadow">
+        <button onclick="openAuthModal('login-password')" class="px-3.5 py-1.5 rounded-full bg-white text-slate-900 font-bold transition flex items-center gap-1.5 shadow text-xs">
           <i class="fa-solid fa-user"></i> <span>Login / Sync</span>
         </button>
       </div>
 
-      <!-- Wallpaper Selector -->
-      <button onclick="openWallpaperModal()" class="p-2 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition" title="Change Background Wallpaper">
-        <i class="fa-solid fa-image text-sm"></i>
+      <!-- Wallpaper & Theme Selector -->
+      <button onclick="openWallpaperModal()" class="p-2 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition" title="Change Theme, Accent & Wallpaper">
+        <i class="fa-solid fa-palette text-sm"></i>
       </button>
 
       <!-- Theme Toggle -->
@@ -817,25 +894,27 @@
   </div>
 
   <!-- ============================================================== -->
-  <!-- MODAL: WALLPAPER & SCENERY SELECTOR -->
+  <!-- MODAL: WALLPAPER, MARVEL & ANIMATED THEME SELECTOR -->
   <!-- ============================================================== -->
   <div id="wallpaperModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-white/10 rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl">
       <div class="flex justify-between items-start border-b border-white/10 pb-3">
         <div>
           <h3 class="text-base font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-image text-accent-blue"></i> Choose Ambient Wallpaper
+            <i class="fa-solid fa-palette text-accent-blue"></i> Choose Theme & Animated Color Palette
           </h3>
-          <p class="text-xs text-slate-400 mt-0.5">Select a high-resolution scenic background for your study station.</p>
+          <p class="text-xs text-slate-400 mt-0.5">Select a superhero edition or animated accent theme with high-res scenic banners.</p>
         </div>
         <button onclick="closeWallpaperModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
+      <!-- Superhero & Animated Themes -->
       <div class="space-y-2">
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <i class="fa-solid fa-mask text-rose-400"></i> Marvel Superhero Editions
+          <i class="fa-solid fa-wand-magic-sparkles text-rose-400"></i> Superhero & Neon Editions (With Animated Text)
         </span>
         <div class="grid grid-cols-2 gap-2.5 text-xs">
+          <!-- Iron Man -->
           <button onclick="applyMarvelTheme('ironman')" class="p-3 rounded-xl bg-red-950/30 border border-red-500/30 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-red-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-microchip"></i>
@@ -846,6 +925,7 @@
             </div>
           </button>
 
+          <!-- Spider-Man -->
           <button onclick="applyMarvelTheme('spiderman')" class="p-3 rounded-xl bg-blue-950/30 border border-red-500/30 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-red-600/30 text-red-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-spider"></i>
@@ -856,6 +936,7 @@
             </div>
           </button>
 
+          <!-- Captain America -->
           <button onclick="applyMarvelTheme('captain')" class="p-3 rounded-xl bg-slate-900 border border-blue-500/30 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-shield-halved"></i>
@@ -866,6 +947,7 @@
             </div>
           </button>
 
+          <!-- TVA / Loki -->
           <button onclick="applyMarvelTheme('tva')" class="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-amber-600/30 text-amber-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-hourglass"></i>
@@ -875,9 +957,32 @@
               <span class="text-[10px] text-amber-300/80">Retro Timeline Amber</span>
             </div>
           </button>
+
+          <!-- Cyberpunk Neon -->
+          <button onclick="applyMarvelTheme('cyberpunk')" class="p-3 rounded-xl bg-pink-950/30 border border-pink-500/30 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-500/20 flex items-center gap-2.5 text-left transition group">
+            <div class="w-8 h-8 rounded-lg bg-pink-600/30 text-pink-400 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white group-hover:text-pink-400 transition">Cyberpunk Neon</p>
+              <span class="text-[10px] text-pink-300/80">Neon Pink & Violet</span>
+            </div>
+          </button>
+
+          <!-- Matrix Emerald -->
+          <button onclick="applyMarvelTheme('matrix')" class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2.5 text-left transition group">
+            <div class="w-8 h-8 rounded-lg bg-emerald-600/30 text-emerald-400 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-terminal"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white group-hover:text-emerald-400 transition">Matrix Terminal</p>
+              <span class="text-[10px] text-emerald-300/80">Hacker Green Stream</span>
+            </div>
+          </button>
         </div>
       </div>
 
+      <!-- Classic Scenery Section -->
       <div class="space-y-2 pt-2 border-t border-white/10">
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i class="fa-solid fa-mountain text-slate-400"></i> Nature & Minimalist
@@ -1163,7 +1268,7 @@
       <div>
         <span class="text-[10px] font-bold text-accent-blue uppercase tracking-wider" id="replaceModalSlotTag">REPLACE SUBJECT</span>
         <h3 class="text-base font-bold text-white mt-0.5">Pick Next Subject for this Cycle</h3>
-        <p class="text-xs text-slate-400">Select an uncompleted subject to load into this slot. Your ongoing monthly countdown continues uninterrupted.</p>
+        <p class="text-xs text-slate-400">Select any Core or Mathematical subject to load into this slot. Your cycle continues uninterrupted.</p>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -1236,7 +1341,7 @@
       solid: ""
     };
 
-    // 2. MARVEL SUPERHERO THEMES DATASET
+    // 2. MARVEL SUPERHERO & ANIMATED THEMES DATASET
     const MARVEL_THEMES = {
       ironman: {
         banner: "https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=3840&q=100",
@@ -1253,6 +1358,14 @@
       tva: {
         banner: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=3840&q=100",
         name: "TVA / Time Variance"
+      },
+      cyberpunk: {
+        banner: "https://images.unsplash.com/photo-1515260268569-9271009adfdb?auto=format&fit=crop&w=3840&q=100",
+        name: "Cyberpunk Neon"
+      },
+      matrix: {
+        banner: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=3840&q=100",
+        name: "Matrix Terminal"
       }
     };
 
@@ -1911,7 +2024,26 @@
       renderAll();
     }
 
-    // 8. INITIALIZATION & DROPDOWNS
+    // 8. LIVE INDIAN STANDARD TIME (IST) CLOCK
+    function initISTClock() {
+      function update() {
+        const el = document.getElementById("istClockDisplay");
+        if (!el) return;
+        const now = new Date();
+        const istTimeStr = now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour12: true,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+        el.innerText = istTimeStr;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // 9. INITIALIZATION & DROPDOWNS
     window.addEventListener("DOMContentLoaded", () => {
       loadState();
       
@@ -1927,6 +2059,7 @@
 
       applyTheme(appState.theme);
       initGateCountdown();
+      initISTClock();
       populateDropdowns();
       syncCycleConfigUI();
       loadStepIntoTimer("core1_prev");
@@ -2007,8 +2140,18 @@
       const c2 = document.getElementById("cfgCore2Select");
       const m = document.getElementById("cfgMathSelect");
 
-      if (c1) c1.innerHTML = cores.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
-      if (c2) c2.innerHTML = cores.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+      // ⭐️ ALLOW MATHEMATICAL SUBJECTS IN BOTH CORE 1 AND CORE 2 SLOTS ⭐️
+      const coreAndMathOptions = `
+        <optgroup label="Core CS Subjects">
+          ${cores.map(s => `<option value="${s.id}">${s.name}</option>`).join("")}
+        </optgroup>
+        <optgroup label="Mathematical Subjects (Allowed in Core)">
+          ${maths.map(s => `<option value="${s.id}">[Math] ${s.name}</option>`).join("")}
+        </optgroup>
+      `;
+
+      if (c1) c1.innerHTML = coreAndMathOptions;
+      if (c2) c2.innerHTML = coreAndMathOptions;
       if (m) m.innerHTML = maths.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
 
       const allSubjOptions = SUBJECTS.map(s => `<option value="${s.id}">${s.name} [${s.type}]</option>`).join("");
@@ -2049,7 +2192,7 @@
       chks.forEach(c => c.checked = !allChecked);
     }
 
-    // 9. ANALYTICS CALCULATION ENGINE
+    // 10. ANALYTICS CALCULATION ENGINE
     function renderAnalyticsHub() {
       const todayIso = new Date().toISOString().slice(0, 10);
       const logs = appState.dailyLogs || [];
@@ -2336,7 +2479,7 @@
       if (elDiagM) elDiagM.innerText = `${avgM}%`;
     }
 
-    // 10. TESTS & MOCKS MODULE
+    // 11. TESTS & MOCKS MODULE
     let currentActiveTestForm = 'topic';
     let currentTestFilter = 'all';
 
@@ -2575,7 +2718,7 @@
       switchTab('daily-flow');
     }
 
-    // 11. MARK COMPLETED & REPLACE SUBJECT
+    // 12. MARK COMPLETED & REPLACE SUBJECT
     let currentReplacingSlot = null;
 
     function markSubjectCompletedFromHome(slotKey) {
@@ -2615,21 +2758,22 @@
 
     function openReplaceSubjectModal(slotKey) {
       currentReplacingSlot = slotKey;
-      const isMath = slotKey === "math";
+      const isMathSlot = slotKey === "math";
       const available = SUBJECTS.filter(s => {
-        if (isMath && s.type !== "Math") return false;
-        if (!isMath && s.type !== "Core") return false;
+        // Math slot only allows Math subjects
+        if (isMathSlot && s.type !== "Math") return false;
+        // Core slots can pick Core OR Math subjects!
         const isActive = (s.id === appState.activeCycle.core1 || s.id === appState.activeCycle.core2 || s.id === appState.activeCycle.math);
         return !isActive;
       });
 
       const select = document.getElementById("replacementSubjectSelect");
       if (available.length === 0) {
-        select.innerHTML = `<option value="">All ${isMath ? 'Math' : 'Core'} subjects are currently active or completed!</option>`;
+        select.innerHTML = `<option value="">All available subjects are currently active or completed!</option>`;
       } else {
         select.innerHTML = available.map(s => {
           const isDone = appState.completedSubjects.some(c => c.id === s.id);
-          return `<option value="${s.id}">${s.name} ${isDone ? '(Mastered)' : ''}</option>`;
+          return `<option value="${s.id}">[${s.type}] ${s.name} ${isDone ? '(Mastered)' : ''}</option>`;
         }).join("");
       }
 
@@ -2659,7 +2803,7 @@
       }
     }
 
-    // 12. 8-STEP GUIDED PROTOCOL WITH MANDATORY PREVIOUS-DAY REVISION
+    // 13. 8-STEP GUIDED PROTOCOL WITH MANDATORY PREVIOUS-DAY REVISION
     let currentStepKey = "core1_prev";
     let timerMode = "stopwatch";
     let timerInterval = null;
@@ -2948,7 +3092,7 @@
       }
     }
 
-    // 13. RENDER ALL COMPONENTS
+    // 14. RENDER ALL COMPONENTS
     function renderAll() {
       renderAnalyticsHub();
       renderDashboardStats();
@@ -3113,7 +3257,7 @@
 
           <div class="text-right shrink-0">
             ${isDone 
-              ? '<span class="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">Done</span>'
+              ? '<span class="text-[9px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">Done</span>'
               : `<span class="text-[9px] text-slate-400 font-mono px-2 py-0.5 rounded-md bg-white/[0.06]">~${s.defaultMinutes}m</span>`
             }
           </div>
@@ -3356,7 +3500,7 @@
       switchTab('daily-flow');
     }
 
-    // 14. TAB NAVIGATION & EXPORT
+    // 15. TAB NAVIGATION & EXPORT
     function switchTab(tabId) {
       const tabs = ['analytics', 'daily-flow', 'tests', 'completed', 'cycle-setup', 'syllabus'];
       tabs.forEach(t => {
@@ -3389,8 +3533,7 @@
       URL.revokeObjectURL(url);
     }
 
-    // 15. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
-// 15. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
+    // 16. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
     function showDayDetailLogs(dateStr) {
       const modal = document.getElementById("dayLogsDetailModal");
       if (!modal) return;
@@ -3434,7 +3577,7 @@
       if (modal) modal.classList.add("hidden");
     }
 
-    // 16. FLOATING PICTURE-IN-PICTURE (PiP) TIMER ENGINE
+    // 17. FLOATING PICTURE-IN-PICTURE (PiP) TIMER ENGINE
     let pipWindow = null;
 
     async function toggleFloatingPipTimer() {
