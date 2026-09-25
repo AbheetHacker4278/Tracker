@@ -49,7 +49,6 @@
     body { 
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
       background-color: #0d0e12; 
-      overflow-x: hidden;
     }
     .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -127,16 +126,17 @@
       animation: gradient-text-anim 7s ease infinite;
     }
 
-    /* ===================================================================== */
-    /* MARVEL THEME OVERRIDES (Especially Deep TVA Aesthetics)               */
-    /* ===================================================================== */
+    /* MARVEL & THEME ACCENTS */
     [data-theme="ironman"] {
       --theme-glow: rgba(6, 182, 212, 0.35);
       --theme-accent: #06b6d4;
     }
     [data-theme="ironman"] .animated-gradient-text {
       background: linear-gradient(90deg, #06b6d4, #f59e0b, #ef4444, #eab308, #06b6d4);
-      background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-text-anim 5s ease infinite;
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
     }
 
     [data-theme="spiderman"] {
@@ -145,7 +145,10 @@
     }
     [data-theme="spiderman"] .animated-gradient-text {
       background: linear-gradient(90deg, #ef4444, #3b82f6, #f87171, #60a5fa, #ef4444);
-      background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-text-anim 5s ease infinite;
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
     }
 
     [data-theme="captain"] {
@@ -154,7 +157,22 @@
     }
     [data-theme="captain"] .animated-gradient-text {
       background: linear-gradient(90deg, #3b82f6, #ffffff, #ef4444, #60a5fa, #3b82f6);
-      background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-text-anim 5s ease infinite;
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
+    }
+
+    [data-theme="tva"] {
+      --theme-glow: rgba(245, 158, 11, 0.35);
+      --theme-accent: #f59e0b;
+    }
+    [data-theme="tva"] .animated-gradient-text {
+      background: linear-gradient(90deg, #f59e0b, #ea580c, #d97706, #fbbf24, #f59e0b);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
     }
 
     [data-theme="cyberpunk"] {
@@ -163,7 +181,10 @@
     }
     [data-theme="cyberpunk"] .animated-gradient-text {
       background: linear-gradient(90deg, #ec4899, #06b6d4, #a855f7, #f43f5e, #ec4899);
-      background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-text-anim 5s ease infinite;
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
     }
 
     [data-theme="matrix"] {
@@ -172,118 +193,11 @@
     }
     [data-theme="matrix"] .animated-gradient-text {
       background: linear-gradient(90deg, #10b981, #34d399, #059669, #6ee7b7, #10b981);
-      background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-text-anim 5s ease infinite;
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-text-anim 5s ease infinite;
     }
-
-    /* TVA DEEP OVERRIDE */
-    [data-theme="tva"] {
-      --theme-glow: rgba(245, 158, 11, 0.35);
-      --theme-accent: #f59e0b;
-    }
-    [data-theme="tva"] body, [data-theme="tva"] #appBackground {
-      background-color: #1a0f07 !important; /* Deep dark amber/brown */
-    }
-    [data-theme="tva"] .glass-card {
-      background: rgba(36, 17, 3, 0.85) !important;
-      border: 1px solid rgba(245, 158, 11, 0.15) !important;
-      box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(245, 158, 11, 0.1) !important;
-    }
-    [data-theme="tva"] header {
-      background: rgba(20, 10, 3, 0.9) !important;
-      border-color: rgba(245, 158, 11, 0.25) !important;
-    }
-    [data-theme="tva"] .animated-gradient-text {
-      background: linear-gradient(90deg, #f59e0b, #ea580c, #d97706, #fbbf24, #f59e0b);
-      background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-text-anim 5s ease infinite;
-    }
-    [data-theme="tva"] .bg-white\/10 { background-color: rgba(245, 158, 11, 0.1) !important; }
-    [data-theme="tva"] .border-white\/10 { border-color: rgba(245, 158, 11, 0.1) !important; }
-
-    /* ===================================================================== */
-    /* TEMPORAL LOOM ANIMATION (Only visible in TVA Theme)                   */
-    /* ===================================================================== */
-    #temporalLoomWrapper {
-      display: none;
-      width: 100%;
-      height: 120px;
-      position: relative;
-      overflow: hidden;
-      margin-top: -10px;
-      margin-bottom: 20px;
-      z-index: 10;
-    }
-    [data-theme="tva"] #temporalLoomWrapper {
-      display: block;
-    }
-    .loom-glow {
-      filter: drop-shadow(0 0 10px #f59e0b) drop-shadow(0 0 20px #ea580c);
-    }
-    @keyframes spinLoom {
-      100% { transform: rotateY(360deg) rotateX(15deg); }
-    }
-    @keyframes threadPulse {
-      0% { opacity: 0.3; stroke-width: 1; }
-      50% { opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 5px currentColor); }
-      100% { opacity: 0.3; stroke-width: 1; }
-    }
-
-    /* ===================================================================== */
-    /* GLOBAL MISS MINUTES ROAMING ANIMATION                                 */
-    /* ===================================================================== */
-    #roamingMissMinutes {
-      display: none; /* Hidden by default, shown in TVA theme */
-      position: fixed;
-      bottom: 20px;
-      left: 0;
-      z-index: 9999;
-      pointer-events: none; /* Allows clicking things behind her */
-      /* Walk across the screen and flip */
-      animation: roamAcrossScreen 25s linear infinite;
-    }
-    [data-theme="tva"] #roamingMissMinutes {
-      display: block;
-    }
-
-    @keyframes roamAcrossScreen {
-      0%   { left: -150px; transform: scaleX(1); }
-      48%  { left: 105vw; transform: scaleX(1); }
-      50%  { left: 105vw; transform: scaleX(-1); } /* Flip direction */
-      98%  { left: -150px; transform: scaleX(-1); }
-      100% { left: -150px; transform: scaleX(1); }
-    }
-
-    /* Bobbing motion while she walks */
-    .mm-bob {
-      animation: mm-bobbing 0.5s ease-in-out infinite alternate;
-    }
-    @keyframes mm-bobbing {
-      0%   { transform: translateY(0px); }
-      100% { transform: translateY(-8px); }
-    }
-
-    /* Leg Swing Animations */
-    .mm-leg-left { transform-origin: 48px 84px; animation: mm-leg-left-swing 0.5s ease-in-out infinite alternate; }
-    .mm-leg-right { transform-origin: 72px 84px; animation: mm-leg-right-swing 0.5s ease-in-out infinite alternate; }
-    @keyframes mm-leg-left-swing { 0% { transform: rotate(-30deg); } 100% { transform: rotate(30deg); } }
-    @keyframes mm-leg-right-swing { 0% { transform: rotate(30deg); } 100% { transform: rotate(-30deg); } }
-
-    /* Arm Swing Animations */
-    .mm-arm-left { transform-origin: 30px 55px; animation: mm-arm-swing 0.5s ease-in-out infinite alternate-reverse; }
-    .mm-arm-right { transform-origin: 90px 55px; animation: mm-arm-swing 0.5s ease-in-out infinite alternate; }
-    @keyframes mm-arm-swing { 0% { transform: rotate(-20deg); } 100% { transform: rotate(20deg); } }
-
-    /* Centered Analog Hands for Miss Minutes */
-    .mm-hand {
-      position: absolute;
-      bottom: 50%;
-      left: 50%;
-      transform-origin: 50% 100%;
-      border-radius: 4px;
-      transition: transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44);
-    }
-    .mm-hand-hour { width: 3.5px; height: 16px; background: #18110b; margin-left: -1.75px; }
-    .mm-hand-minute { width: 2.5px; height: 26px; background: #18110b; margin-left: -1.25px; }
-    .mm-hand-second { width: 1.5px; height: 32px; background: #dc2626; margin-left: -0.75px; }
   </style>
 </head>
 <body id="appBackground" class="bg-[#121214] text-slate-100 min-h-screen flex flex-col relative antialiased selection:bg-indigo-500 selection:text-white">
@@ -345,18 +259,16 @@
       <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition">
         <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
       </button>
+
+      <!-- Backup JSON -->
+      <button onclick="exportData()" class="px-3 py-1.5 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-white/10 text-slate-300 transition font-medium hidden sm:flex items-center gap-1.5">
+        <i class="fa-solid fa-download"></i> <span>Backup</span>
+      </button>
     </div>
   </header>
 
   <!-- MAIN WRAPPER -->
   <main class="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 py-5 flex-1 w-full space-y-5">
-
-    <!-- TEMPORAL LOOM (VISIBLE ONLY IN TVA THEME) -->
-    <div id="temporalLoomWrapper">
-      <svg id="loomSvg" width="100%" height="120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Rendered dynamically via JS based on completed subjects -->
-      </svg>
-    </div>
 
     <!-- FLOATING SEGMENTED TABS BAR -->
     <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl border border-white/10 shadow-xl overflow-x-auto custom-scroll text-xs font-semibold">
@@ -650,7 +562,7 @@
           <p class="text-[11px] text-slate-400 mt-1">DPP & subject practice</p>
         </div>
 
-        <!-- Active Cycle Time Left Card -->
+        <!-- Active Cycle Time Left Card with Dynamic Next Cycle Continue Button -->
         <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start">
@@ -671,7 +583,7 @@
         </div>
       </div>
 
-      <!-- ACTIVE MONTH SUBJECTS CARDS -->
+      <!-- ACTIVE MONTH SUBJECTS CARDS (SUPPORTS MATHEMATICAL SUBJECTS IN CORE SLOTS) -->
       <div class="glass-card p-5 rounded-2xl space-y-3">
         <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/[0.08] pb-3">
           <div class="flex items-center gap-2.5">
@@ -729,7 +641,7 @@
           </div>
         </div>
 
-        <!-- RIGHT: INTERACTIVE FOCUS TIMER CONSOLE (Digital Only here, Miss Minutes floats outside) -->
+        <!-- RIGHT: INTERACTIVE FOCUS TIMER CONSOLE -->
         <div id="mainTimerCard" class="lg:col-span-7 glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between space-y-6 relative overflow-hidden">
           <div class="relative z-10">
             <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/[0.08] pb-3.5">
@@ -879,7 +791,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label class="text-xs font-semibold text-slate-300 flex items-center justify-between">
-              <span>Core Subject 1</span>
+              <span>Core Subject 1 (Core or Math)</span>
               <span id="c1RolloverBadge" class="hidden text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded">Carried Over</span>
             </label>
             <select id="cfgCore1Select" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
@@ -887,7 +799,7 @@
 
           <div>
             <label class="text-xs font-semibold text-slate-300 flex items-center justify-between">
-              <span>Core Subject 2</span>
+              <span>Core Subject 2 (Core or Math)</span>
               <span id="c2RolloverBadge" class="hidden text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded">Carried Over</span>
             </label>
             <select id="cfgCore2Select" class="w-full mt-1.5 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white"></select>
@@ -947,63 +859,6 @@
   </main>
 
   <!-- ============================================================== -->
-  <!-- ROAMING MISS MINUTES (GLOBAL ANIMATION, ONLY VISIBLE IN TVA THEME) -->
-  <!-- ============================================================== -->
-  <div id="roamingMissMinutes">
-    <div class="mm-bob relative">
-      <svg viewBox="0 0 120 125" width="120" height="125" style="overflow: visible; filter: drop-shadow(0 6px 14px rgba(245, 158, 11, 0.4));">
-        <!-- Swinging Left Arm -->
-        <g class="mm-arm-left">
-          <path d="M25 58 C10 46 14 30 18 24" fill="none" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="18" cy="22" r="6" fill="#ffffff" stroke="#1f140e" stroke-width="1.8"/>
-          <path d="M18 16 L18 8" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
-        </g>
-        <!-- Swinging Right Arm -->
-        <g class="mm-arm-right">
-          <path d="M95 58 C110 68 114 82 108 88" fill="none" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="108" cy="88" r="6" fill="#ffffff" stroke="#1f140e" stroke-width="1.8"/>
-        </g>
-        <!-- Legs -->
-        <g class="mm-leg-left">
-          <path d="M48 84 L46 108" stroke="#1f140e" stroke-width="3" stroke-linecap="round"/>
-          <ellipse cx="40" cy="110" rx="9" ry="5" fill="#f59e0b" stroke="#1f140e" stroke-width="1.8"/>
-        </g>
-        <g class="mm-leg-right">
-          <path d="M72 84 L74 108" stroke="#1f140e" stroke-width="3" stroke-linecap="round"/>
-          <ellipse cx="80" cy="110" rx="9" ry="5" fill="#f59e0b" stroke="#1f140e" stroke-width="1.8"/>
-        </g>
-        <!-- Face -->
-        <circle cx="60" cy="55" r="38" fill="#f97316" stroke="#1f140e" stroke-width="3.5"/>
-        <circle cx="60" cy="55" r="35" fill="#fb923c" opacity="0.4"/>
-        <!-- Ticks -->
-        <line x1="60" y1="21" x2="60" y2="26" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="94" y1="55" x2="89" y2="55" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="60" y1="89" x2="60" y2="84" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="26" y1="55" x2="31" y2="55" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Eyes -->
-        <ellipse cx="48" cy="43" rx="8" ry="12" fill="#ffffff" stroke="#1f140e" stroke-width="2"/>
-        <ellipse cx="50" cy="43" rx="4.5" ry="7" fill="#1f140e"/>
-        <circle cx="51" cy="40" r="1.8" fill="#ffffff"/>
-        <path d="M43 32 L40 28 M48 31 L48 26 M53 32 L56 28" stroke="#1f140e" stroke-width="1.6" stroke-linecap="round"/>
-        <ellipse cx="72" cy="43" rx="8" ry="12" fill="#ffffff" stroke="#1f140e" stroke-width="2"/>
-        <ellipse cx="74" cy="43" rx="4.5" ry="7" fill="#1f140e"/>
-        <circle cx="75" cy="40" r="1.8" fill="#ffffff"/>
-        <path d="M68 32 L65 28 M73 31 L73 26 M78 32 L81 28" stroke="#1f140e" stroke-width="1.6" stroke-linecap="round"/>
-        <!-- Smile -->
-        <path d="M46 66 Q60 80 74 66" fill="#ffffff" stroke="#1f140e" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M52 71 Q60 80 68 71" fill="#dc2626"/>
-      </svg>
-      <!-- Real-Time Analog Clock Hands -->
-      <div style="position: absolute; top: 0; left: 0; width: 120px; height: 110px; pointer-events: none;">
-        <div class="mm-hand mm-hand-hour" id="roamingMmHourHand"></div>
-        <div class="mm-hand mm-hand-minute" id="roamingMmMinuteHand"></div>
-        <div class="mm-hand mm-hand-second" id="roamingMmSecondHand"></div>
-        <div style="position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; background: #18110b; border-radius: 50%; transform: translate(-50%, -50%);"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================== -->
   <!-- MODAL: 7-DAY LOGGED DATA FOR CLICKED DATE -->
   <!-- ============================================================== -->
   <div id="dayLogsDetailModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
@@ -1053,11 +908,13 @@
         <button onclick="closeWallpaperModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
+      <!-- Superhero & Animated Themes -->
       <div class="space-y-2">
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <i class="fa-solid fa-mask text-rose-400"></i> Marvel Superhero Editions
+          <i class="fa-solid fa-wand-magic-sparkles text-rose-400"></i> Superhero & Neon Editions (With Animated Text)
         </span>
         <div class="grid grid-cols-2 gap-2.5 text-xs">
+          <!-- Iron Man -->
           <button onclick="applyMarvelTheme('ironman')" class="p-3 rounded-xl bg-red-950/30 border border-red-500/30 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-red-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-microchip"></i>
@@ -1068,6 +925,7 @@
             </div>
           </button>
 
+          <!-- Spider-Man -->
           <button onclick="applyMarvelTheme('spiderman')" class="p-3 rounded-xl bg-blue-950/30 border border-red-500/30 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-red-600/30 text-red-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-spider"></i>
@@ -1078,6 +936,7 @@
             </div>
           </button>
 
+          <!-- Captain America -->
           <button onclick="applyMarvelTheme('captain')" class="p-3 rounded-xl bg-slate-900 border border-blue-500/30 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-shield-halved"></i>
@@ -1088,6 +947,7 @@
             </div>
           </button>
 
+          <!-- TVA / Loki -->
           <button onclick="applyMarvelTheme('tva')" class="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-amber-600/30 text-amber-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-hourglass"></i>
@@ -1098,6 +958,7 @@
             </div>
           </button>
 
+          <!-- Cyberpunk Neon -->
           <button onclick="applyMarvelTheme('cyberpunk')" class="p-3 rounded-xl bg-pink-950/30 border border-pink-500/30 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-pink-600/30 text-pink-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-bolt"></i>
@@ -1108,6 +969,7 @@
             </div>
           </button>
 
+          <!-- Matrix Emerald -->
           <button onclick="applyMarvelTheme('matrix')" class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/20 flex items-center gap-2.5 text-left transition group">
             <div class="w-8 h-8 rounded-lg bg-emerald-600/30 text-emerald-400 flex items-center justify-center font-bold text-sm">
               <i class="fa-solid fa-terminal"></i>
@@ -1120,6 +982,7 @@
         </div>
       </div>
 
+      <!-- Classic Scenery Section -->
       <div class="space-y-2 pt-2 border-t border-white/10">
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i class="fa-solid fa-mountain text-slate-400"></i> Nature & Minimalist
@@ -1463,7 +1326,7 @@
 
       <div class="flex justify-end gap-3 pt-3 border-t border-white/10">
         <button onclick="closeForceEndCycleModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white">Cancel</button>
-        <button onclick="confirmForceEndCycle()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 text-xs font-bold">Confirm & Start Next Cycle</button>
+        <button onclick="confirmForceEndCycle()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-200 text-slate-950 font-bold text-xs">Confirm & Start Next Cycle</button>
       </div>
     </div>
   </div>
@@ -1513,12 +1376,6 @@
       document.documentElement.setAttribute("data-theme", themeKey);
       applyWallpaper(theme.banner);
       appState.marvelTheme = themeKey;
-      
-      // Toggle Temporal Loom visibility based on TVA theme
-      if (themeKey === 'tva') {
-         renderTemporalLoom();
-      }
-
       saveState();
       closeWallpaperModal();
     }
@@ -1876,13 +1733,9 @@
 
         if (data && data.state_data && Object.keys(data.state_data).length > 0) {
           appState = { ...appState, ...data.state_data };
-          localStorage.setItem("gate2027_v15_state", JSON.stringify(appState));
+          localStorage.setItem("gate2027_v14_state", JSON.stringify(appState));
           if (appState.wallpaper) {
             applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
-          }
-          if (appState.marvelTheme) {
-            document.documentElement.setAttribute("data-theme", appState.marvelTheme);
-            if(appState.marvelTheme === 'tva') renderTemporalLoom();
           }
           renderAll();
         } else {
@@ -2154,7 +2007,7 @@
 
     // 7. LOCAL STORAGE & PERSISTENCE
     function loadState() {
-      const saved = localStorage.getItem("gate2027_v15_state");
+      const saved = localStorage.getItem("gate2027_v14_state");
       if (saved) {
         try {
           appState = { ...appState, ...JSON.parse(saved) };
@@ -2166,7 +2019,7 @@
     }
 
     function saveState() {
-      localStorage.setItem("gate2027_v15_state", JSON.stringify(appState));
+      localStorage.setItem("gate2027_v14_state", JSON.stringify(appState));
       pushDataToSupabase();
       renderAll();
     }
@@ -2202,7 +2055,6 @@
 
       if (appState.marvelTheme) {
         document.documentElement.setAttribute("data-theme", appState.marvelTheme);
-        if(appState.marvelTheme === 'tva') renderTemporalLoom();
       }
 
       applyTheme(appState.theme);
@@ -2288,6 +2140,7 @@
       const c2 = document.getElementById("cfgCore2Select");
       const m = document.getElementById("cfgMathSelect");
 
+      // ⭐️ ALLOW MATHEMATICAL SUBJECTS IN BOTH CORE 1 AND CORE 2 SLOTS ⭐️
       const coreAndMathOptions = `
         <optgroup label="Core CS Subjects">
           ${cores.map(s => `<option value="${s.id}">${s.name}</option>`).join("")}
@@ -2339,37 +2192,7 @@
       chks.forEach(c => c.checked = !allChecked);
     }
 
-    // 10. TEMPORAL LOOM RENDERER (TVA THEME ONLY)
-    function renderTemporalLoom() {
-       const loomSvg = document.getElementById("loomSvg");
-       if (!loomSvg) return;
-       const completedCount = appState.completedSubjects.length;
-       let paths = '';
-       
-       // Center Loom Hub
-       paths += `<ellipse cx="50%" cy="60" rx="15" ry="40" fill="none" stroke="#f59e0b" stroke-width="4" class="loom-glow"><animateTransform attributeName="transform" type="scale" values="1 1; 1.05 1.1; 1 1" dur="2s" repeatCount="indefinite" additive="sum"/></ellipse>`;
-       paths += `<ellipse cx="calc(50% + 20px)" cy="60" rx="10" ry="30" fill="none" stroke="#fbbf24" stroke-width="3" />`;
-       paths += `<ellipse cx="calc(50% - 20px)" cy="60" rx="10" ry="30" fill="none" stroke="#fbbf24" stroke-width="3" />`;
-       
-       // Left Threads (Completed Subjects converging)
-       if (completedCount === 0) {
-         paths += `<path d="M0,60 Q 25%,60 50%,60" stroke="#f59e0b" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="5 5"><animate attributeName="stroke-dashoffset" from="20" to="0" dur="1s" repeatCount="indefinite"/></path>`;
-       } else {
-         for(let i=0; i<completedCount; i++) {
-            const yStart = 60 + (Math.random() * 80 - 40); // Spread incoming threads
-            const hue = Math.floor(Math.random() * 50) + 15; // Orange/Yellow/Gold hues
-            const dur = (Math.random() * 2 + 1.5).toFixed(1);
-            paths += `<path d="M0,${yStart} C 20%,${yStart} 40%,60 50%,60" stroke="hsl(${hue}, 100%, 60%)" stroke-width="2.5" fill="none" class="loom-glow"><animate attributeName="stroke-dasharray" values="0,1000;1000,0" dur="${dur}s" repeatCount="indefinite"/></path>`;
-         }
-       }
-       
-       // Right Thread (Single Golden Timeline to GATE 2027)
-       paths += `<path d="M50%,60 C 70%,60 80%,60 100%,60" stroke="#fbbf24" stroke-width="6" fill="none" class="loom-glow"><animate attributeName="stroke-width" values="4;7;4" dur="2s" repeatCount="indefinite"/></path>`;
-       
-       loomSvg.innerHTML = paths;
-    }
-
-    // 11. ANALYTICS CALCULATION ENGINE
+    // 10. ANALYTICS CALCULATION ENGINE
     function renderAnalyticsHub() {
       const todayIso = new Date().toISOString().slice(0, 10);
       const logs = appState.dailyLogs || [];
@@ -2656,7 +2479,7 @@
       if (elDiagM) elDiagM.innerText = `${avgM}%`;
     }
 
-    // 12. TESTS & MOCKS MODULE
+    // 11. TESTS & MOCKS MODULE
     let currentActiveTestForm = 'topic';
     let currentTestFilter = 'all';
 
@@ -2895,7 +2718,7 @@
       switchTab('daily-flow');
     }
 
-    // 13. MARK COMPLETED & REPLACE SUBJECT
+    // 12. MARK COMPLETED & REPLACE SUBJECT
     let currentReplacingSlot = null;
 
     function markSubjectCompletedFromHome(slotKey) {
@@ -2937,7 +2760,9 @@
       currentReplacingSlot = slotKey;
       const isMathSlot = slotKey === "math";
       const available = SUBJECTS.filter(s => {
+        // Math slot only allows Math subjects
         if (isMathSlot && s.type !== "Math") return false;
+        // Core slots can pick Core OR Math subjects!
         const isActive = (s.id === appState.activeCycle.core1 || s.id === appState.activeCycle.core2 || s.id === appState.activeCycle.math);
         return !isActive;
       });
@@ -2978,7 +2803,7 @@
       }
     }
 
-    // 14. 8-STEP GUIDED PROTOCOL WITH MANDATORY PREVIOUS-DAY REVISION
+    // 13. 8-STEP GUIDED PROTOCOL WITH MANDATORY PREVIOUS-DAY REVISION
     let currentStepKey = "core1_prev";
     let timerMode = "stopwatch";
     let timerInterval = null;
@@ -3122,7 +2947,6 @@
       if (toggleIcon) toggleIcon.className = "fa-solid fa-play";
       if (statusLabel) statusLabel.innerText = "READY TO START";
       document.getElementById("mainTimerCard")?.classList.remove("timer-running");
-      updateMainMissMinutesAnalog();
     }
 
     function startTimer() {
@@ -3155,7 +2979,6 @@
             openFinishSessionModal();
           }
         }
-        updateMainMissMinutesAnalog();
       }, 1000);
     }
 
@@ -3269,22 +3092,839 @@
       }
     }
 
-    // 15. MISS MINUTES ANALOG HAND ROTATION (GLOBAL)
-    function updateMainMissMinutesAnalog() {
+    // 14. RENDER ALL COMPONENTS
+    function renderAll() {
+      renderAnalyticsHub();
+      renderDashboardStats();
+      renderHomeActiveSubjects();
+      renderStepsQueue();
+      renderTodayLogsList();
+      renderCompletedSubjectsList();
+      renderTestsSection();
+      renderSyllabusMatrix();
+    }
+
+    function renderDashboardStats() {
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayLogs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
+
+      const doneCount = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+      const pct = Math.round((doneCount / 8) * 100);
+
+      const stepFrac = document.getElementById("dashDailyStepFraction");
+      const pctEl = document.getElementById("dashDailyProgressPercent");
+      const bar = document.getElementById("dashDailyProgressBar");
+
+      if (stepFrac) stepFrac.innerText = `${doneCount}/8 Done`;
+      if (pctEl) pctEl.innerText = `${pct}%`;
+      if (bar) bar.style.width = `${pct}%`;
+
+      const totalMinutes = todayLogs.reduce((acc, curr) => acc + curr.minutes, 0);
+      const timeEl = document.getElementById("dashTotalTimeToday");
+      const qsEl = document.getElementById("dashTotalQsToday");
+
+      if (timeEl) timeEl.innerText = `${Math.floor(totalMinutes / 60)}h ${totalMinutes % 60}m`;
+      if (qsEl) qsEl.innerText = `${todayLogs.reduce((acc, curr) => acc + curr.questions, 0)} Qs`;
+
+      const remaining = getDaysRemaining(appState.activeCycle.endDate);
+      const daysDisplay = document.getElementById("dashCycleDaysLeft");
+      const expiredBtnContainer = document.getElementById("dashCycleExpiredBtnContainer");
+
+      if (daysDisplay) {
+        if (remaining.expired) {
+          daysDisplay.innerText = "Expired";
+          daysDisplay.className = "text-xl font-bold mt-1 font-mono text-red-400";
+          if (expiredBtnContainer) expiredBtnContainer.classList.remove("hidden");
+        } else {
+          daysDisplay.innerText = `${remaining.days} Days`;
+          daysDisplay.className = "text-2xl font-bold mt-2 font-mono text-white";
+          if (expiredBtnContainer) expiredBtnContainer.classList.add("hidden");
+        }
+      }
+
+      const cycleNameBadge = document.getElementById("dashCycleNameBadge");
+      const cycleTitlePill = document.getElementById("activeCycleTitlePill");
+      const streakPill = document.getElementById("streakPill");
+
+      if (cycleNameBadge) cycleNameBadge.innerText = `${appState.activeCycle.name} (${remaining.days}d left)`;
+      if (cycleTitlePill) cycleTitlePill.innerText = appState.activeCycle.name;
+      if (streakPill) streakPill.innerHTML = `<i class="fa-solid fa-fire text-amber-400"></i> ${appState.streak} Day Streak`;
+    }
+
+    function renderHomeActiveSubjects() {
+      const container = document.getElementById("homeActiveSubjectsCardsGrid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const activeSlots = [
+        { slot: "Core 1", key: "core1", id: appState.activeCycle.core1 },
+        { slot: "Core 2", key: "core2", id: appState.activeCycle.core2 },
+        { slot: "Math", key: "math", id: appState.activeCycle.math }
+      ];
+
+      activeSlots.forEach(item => {
+        const subj = SUBJECTS.find(s => s.id === item.id) || { name: "Not selected", subtopics: [] };
+        const isMastered = (appState.completedSubjects || []).some(c => c.id === item.id);
+
+        let subDone = 0;
+        subj.subtopics.forEach((_, idx) => {
+          const p = appState.syllabusProgress[`${subj.id}_${idx}`] || {};
+          if (p.theory) subDone++;
+          if (p.dpp) subDone++;
+          if (p.pyq) subDone++;
+        });
+        const pct = Math.round((subDone / ((subj.subtopics.length * 3) || 1)) * 100);
+
+        const card = document.createElement("div");
+        card.className = "p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-white/[0.16] transition flex flex-col justify-between space-y-3";
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-400 uppercase tracking-wider text-[10px]">${item.slot}</span>
+              ${isMastered 
+                ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/25">Completed</span>'
+                : '<span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/15 text-accent-blue font-bold border border-blue-500/25">In Progress</span>'
+              }
+            </div>
+            <h4 class="font-bold text-sm text-white mt-1.5 truncate">${subj.name}</h4>
+            
+            <div class="pt-2">
+              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                <span>Syllabus Covered</span>
+                <span class="font-mono font-bold text-slate-200">${pct}%</span>
+              </div>
+              <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-white h-1.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-2 border-t border-white/[0.08] text-xs">
+            ${!isMastered ? `
+              <button onclick="markSubjectCompletedFromHome('${item.key}')" class="flex-1 py-1.5 px-2 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 font-bold rounded-lg border border-emerald-500/30 transition flex items-center justify-center gap-1.5 text-[11px]">
+                <i class="fa-solid fa-check"></i> Mark Complete
+              </button>
+            ` : `
+              <button onclick="reopenCompletedSubject('${subj.id}')" class="flex-1 py-1.5 px-2 bg-white/[0.08] hover:bg-white/[0.15] text-slate-300 font-bold rounded-lg transition text-[11px]">
+                Reopen
+              </button>
+            `}
+            <button onclick="openReplaceSubjectModal('${item.key}')" class="py-1.5 px-2.5 bg-white/[0.08] hover:bg-white/[0.15] text-slate-200 font-bold rounded-lg transition text-[11px]" title="Swap or load another subject into this slot">
+              <i class="fa-solid fa-plus mr-0.5"></i> Load Next
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderStepsQueue() {
+      const container = document.getElementById("stepsQueueContainer");
+      if (!container) return;
+      container.innerHTML = "";
+      const todayIso = new Date().toISOString().slice(0, 10);
+
+      STEPS_META.forEach(s => {
+        const isDone = !!appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
+        const isCurrent = currentStepKey === s.key;
+        const subjTitle = getStepName(s.key);
+        const isPrevRev = s.subType === "prev_rev";
+
+        const card = document.createElement("div");
+        card.className = `p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-between gap-3 ${
+          isCurrent
+            ? 'bg-white/[0.12] border-white/40 shadow-lg ring-1 ring-white/30'
+            : isDone
+            ? 'bg-emerald-500/[0.06] border-emerald-500/20 opacity-80'
+            : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.07] hover:border-white/[0.15]'
+        }`;
+
+        card.onclick = () => loadStepIntoTimer(s.key);
+
+        card.innerHTML = `
+          <div class="flex items-center gap-2.5 truncate">
+            <div class="w-7 h-7 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : (isPrevRev ? 'bg-amber-500/20 text-accent-amber border border-amber-500/30' : 'bg-white/[0.08] text-slate-300')} flex items-center justify-center text-xs font-bold shrink-0">
+              ${isDone ? '<i class="fa-solid fa-check"></i>' : (isPrevRev ? '<i class="fa-solid fa-rotate-left"></i>' : s.label.replace('Step ', ''))}
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5">
+                <span class="text-[9px] font-bold uppercase tracking-wider ${isPrevRev ? 'text-amber-400' : 'text-slate-400'}">${s.title}</span>
+                ${isCurrent ? '<span class="text-[8px] px-1.5 py-0.2 rounded bg-blue-500 text-white font-bold animate-pulse">ACTIVE</span>' : ''}
+              </div>
+              <p class="text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'} truncate">${subjTitle}</p>
+            </div>
+          </div>
+
+          <div class="text-right shrink-0">
+            ${isDone 
+              ? '<span class="text-[9px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">Done</span>'
+              : `<span class="text-[9px] text-slate-400 font-mono px-2 py-0.5 rounded-md bg-white/[0.06]">~${s.defaultMinutes}m</span>`
+            }
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderTodayLogsList() {
+      const container = document.getElementById("todayCompletedSessionsList");
+      if (!container) return;
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const logs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
+
+      if (logs.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 italic text-center py-2 text [11px]">No slots completed yet today. Start step 1 above!</p>`;
+        return;
+      }
+
+      container.innerHTML = logs.map(l => `
+        <div class="flex justify-between items-center py-1 border-b border-white/10">
+          <span class="truncate max-w-[170px] font-medium text-slate-200">${l.title}</span>
+          <div class="flex items-center gap-2 font-mono text-[11px]">
+            <span>${l.minutes}m</span>
+            ${l.questions > 0 ? `<span class="text-emerald-400 font-bold">+${l.questions} Qs</span>` : ''}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderCompletedSubjectsList() {
+      const container = document.getElementById("completedSubjectsListGrid");
+      const badge = document.getElementById("completedCountBadge");
+      const tabBadge = document.getElementById("completedTabBadge");
+      if (!container) return;
+      
+      const count = (appState.completedSubjects || []).length;
+      if (badge) badge.innerText = `${count} / 12 Subjects Mastered`;
+      if (tabBadge) tabBadge.innerText = count;
+
+      if (count === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-10 text-slate-400">
+            <i class="fa-solid fa-award text-3xl mb-2 opacity-50"></i>
+            <p class="text-xs font-semibold">No subjects marked complete yet.</p>
+            <p class="text-[11px] opacity-70">Finish your active subjects on the dashboard and click "Mark Complete"!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = appState.completedSubjects.map(c => `
+        <div class="p-4 rounded-xl bg-white/5 border border-emerald-500/30 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">MASTERED</span>
+              <span class="text-[10px] text-slate-400 font-mono">${c.dateCompleted}</span>
+            </div>
+            <h4 class="font-bold text-sm text-white mt-1">${c.name}</h4>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
+            <span class="text-emerald-400 font-semibold text-[11px]"><i class="fa-solid fa-check-double mr-1"></i> Syllabus Done</span>
+            <button onclick="reopenCompletedSubject('${c.id}')" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-slate-300 rounded-lg font-semibold text-[11px] transition">
+              Reopen
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderSyllabusMatrix() {
+      const container = document.getElementById("syllabusCardsGrid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      SUBJECTS.forEach(s => {
+        let totalChecks = s.subtopics.length * 3;
+        let checksDone = 0;
+
+        s.subtopics.forEach((_, idx) => {
+          const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
+          if (p.theory) checksDone++;
+          if (p.dpp) checksDone++;
+          if (p.pyq) checksDone++;
+        });
+
+        const pct = Math.round((checksDone / (totalChecks || 1)) * 100);
+
+        const card = document.createElement("div");
+        card.className = "bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl";
+        card.id = `sub-card-${s.id}`;
+
+        card.innerHTML = `
+          <div class="p-4 flex justify-between items-center cursor-pointer select-none" onclick="toggleSyllabusAccordion('${s.id}')">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${s.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : 'bg-blue-500/20 text-accent-blue'}">${s.type}</span>
+              <h3 class="font-bold text-sm sm:text-base text-white">${s.name}</h3>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-semibold text-slate-300">${pct}%</span>
+              <div class="w-20 bg-white/10 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-white h-1.5 rounded-full" style="width: ${pct}%"></div>
+              </div>
+              <i id="sub-chevron-${s.id}" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+            </div>
+          </div>
+
+          <div id="sub-body-${s.id}" class="hidden border-t border-white/10 bg-black/30 p-4 space-y-3 text-xs">
+            ${s.subtopics.map((top, idx) => {
+              const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
+              return `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10">
+                  <span class="font-medium text-slate-200">${top}</span>
+                  <div class="flex items-center gap-4 text-[11px]">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" onchange="toggleSyllabusProgressItem('${s.id}_${idx}', 'theory')" ${p.theory ? 'checked' : ''} class="w-3.5 h-3.5 rounded accent-blue-500" />
+                      <span class="${p.theory ? 'text-accent-blue font-bold' : 'text-slate-400'}">Theory</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" onchange="toggleSyllabusProgressItem('${s.id}_${idx}', 'dpp')" ${p.dpp ? 'checked' : ''} class="w-3.5 h-3.5 rounded accent-emerald-500" />
+                      <span class="${p.dpp ? 'text-accent-emerald font-bold' : 'text-slate-400'}">DPP</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" onchange="toggleSyllabusProgressItem('${s.id}_${idx}', 'pyq')" ${p.pyq ? 'checked' : ''} class="w-3.5 h-3.5 rounded accent-purple-500" />
+                      <span class="${p.pyq ? 'text-purple-400 font-bold' : 'text-slate-400'}">PYQs</span>
+                    </label>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleSyllabusAccordion(id) {
+      const body = document.getElementById(`sub-body-${id}`);
+      const chevron = document.getElementById(`sub-chevron-${id}`);
+      if (body) body.classList.toggle("hidden");
+      if (chevron) chevron.classList.toggle("rotate-180");
+    }
+
+    function toggleSyllabusProgressItem(key, field) {
+      if (!appState.syllabusProgress[key]) {
+        appState.syllabusProgress[key] = { theory: false, dpp: false, pyq: false };
+      }
+      appState.syllabusProgress[key][field] = !appState.syllabusProgress[key][field];
+      saveState();
+    }
+
+    function filterSyllabusList() {
+      const input = document.getElementById("syllabusSearchInput");
+      if (!input) return;
+      const q = input.value.toLowerCase();
+      SUBJECTS.forEach(s => {
+        const card = document.getElementById(`sub-card-${s.id}`);
+        if (!card) return;
+        const matchesSubj = s.name.toLowerCase().includes(q);
+        const matchesTopic = s.subtopics.some(t => t.toLowerCase().includes(q));
+        card.classList.toggle("hidden", !(matchesSubj || matchesTopic));
+      });
+    }
+
+    // CONTINUATION WITH EXISTING LOADED SUBJECTS (PRESERVING STREAK & SUBJECTS)
+    function handleCycleExpiredAction() {
+      const now = new Date();
+      const durDays = parseInt(appState.activeCycle.durationDays, 10) || 30;
+      
+      // Update cycle timeline directly from today without resetting loaded subjects or streak
+      appState.activeCycle.startDate = now.toISOString().slice(0, 10);
+      appState.activeCycle.endDate = new Date(Date.now() + durDays * 86400000).toISOString().slice(0, 10);
+      
+      syncCycleConfigUI();
+      saveState();
+      renderAll();
+    }
+
+    function openForceEndCycleModal() {
+      const container = document.getElementById("rolloverChecklistContainer");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const s1 = SUBJECTS.find(s => s.id === appState.activeCycle.core1);
+      const s2 = SUBJECTS.find(s => s.id === appState.activeCycle.core2);
+      const sm = SUBJECTS.find(s => s.id === appState.activeCycle.math);
+
+      const items = [
+        { key: "core1", subj: s1, label: "Core Subject 1" },
+        { key: "core2", subj: s2, label: "Core Subject 2" },
+        { key: "math", subj: sm, label: "Math Subject" }
+      ];
+
+      items.forEach(it => {
+        if (!it.subj) return;
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10";
+        div.innerHTML = `
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase">${it.label}</span>
+            <p class="text-xs font-bold text-white">${it.subj.name}</p>
+          </div>
+          <label class="flex items-center gap-2 text-xs cursor-pointer select-none">
+            <input type="checkbox" id="modal_chk_${it.key}" class="w-4 h-4 rounded accent-emerald-500" />
+            <span class="text-emerald-400 font-bold">Done</span>
+          </label>
+        `;
+        container.appendChild(div);
+      });
+
+      document.getElementById("forceEndCycleModal").classList.remove("hidden");
+    }
+
+    function closeForceEndCycleModal() {
+      document.getElementById("forceEndCycleModal").classList.add("hidden");
+    }
+
+    function confirmForceEndCycle() {
+      const c1Done = document.getElementById("modal_chk_core1")?.checked;
+      const c2Done = document.getElementById("modal_chk_core2")?.checked;
+      const mathDone = document.getElementById("modal_chk_math")?.checked;
+
+      appState.rollover = {
+        core1: !c1Done,
+        core2: !c2Done,
+        math: !mathDone
+      };
+
+      const now = new Date();
+      appState.activeCycle.name = "Next Cycle Slot";
+      appState.activeCycle.startDate = now.toISOString().slice(0, 10);
+      const durDays = parseInt(appState.activeCycle.durationDays, 10) || 30;
+      appState.activeCycle.endDate = new Date(Date.now() + durDays * 86400000).toISOString().slice(0, 10);
+
+      closeForceEndCycleModal();
+      syncCycleConfigUI();
+      saveState();
+      switchTab('daily-flow');
+    }
+
+    // 15. TAB NAVIGATION & EXPORT
+    function switchTab(tabId) {
+      const tabs = ['analytics', 'daily-flow', 'tests', 'completed', 'cycle-setup', 'syllabus'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        const view = document.getElementById(`view-${t}`);
+        if (!btn || !view) return;
+        if (t === tabId) {
+          btn.className = "tab-btn px-4 py-2 rounded-xl bg-white text-slate-950 shadow-md flex items-center gap-2 shrink-0 font-semibold transition";
+          view.classList.remove("hidden");
+        } else {
+          btn.className = "tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 font-semibold transition";
+          view.classList.add("hidden");
+        }
+      });
+
+      if (tabId === 'analytics') renderAnalyticsHub();
+      if (tabId === 'tests') renderTestsSection();
+      if (tabId === 'completed') renderCompletedSubjectsList();
+      if (tabId === 'syllabus') renderSyllabusMatrix();
+      if (tabId === 'cycle-setup') syncCycleConfigUI();
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `GATE_2027_StudyData_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // 16. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
+    function showDayDetailLogs(dateStr) {
+      const modal = document.getElementById("dayLogsDetailModal");
+      if (!modal) return;
+
+      const logs = (appState.dailyLogs || []).filter(l => l.date === dateStr);
+      const totalM = logs.reduce((a, c) => a + (c.minutes || 0), 0);
+      const totalQ = logs.reduce((a, c) => a + (c.questions || 0), 0);
+
+      const dt = new Date(dateStr + "T00:00:00");
+      const dateFormatted = dt.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+      const isToday = dateStr === new Date().toISOString().slice(0, 10);
+
+      document.getElementById("dayModalDateTitle").innerText = dateFormatted;
+      document.getElementById("dayModalDateSub").innerText = isToday ? "Today's Activity" : "Historical Day Log";
+      document.getElementById("dayModalTotalTime").innerText = `${Math.floor(totalM / 60)}h ${totalM % 60}m`;
+      document.getElementById("dayModalTotalQs").innerText = `${totalQ} Qs`;
+
+      const listContainer = document.getElementById("dayModalSessionsList");
+      if (logs.length === 0) {
+        listContainer.innerHTML = `<p class="text-slate-400 italic text-center py-6">No study sessions logged on this day.</p>`;
+      } else {
+        listContainer.innerHTML = logs.map(l => `
+          <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center">
+            <div>
+              <p class="font-bold text-white text-xs truncate max-w-[210px]">${l.title}</p>
+              <span class="text-[10px] text-slate-400">${l.timeStr || "Logged session"}</span>
+            </div>
+            <div class="text-right font-mono text-xs">
+              <span class="text-slate-200">${l.minutes}m</span>
+              ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+            </div>
+          </div>
+        `).join("");
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeDayLogsDetailModal() {
+      const modal = document.getElementById("dayLogsDetailModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    // ==============================================================
+    // 17. MISS MINUTES (TVA / LOKI) FLOATING DUAL TIMER (ANALOG + DIGITAL)
+    // ==============================================================
+    let pipWindow = null;
+
+    async function toggleFloatingPipTimer() {
+      if (!('documentPictureInPicture' in window)) {
+        alert("Floating Picture-in-Picture window is supported in Chrome, Edge, and modern Chromium browsers.");
+        return;
+      }
+
+      if (pipWindow) {
+        pipWindow.close();
+        pipWindow = null;
+        return;
+      }
+
+      try {
+        pipWindow = await window.documentPictureInPicture.requestWindow({
+          width: 380,
+          height: 230
+        });
+
+        const faLink = document.createElement("link");
+        faLink.rel = "stylesheet";
+        faLink.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
+        pipWindow.document.head.appendChild(faLink);
+
+        const style = document.createElement("style");
+        style.textContent = `
+          * { box-sizing: border-box; }
+          body {
+            margin: 0;
+            padding: 12px 14px;
+            background: linear-gradient(145deg, #181412 0%, #0d0c0a 100%);
+            color: #f5ede6;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            user-select: none;
+            overflow: hidden;
+            border: 2px solid rgba(245, 142, 11, 0.35);
+          }
+          .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .tva-badge {
+            background: linear-gradient(90deg, #ea580c, #f59e0b);
+            color: #000;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            font-weight: 900;
+            font-size: 8px;
+            letter-spacing: 0.5px;
+          }
+          .step-tag {
+            color: #f59e0b;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+          }
+          .session-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 250px;
+          }
+          
+          /* DUAL DISPLAY CONTAINER */
+          .display-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 10px;
+            padding: 2px 0;
+          }
+
+          /* MISS MINUTES CHARACTER & ANALOG CLOCK */
+          .miss-minutes-box {
+            position: relative;
+            width: 105px;
+            height: 105px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.45));
+          }
+          .analog-hands {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 55px;
+            height: 55px;
+            pointer-events: none;
+          }
+          .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: 50% 100%;
+            border-radius: 4px;
+            transition: transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+          }
+          .hand-hour {
+            width: 3.5px;
+            height: 16px;
+            background: #18110b;
+            margin-left: -1.75px;
+          }
+          .hand-minute {
+            width: 2.5px;
+            height: 22px;
+            background: #18110b;
+            margin-left: -1.25px;
+          }
+          .hand-second {
+            width: 1.5px;
+            height: 25px;
+            background: #dc2626;
+            margin-left: -0.75px;
+          }
+          .center-pivot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 7px;
+            height: 7px;
+            background: #18110b;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 4px rgba(0,0,0,0.6);
+          }
+
+          /* DIGITAL READOUT */
+          .digital-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+          }
+          .digital-clock {
+            font-size: 32px;
+            font-weight: 900;
+            font-family: ui-monospace, SFMono-Regular, monospace;
+            color: #fbbf24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.55);
+            letter-spacing: -0.5px;
+          }
+          .status-indicator {
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #f97316;
+            margin-top: -2px;
+          }
+
+          /* CONTROLS */
+          .controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+          }
+          button {
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 6px 14px;
+            transition: all 0.15s ease;
+          }
+          button:active { transform: scale(0.96); }
+          .btn-play { background: #f59e0b; color: #1c1307; }
+          .btn-reset { background: rgba(255, 255, 255, 0.08); color: #f5ede6; }
+          .btn-end { background: #059669; color: #ffffff; border: none; }
+        `;
+        pipWindow.document.head.appendChild(style);
+
+        // Render Miss Minutes with working Analog clock face + Digital clock
+        pipWindow.document.body.innerHTML = `
+          <div>
+            <div class="header-row">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="tva-badge">TVA</span>
+                <span class="step-tag" id="pipStepTag">${document.getElementById("activeStepTag")?.innerText || "STEP"}</span>
+              </div>
+              <span id="pipStatusText" class="status-indicator">${isTimerRunning ? '● RUNNING' : '❚❚ PAUSED'}</span>
+            </div>
+            <div class="session-title" id="pipSubjectName">${document.getElementById("activeTimerTitle")?.innerText || "GATE CS 2027"}</div>
+          </div>
+
+          <!-- DUAL DISPLAY: MISS MINUTES ANALOG + DIGITAL -->
+          <div class="display-container">
+            
+            <!-- MISS MINUTES WITH INTEGRATED ANALOG HANDS -->
+            <div class="miss-minutes-box">
+              <svg viewBox="0 0 140 140" width="105" height="105" style="overflow: visible;">
+                <!-- Arms / Waving Hand -->
+                <path d="M22 62 C5 48 10 30 18 24 C23 20 28 32 24 45" fill="none" stroke="#ea580c" stroke-width="4.5" stroke-linecap="round"/>
+                <!-- Left White Glove Pointing Up -->
+                <circle cx="18" cy="22" r="7" fill="#ffffff" stroke="#1f140e" stroke-width="2"/>
+                <path d="M18 16 L18 6 C18 4 15 4 15 6 L15 18" fill="#ffffff" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                
+                <!-- Right Arm on Hip -->
+                <path d="M118 64 C132 72 134 90 120 95 C116 92 114 84 116 75" fill="none" stroke="#ea580c" stroke-width="4.5" stroke-linecap="round"/>
+                <circle cx="120" cy="94" r="6" fill="#ffffff" stroke="#1f140e" stroke-width="2"/>
+                
+                <!-- Legs & Boots -->
+                <path d="M52 118 L48 135" stroke="#1f140e" stroke-width="3" stroke-linecap="round"/>
+                <path d="M88 118 L92 135" stroke="#1f140e" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="42" cy="136" rx="9" ry="5" fill="#f59e0b" stroke="#1f140e" stroke-width="2"/>
+                <ellipse cx="98" cy="136" rx="9" ry="5" fill="#f59e0b" stroke="#1f140e" stroke-width="2"/>
+
+                <!-- Main Face (Miss Minutes Clock Dial) -->
+                <circle cx="70" cy="70" r="50" fill="#f97316" stroke="#1f140e" stroke-width="4.5"/>
+                <circle cx="70" cy="70" r="46" fill="#fb923c" opacity="0.4"/>
+                
+                <!-- Clock Hour Tick Marks -->
+                <line x1="70" y1="24" x2="70" y2="30" stroke="#1f140e" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="116" y1="70" x2="110" y2="70" stroke="#1f140e" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="70" y1="116" x2="70" y2="110" stroke="#1f140e" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="24" y1="70" x2="30" y2="70" stroke="#1f140e" stroke-width="3.5" stroke-linecap="round"/>
+
+                <line x1="93" y1="30" x2="89" y2="36" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="110" y1="47" x2="104" y2="51" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="110" y1="93" x2="104" y2="89" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="93" y1="110" x2="89" y2="104" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="47" y1="110" x2="51" y2="104" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="30" y1="93" x2="36" y2="89" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="30" y1="47" x2="36" y2="51" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="47" y1="30" x2="51" y2="36" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+
+                <!-- Cartoon Big Eyes with Eyelashes -->
+                <!-- Left Eye -->
+                <ellipse cx="54" cy="54" rx="10" ry="15" fill="#ffffff" stroke="#1f140e" stroke-width="2.5"/>
+                <ellipse cx="57" cy="54" rx="5.5" ry="9" fill="#1f140e"/>
+                <circle cx="59" cy="50" r="2.2" fill="#ffffff"/>
+                <!-- Left Lashes -->
+                <path d="M47 41 L43 36 M53 39 L53 33 M59 41 L62 35" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+
+                <!-- Right Eye -->
+                <ellipse cx="86" cy="54" rx="10" ry="15" fill="#ffffff" stroke="#1f140e" stroke-width="2.5"/>
+                <ellipse cx="89" cy="54" rx="5.5" ry="9" fill="#1f140e"/>
+                <circle cx="91" cy="50" r="2.2" fill="#ffffff"/>
+                <!-- Right Lashes -->
+                <path d="M81 41 L78 35 M87 39 L87 33 M93 41 L97 36" stroke="#1f140e" stroke-width="2" stroke-linecap="round"/>
+
+                <!-- Smiling Mouth -->
+                <path d="M52 84 Q70 102 88 84" fill="#ffffff" stroke="#1f140e" stroke-width="3" stroke-linecap="round"/>
+                <path d="M60 90 Q70 101 80 90" fill="#dc2626"/>
+              </svg>
+
+              <!-- ROTATING ANALOG HANDS (Overlaying the dial center) -->
+              <div class="analog-hands">
+                <div class="hand hand-hour" id="pipHourHand"></div>
+                <div class="hand hand-minute" id="pipMinuteHand"></div>
+                <div class="hand hand-second" id="pipSecondHand"></div>
+                <div class="center-pivot"></div>
+              </div>
+            </div>
+
+            <!-- DIGITAL READOUT -->
+            <div class="digital-box">
+              <div class="digital-clock" id="pipClock">${document.getElementById("timerBigClock")?.innerText || "00:20:00"}</div>
+              <div style="font-size:10px; color:#f59e0b; font-weight:700; margin-top:2px;">HEY Y'ALL!</div>
+            </div>
+
+          </div>
+
+          <!-- CONTROLS -->
+          <div class="controls">
+            <button class="btn-play" id="pipToggleBtn"><i class="fa-solid ${isTimerRunning ? 'fa-pause' : 'fa-play'}"></i></button>
+            <button class="btn-reset" id="pipResetBtn"><i class="fa-solid fa-rotate-left"></i></button>
+            <button class="btn-end" id="pipEndBtn"><i class="fa-solid fa-flag-checkered"></i> Done</button>
+          </div>
+        `;
+
+        // Attach PiP window controls to parent app functions
+        pipWindow.document.getElementById("pipToggleBtn").onclick = () => toggleMainTimer();
+        pipWindow.document.getElementById("pipResetBtn").onclick = () => resetMainTimer();
+        pipWindow.document.getElementById("pipEndBtn").onclick = () => {
+          window.focus();
+          openFinishSessionModal();
+        };
+
+        pipWindow.addEventListener("pagehide", () => {
+          pipWindow = null;
+        });
+
+        updatePipContent();
+
+      } catch (err) {
+        console.error("Document PiP error:", err);
+      }
+    }
+
+    const originalStartTimer = startTimer;
+    startTimer = function() {
+      originalStartTimer();
+      updatePipContent();
+    };
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && isTimerRunning && !pipWindow && ('documentPictureInPicture' in window)) {
+        toggleFloatingPipTimer();
+      }
+    });
+
+    // Synchronize both Analog hands and Digital clock with Miss Minutes
+    function updatePipContent() {
+      if (!pipWindow || !pipWindow.document) return;
+      const clock = pipWindow.document.getElementById("pipClock");
+      const btn = pipWindow.document.getElementById("pipToggleBtn");
+      const status = pipWindow.document.getElementById("pipStatusText");
+      const title = pipWindow.document.getElementById("pipSubjectName");
+      const tag = pipWindow.document.getElementById("pipStepTag");
+
+      // Update Digital Readout
+      if (clock) clock.innerText = document.getElementById("timerBigClock")?.innerText || "00:20:00";
+      if (btn) btn.innerHTML = `<i class="fa-solid ${isTimerRunning ? 'fa-pause' : 'fa-play'}"></i>`;
+      if (status) status.innerText = isTimerRunning ? "● RUNNING" : "❚❚ PAUSED";
+      if (title) title.innerText = document.getElementById("activeTimerTitle")?.innerText || "GATE CS 2027";
+      if (tag) tag.innerText = document.getElementById("activeStepTag")?.innerText || "STEP";
+
+      // Calculate Real Rotations for Miss Minutes Analog Hands
       const totalSec = typeof timerSeconds !== 'undefined' ? timerSeconds : 0;
       const sDeg = (totalSec % 60) * 6;
       const mDeg = ((Math.floor(totalSec / 60) % 60) * 6) + (totalSec % 60) * 0.1;
       const hDeg = ((Math.floor(totalSec / 3600) % 12) * 30) + ((Math.floor(totalSec / 60) % 60) * 0.5);
 
-      const hHand = document.getElementById("roamingMmHourHand");
-      const mHand = document.getElementById("roamingMmMinuteHand");
-      const sHand = document.getElementById("roamingMmSecondHand");
+      const hHand = pipWindow.document.getElementById("pipHourHand");
+      const mHand = pipWindow.document.getElementById("pipMinuteHand");
+      const sHand = pipWindow.document.getElementById("pipSecondHand");
 
       if (hHand) hHand.style.transform = `rotate(${hDeg}deg)`;
       if (mHand) mHand.style.transform = `rotate(${mDeg}deg)`;
       if (sHand) sHand.style.transform = `rotate(${sDeg}deg)`;
     }
 
+    setInterval(() => {
+      if (pipWindow) updatePipContent();
+    }, 1000);
   </script>
 </body>
 </html>
