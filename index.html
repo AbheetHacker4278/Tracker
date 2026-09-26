@@ -55,6 +55,46 @@
     .dark .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
     .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 
+
+    /* Accessible keyboard focus (was missing everywhere) */
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid #60a5fa;
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+    
+    /* Subject status badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .status-completed { background: rgba(16,185,129,0.18); color: #34d399; border: 1px solid rgba(16,185,129,0.35); }
+    .status-progress  { background: rgba(59,130,246,0.18); color: #60a5fa; border: 1px solid rgba(59,130,246,0.35); }
+    .status-pending   { background: rgba(161,161,170,0.15); color: #a1a1aa; border: 1px solid rgba(161,161,170,0.3); }
+    .status-active-now {
+      background: rgba(245,158,11,0.18); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35);
+      animation: pulse-glow 2.4s infinite alternate;
+    }
+    
+    .syllabus-bar-completed { background: #10b981 !important; }
+    .syllabus-bar-progress  { background: #3b82f6 !important; }
+    .syllabus-bar-pending   { background: rgba(255,255,255,0.25) !important; }
+    
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
     /* Top Header Wallpaper Banner with Cinematic Fade */
     #topHeroWallpaper {
       position: absolute;
@@ -845,14 +885,22 @@
     <div id="view-syllabus" class="hidden space-y-5">
       <div class="flex flex-wrap justify-between items-center gap-3">
         <div>
-          <h2 class="text-lg font-bold text-white">Official GATE CS Syllabus Matrix</h2>
+          <h2 id="syllabusHeading" class="text-lg font-bold text-white">Official GATE CS Syllabus Matrix</h2>
           <p class="text-xs text-slate-300">Mark Theory, DPP, and PYQ progress across each subject</p>
         </div>
         <div>
-          <input type="text" id="syllabusSearchInput" oninput="filterSyllabusList()" placeholder="Search topic or subject..." class="bg-slate-900/80 backdrop-blur-xl border border-white/10 text-xs px-3.5 py-2.5 rounded-xl w-64 text-white focus:outline-none" />
+          <label for="syllabusSearchInput" class="sr-only">Search topic or subject</label>
+          <input type="text" id="syllabusSearchInput" oninput="filterSyllabusList()"
+                 placeholder="Search topic or subject..."
+                 aria-describedby="syllabusSearchResultCount"
+                 class="bg-slate-900/80 backdrop-blur-xl border border-white/10 text-xs px-3.5 py-2.5 rounded-xl w-64 text-white" />
+          <span id="syllabusSearchResultCount" class="sr-only" aria-live="polite"></span>
         </div>
       </div>
-
+    
+      <!-- STATUS SUMMARY STRIP -->
+      <div id="syllabusStatusSummary" class="flex flex-wrap gap-2.5 text-xs" role="status"></div>
+    
       <div id="syllabusCardsGrid" class="space-y-4"></div>
     </div>
 
@@ -3330,43 +3378,88 @@
       `).join("");
     }
 
+    function getSubjectStatus(subj) {
+      let totalChecks = subj.subtopics.length * 3;
+      let checksDone = 0;
+      subj.subtopics.forEach((_, idx) => {
+        const p = appState.syllabusProgress[`${subj.id}_${idx}`] || {};
+        if (p.theory) checksDone++;
+        if (p.dpp) checksDone++;
+        if (p.pyq) checksDone++;
+      });
+      const pct = Math.round((checksDone / (totalChecks || 1)) * 100);
+      let status = "pending";
+      if (pct === 100) status = "completed";
+      else if (checksDone > 0) status = "progress";
+    
+      const isActiveNow = [appState.activeCycle.core1, appState.activeCycle.core2, appState.activeCycle.math].includes(subj.id);
+    
+      return { pct, checksDone, totalChecks, status, isActiveNow };
+    }
+    
+    function statusBadgeHtml(status) {
+      if (status === "completed") return `<span class="status-badge status-completed"><i class="fa-solid fa-circle-check"></i> Completed</span>`;
+      if (status === "progress") return `<span class="status-badge status-progress"><i class="fa-solid fa-spinner"></i> In Progress</span>`;
+      return `<span class="status-badge status-pending"><i class="fa-regular fa-circle"></i> Not Started</span>`;
+    }
+    
+    function renderSyllabusStatusSummary() {
+      const container = document.getElementById("syllabusStatusSummary");
+      if (!container) return;
+    
+      let completed = 0, progress = 0, pending = 0;
+      SUBJECTS.forEach(s => {
+        const { status } = getSubjectStatus(s);
+        if (status === "completed") completed++;
+        else if (status === "progress") progress++;
+        else pending++;
+      });
+    
+      container.innerHTML = `
+        <span class="status-badge status-completed"><i class="fa-solid fa-circle-check"></i> ${completed} Completed</span>
+        <span class="status-badge status-progress"><i class="fa-solid fa-spinner"></i> ${progress} In Progress</span>
+        <span class="status-badge status-pending"><i class="fa-regular fa-circle"></i> ${pending} Not Started</span>
+      `;
+    }
+    
     function renderSyllabusMatrix() {
       const container = document.getElementById("syllabusCardsGrid");
       if (!container) return;
       container.innerHTML = "";
-
+    
+      renderSyllabusStatusSummary();
+    
       SUBJECTS.forEach(s => {
-        let totalChecks = s.subtopics.length * 3;
-        let checksDone = 0;
-
-        s.subtopics.forEach((_, idx) => {
-          const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
-          if (p.theory) checksDone++;
-          if (p.dpp) checksDone++;
-          if (p.pyq) checksDone++;
-        });
-
-        const pct = Math.round((checksDone / (totalChecks || 1)) * 100);
-
+        const { pct, status, isActiveNow } = getSubjectStatus(s);
+        const barClass = status === "completed" ? "syllabus-bar-completed" : status === "progress" ? "syllabus-bar-progress" : "syllabus-bar-pending";
+    
         const card = document.createElement("div");
         card.className = "bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl";
         card.id = `sub-card-${s.id}`;
-
+    
         card.innerHTML = `
-          <div class="p-4 flex justify-between items-center cursor-pointer select-none" onclick="toggleSyllabusAccordion('${s.id}')">
-            <div class="flex items-center gap-3">
+          <div class="p-4 flex flex-wrap justify-between items-center gap-2.5 cursor-pointer select-none"
+               role="button"
+               tabindex="0"
+               aria-expanded="false"
+               aria-controls="sub-body-${s.id}"
+               onclick="toggleSyllabusAccordion('${s.id}')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSyllabusAccordion('${s.id}')}">
+            <div class="flex items-center gap-3 flex-wrap">
               <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${s.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : 'bg-blue-500/20 text-accent-blue'}">${s.type}</span>
               <h3 class="font-bold text-sm sm:text-base text-white">${s.name}</h3>
+              ${statusBadgeHtml(status)}
+              ${isActiveNow ? `<span class="status-badge status-active-now"><i class="fa-solid fa-bolt"></i> Active Now</span>` : ''}
             </div>
             <div class="flex items-center gap-3">
               <span class="text-xs font-semibold text-slate-300">${pct}%</span>
               <div class="w-20 bg-white/10 rounded-full h-1.5 overflow-hidden">
-                <div class="bg-white h-1.5 rounded-full" style="width: ${pct}%"></div>
+                <div class="${barClass} h-1.5 rounded-full" style="width: ${pct}%"></div>
               </div>
-              <i id="sub-chevron-${s.id}" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+              <i id="sub-chevron-${s.id}" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform" aria-hidden="true"></i>
             </div>
           </div>
-
+    
           <div id="sub-body-${s.id}" class="hidden border-t border-white/10 bg-black/30 p-4 space-y-3 text-xs">
             ${s.subtopics.map((top, idx) => {
               const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
@@ -3399,8 +3492,13 @@
     function toggleSyllabusAccordion(id) {
       const body = document.getElementById(`sub-body-${id}`);
       const chevron = document.getElementById(`sub-chevron-${id}`);
+      const header = document.querySelector(`#sub-card-${id} [role="button"]`);
       if (body) body.classList.toggle("hidden");
       if (chevron) chevron.classList.toggle("rotate-180");
+      if (header) {
+        const isOpen = !body.classList.contains("hidden");
+        header.setAttribute("aria-expanded", String(isOpen));
+      }
     }
 
     function toggleSyllabusProgressItem(key, field) {
@@ -3415,13 +3513,18 @@
       const input = document.getElementById("syllabusSearchInput");
       if (!input) return;
       const q = input.value.toLowerCase();
+      let visibleCount = 0;
       SUBJECTS.forEach(s => {
         const card = document.getElementById(`sub-card-${s.id}`);
         if (!card) return;
         const matchesSubj = s.name.toLowerCase().includes(q);
         const matchesTopic = s.subtopics.some(t => t.toLowerCase().includes(q));
-        card.classList.toggle("hidden", !(matchesSubj || matchesTopic));
+        const show = matchesSubj || matchesTopic;
+        card.classList.toggle("hidden", !show);
+        if (show) visibleCount++;
       });
+      const liveRegion = document.getElementById("syllabusSearchResultCount");
+      if (liveRegion) liveRegion.innerText = `${visibleCount} subject${visibleCount === 1 ? '' : 's'} match your search`;
     }
 
     // CONTINUATION WITH EXISTING LOADED SUBJECTS (PRESERVING STREAK & SUBJECTS)
