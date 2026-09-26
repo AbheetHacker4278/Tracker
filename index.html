@@ -83,7 +83,6 @@
     .status-pending   { background: rgba(161,161,170,0.15); color: #a1a1aa; border: 1px solid rgba(161,161,170,0.3); }
     .status-active-now {
       background: rgba(245,158,11,0.18); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35);
-      animation: pulse-glow 2.4s infinite alternate;
     }
     
     .syllabus-bar-completed { background: #10b981 !important; }
@@ -3438,28 +3437,36 @@
         card.id = `sub-card-${s.id}`;
     
         card.innerHTML = `
-          <div class="p-4 flex flex-wrap justify-between items-center gap-2.5 cursor-pointer select-none"
+          <div class="p-4 flex flex-wrap sm:flex-nowrap justify-between items-start gap-3 cursor-pointer select-none"
                role="button"
                tabindex="0"
                aria-expanded="false"
                aria-controls="sub-body-${s.id}"
                onclick="toggleSyllabusAccordion('${s.id}')"
                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSyllabusAccordion('${s.id}')}">
-            <div class="flex items-center gap-3 flex-wrap">
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${s.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : 'bg-blue-500/20 text-accent-blue'}">${s.type}</span>
-              <h3 class="font-bold text-sm sm:text-base text-white">${s.name}</h3>
-              ${statusBadgeHtml(status)}
-              ${isActiveNow ? `<span class="status-badge status-active-now"><i class="fa-solid fa-bolt"></i> Active Now</span>` : ''}
+        
+            <!-- LEFT: name + badges, always two stacked lines -->
+            <div class="flex flex-col gap-1.5 min-w-0 flex-1">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${s.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : 'bg-blue-500/20 text-accent-blue'}">${s.type}</span>
+                <h3 class="font-bold text-sm sm:text-base text-white truncate">${s.name}</h3>
+              </div>
+              <div class="flex items-center gap-2 flex-wrap">
+                ${statusBadgeHtml(status)}
+                ${isActiveNow ? `<span class="status-badge status-active-now"><i class="fa-solid fa-bolt"></i> Active Now</span>` : ''}
+              </div>
             </div>
-            <div class="flex items-center gap-3">
-              <span class="text-xs font-semibold text-slate-300">${pct}%</span>
+        
+            <!-- RIGHT: progress, fixed width, never wraps -->
+            <div class="flex items-center gap-3 shrink-0 pt-0.5">
+              <span class="text-xs font-semibold text-slate-300 w-9 text-right">${pct}%</span>
               <div class="w-20 bg-white/10 rounded-full h-1.5 overflow-hidden">
                 <div class="${barClass} h-1.5 rounded-full" style="width: ${pct}%"></div>
               </div>
               <i id="sub-chevron-${s.id}" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform" aria-hidden="true"></i>
             </div>
           </div>
-    
+        
           <div id="sub-body-${s.id}" class="hidden border-t border-white/10 bg-black/30 p-4 space-y-3 text-xs">
             ${s.subtopics.map((top, idx) => {
               const p = appState.syllabusProgress[`${s.id}_${idx}`] || {};
