@@ -235,6 +235,30 @@
       animation: gradient-text-anim 7s ease infinite;
     }
 
+    /* ANIMATED CHART & VELOCITY EFFECTS */
+    @keyframes barGrow {
+      0% {
+        transform: scaleY(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+
+    .animate-bar-grow {
+      transform-origin: bottom;
+      animation: barGrow 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .vel-tab-active {
+      background: rgba(59, 130, 246, 0.25) !important;
+      color: #ffffff !important;
+      border-color: rgba(59, 130, 246, 0.5) !important;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+    }
+
     /* ============================================================== */
     /* DYNAMIC THEME & ANIMATED COLOR PALETTE SYSTEM */
     /* ============================================================== */
@@ -267,6 +291,7 @@
       --color-accent-rose: #ef4444;
       --color-accent-purple: #0891b2;
     }
+
     [data-theme="ironman"] .animated-gradient-text {
       background: linear-gradient(90deg, #06b6d4, #f59e0b, #ef4444, #eab308, #06b6d4);
       background-size: 300% 300%;
@@ -289,6 +314,7 @@
       --color-accent-rose: #ef4444;
       --color-accent-purple: #818cf8;
     }
+
     [data-theme="spiderman"] .animated-gradient-text {
       background: linear-gradient(90deg, #ef4444, #3b82f6, #f87171, #60a5fa, #ef4444);
       background-size: 300% 300%;
@@ -311,6 +337,7 @@
       --color-accent-amber: #60a5fa;
       --color-accent-rose: #ef4444;
     }
+
     [data-theme="captain"] .animated-gradient-text {
       background: linear-gradient(90deg, #3b82f6, #ffffff, #ef4444, #60a5fa, #3b82f6);
       background-size: 300% 300%;
@@ -333,6 +360,7 @@
       --color-accent-amber: #f59e0b;
       --color-accent-rose: #ea580c;
     }
+
     [data-theme="tva"] .animated-gradient-text {
       background: linear-gradient(90deg, #f59e0b, #ea580c, #d97706, #fbbf24, #f59e0b);
       background-size: 300% 300%;
@@ -355,6 +383,7 @@
       --color-accent-amber: #f43f5e;
       --color-accent-rose: #ec4899;
     }
+
     [data-theme="cyberpunk"] .animated-gradient-text {
       background: linear-gradient(90deg, #ec4899, #06b6d4, #a855f7, #f43f5e, #ec4899);
       background-size: 300% 300%;
@@ -377,6 +406,7 @@
       --color-accent-amber: #6ee7b7;
       --color-accent-purple: #059669;
     }
+
     [data-theme="matrix"] .animated-gradient-text {
       background: linear-gradient(90deg, #10b981, #34d399, #059669, #6ee7b7, #10b981);
       background-size: 300% 300%;
@@ -399,6 +429,7 @@
       --color-accent-amber: #f97316;
       --color-accent-rose: #ef4444;
     }
+
     [data-theme="solar"] .animated-gradient-text {
       background: linear-gradient(90deg, #f97316, #eab308, #ef4444, #fbbf24, #f97316);
       background-size: 300% 300%;
@@ -421,6 +452,7 @@
       --color-accent-rose: #d946ef;
       --color-accent-amber: #c084fc;
     }
+
     [data-theme="galactic"] .animated-gradient-text {
       background: linear-gradient(90deg, #a855f7, #6366f1, #d946ef, #818cf8, #a855f7);
       background-size: 300% 300%;
@@ -443,6 +475,7 @@
       --color-accent-amber: #38bdf8;
       --color-accent-purple: #06b6d4;
     }
+
     [data-theme="ocean"] .animated-gradient-text {
       background: linear-gradient(90deg, #0ea5e9, #14b8a6, #38bdf8, #2dd4bf, #0ea5e9);
       background-size: 300% 300%;
@@ -458,37 +491,46 @@
       box-shadow: 0 4px 20px var(--theme-glow) !important;
       border: 1px solid rgba(255, 255, 255, 0.25) !important;
     }
+
     [data-theme] .glass-card:hover {
       border-color: var(--theme-border-active) !important;
       box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.65), 0 0 20px -3px var(--theme-glow-sm) !important;
     }
+
     [data-theme] .test-card:hover {
       border-color: var(--theme-border-active) !important;
       box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.65), 0 0 18px -3px var(--theme-glow-sm) !important;
     }
+
     [data-theme] ::selection {
       background: var(--theme-accent) !important;
       color: #ffffff !important;
     }
+
     [data-theme] button:focus-visible,
     [data-theme] input:focus-visible,
     [data-theme] select:focus-visible {
       outline-color: var(--theme-accent) !important;
       box-shadow: 0 0 0 3px var(--theme-glow-sm) !important;
     }
+
     [data-theme] .timer-running .timer-glow::before {
       background: radial-gradient(circle, var(--theme-glow) 0%, transparent 70%) !important;
     }
+
     [data-theme] #timerCircle {
       stroke: var(--theme-accent) !important;
     }
+
     [data-theme] #timerTotalDisplay {
       color: var(--theme-accent) !important;
     }
+
     [data-theme] #weekendModeAlertBanner {
       border-color: var(--theme-border-active) !important;
       box-shadow: 0 8px 25px -4px var(--theme-glow-sm) !important;
     }
+
     [data-theme] .status-active-now {
       background: var(--theme-bg-subtle) !important;
       color: var(--theme-accent) !important;
@@ -501,28 +543,35 @@
       will-change: transform;
       transform: translateZ(0);
     }
+
     .test-card:hover {
       transform: translateY(-2px);
       border-color: rgba(245, 158, 11, 0.38);
       box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.65), 0 0 16px -3px rgba(245, 158, 11, 0.15);
     }
+
     .test-score-bar {
       transition: width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: width;
     }
+
     .test-preset-chip {
       transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
     .test-preset-chip:hover {
       transform: translateY(-1px);
     }
+
     .test-preset-chip:active {
       transform: scale(0.97);
     }
+
     .test-weakness-tag {
       transition: all 0.15s ease;
       user-select: none;
     }
+
     .test-weakness-tag:hover {
       background: rgba(245, 158, 11, 0.22);
       border-color: rgba(245, 158, 11, 0.45);
@@ -627,7 +676,9 @@
       <button onclick="switchTab('weekend')" id="tab-weekend"
         class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition relative">
         <i class="fa-solid fa-calendar-week text-accent-purple"></i> Weekend Routine (Sat & Sun)
-        <span id="navWeekendBadge" class="hidden text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold">Weekend Active</span>
+        <span id="navWeekendBadge"
+          class="hidden text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold">Weekend
+          Active</span>
       </button>
       <button onclick="switchTab('tests')" id="tab-tests"
         class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
@@ -772,18 +823,139 @@
           </div>
         </div>
 
-        <div class="lg:col-span-7 glass-card p-6 rounded-2xl space-y-4 flex flex-col justify-between">
-          <div class="flex justify-between items-center border-b border-white/10 pb-3">
-            <div>
-              <h3 class="text-sm font-bold flex items-center gap-2 text-white">
-                <i class="fa-solid fa-chart-column text-accent-blue"></i> 7-Day Study Time Velocity
-              </h3>
-              <p class="text-[11px] text-slate-400">Click any bar to view logged sessions on that day</p>
+        <!-- ENHANCED STUDY TIME VELOCITY & MULTI-GRANULARITY ANALYTICS HUB -->
+        <div class="lg:col-span-7 glass-card p-5 sm:p-6 rounded-2xl space-y-4 flex flex-col justify-between border border-white/15 shadow-xl relative overflow-hidden group">
+          <!-- Background Ambient Glow Effect -->
+          <div class="absolute -top-24 -right-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none transition-all duration-700 group-hover:bg-purple-500/15"></div>
+
+          <!-- HEADER & NAVIGATION TABS -->
+          <div class="space-y-3 border-b border-white/10 pb-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs shadow-inner border border-blue-500/30">
+                    <i class="fa-solid fa-chart-column"></i>
+                  </div>
+                  <h3 id="anVelocityTitle" class="text-base font-extrabold text-white tracking-tight">Study Time Velocity & Progress</h3>
+                  <span id="anVelocityBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">7 Days</span>
+                </div>
+                <p id="anVelocitySubtext" class="text-xs text-slate-400 mt-1">Interactive velocity tracking across all days, weeks & months with full detail logs</p>
+              </div>
+
+              <!-- Metric Switcher & Export Button -->
+              <div class="flex items-center gap-2">
+                <div class="flex items-center bg-black/40 backdrop-blur-md p-1 rounded-xl border border-white/10 text-xs">
+                  <button id="anMetricHoursBtn" onclick="setVelocityMetric('hours')" class="px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 bg-blue-600 text-white shadow-md">
+                    <i class="fa-solid fa-clock mr-1"></i> Hours
+                  </button>
+                  <button id="anMetricQsBtn" onclick="setVelocityMetric('questions')" class="px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-brain mr-1"></i> Qs Solved
+                  </button>
+                </div>
+                
+                <button onclick="exportStudyLogsCSV()" title="Export all study data to CSV" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+                  <i class="fa-solid fa-download text-accent-blue"></i> CSV
+                </button>
+              </div>
             </div>
-            <span id="an7DayTotalHours" class="text-xs font-mono font-bold text-slate-300">0h Total</span>
+
+            <!-- Granularity Range Selector Tabs -->
+            <div class="flex items-center justify-between flex-wrap gap-2 pt-1">
+              <div class="flex items-center gap-1.5 overflow-x-auto custom-scroll pb-1 max-w-full text-xs" id="velocityTabGroup">
+                <button onclick="setVelocityRange('7d')" id="velTab-7d" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-blue-600/30 text-white shadow-md border border-blue-400/50 vel-tab-active">
+                  <i class="fa-solid fa-calendar-day mr-1 text-[10px]"></i> 7 Days
+                </button>
+                <button onclick="setVelocityRange('14d')" id="velTab-14d" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                  14 Days
+                </button>
+                <button onclick="setVelocityRange('30d')" id="velTab-30d" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                  30 Days
+                </button>
+                <button onclick="setVelocityRange('weeks')" id="velTab-weeks" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                  <i class="fa-solid fa-calendar-week mr-1 text-[10px]"></i> All Weeks
+                </button>
+                <button onclick="setVelocityRange('months')" id="velTab-months" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                  <i class="fa-solid fa-calendar-days mr-1 text-[10px]"></i> All Months
+                </button>
+                <button onclick="setVelocityRange('all_days')" id="velTab-all_days" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                  <i class="fa-solid fa-list-check mr-1 text-[10px]"></i> All Days Log
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2 font-mono text-xs font-bold text-slate-300 bg-white/5 px-3 py-1 rounded-xl border border-white/10 ml-auto">
+                <span id="an7DayTotalHours" class="text-accent-blue">0h Total</span>
+              </div>
+            </div>
           </div>
 
-          <div class="grid grid-cols-7 gap-2 items-end h-40 pt-4" id="an7DayBarsContainer"></div>
+          <!-- STATS SUMMARY ROW FOR SELECTED GRANULARITY -->
+          <div id="anVelocityStatsSummary" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-slate-400 text-[10px] block">Range Total</span>
+              <p id="anVelStatTotal" class="font-mono font-bold text-sm text-white mt-0.5">0h 0m</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-slate-400 text-[10px] block">Period Average</span>
+              <p id="anVelStatAvg" class="font-mono font-bold text-sm text-accent-blue mt-0.5">0.0h / day</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-slate-400 text-[10px] block">Peak Velocity</span>
+              <p id="anVelStatPeak" class="font-mono font-bold text-sm text-accent-emerald mt-0.5">0h (Best)</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-slate-400 text-[10px] block">Questions Pace</span>
+              <p id="anVelStatQs" class="font-mono font-bold text-sm text-purple-300 mt-0.5">0 Qs</p>
+            </div>
+          </div>
+
+          <!-- CHART CONTAINER / CONTENT VIEW AREA -->
+          <div class="relative min-h-[180px] flex flex-col justify-end pt-2">
+            <!-- Dynamic Bar Chart View -->
+            <div id="anVelocityChartContainer" class="flex items-end justify-between gap-1.5 sm:gap-2 h-44 pt-4 overflow-x-auto custom-scroll pb-1">
+              <!-- Animated Bars injected dynamically -->
+            </div>
+            <!-- Keep hidden fallback for legacy selectors -->
+            <div id="an7DayBarsContainer" class="hidden"></div>
+
+            <!-- Detailed All Days Table View (Hidden by default, shown in 'all_days' range) -->
+            <div id="anVelocityAllDaysContainer" class="hidden space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <div class="relative flex-1">
+                  <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-500 text-xs"></i>
+                  <input type="text" id="anAllDaysSearchInput" oninput="renderVelocityAllDaysTable()" placeholder="Search logs by subject, step title, or date..." class="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50">
+                </div>
+                <select id="anAllDaysSubjectFilter" onchange="renderVelocityAllDaysTable()" class="bg-slate-900 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none">
+                  <option value="all">All Subjects</option>
+                </select>
+              </div>
+
+              <div class="max-h-60 overflow-y-auto custom-scroll rounded-xl border border-white/10 bg-slate-950/40">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-white/10 text-slate-300 font-mono text-[11px] sticky top-0 backdrop-blur-md">
+                    <tr>
+                      <th class="p-2.5">Date</th>
+                      <th class="p-2.5">Subject / Activity</th>
+                      <th class="p-2.5 text-right">Study Time</th>
+                      <th class="p-2.5 text-right">Questions</th>
+                      <th class="p-2.5 text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="anAllDaysTableBody" class="divide-y divide-white/5 text-slate-300">
+                    <!-- Dynamic rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Footer helper text -->
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-white/5">
+            <span class="flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-info text-blue-400"></i>
+              <span id="anVelocityHint">Click any bar to inspect detailed session breakdown for that period</span>
+            </span>
+            <span class="font-mono text-[10px] text-slate-500">Live Auto-Updated</span>
+          </div>
         </div>
       </div>
 
@@ -873,7 +1045,8 @@
               <i class="fa-solid fa-chart-line text-accent-amber"></i> Test Series & Mock Accuracy Diagnostic
             </h3>
             <div class="flex items-center gap-2">
-              <button onclick="openAddTestModal('topic')" class="test-preset-chip px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold transition flex items-center gap-1 border border-amber-500/30">
+              <button onclick="openAddTestModal('topic')"
+                class="test-preset-chip px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold transition flex items-center gap-1 border border-amber-500/30">
                 <i class="fa-solid fa-plus text-[10px]"></i> Log Test
               </button>
               <button onclick="switchTab('tests')" class="text-xs font-semibold text-accent-amber hover:underline">
@@ -907,20 +1080,27 @@
     <div id="view-daily-flow" class="hidden space-y-5">
 
       <!-- WEEKEND PROTOCOL ACTIVE BANNER -->
-      <div id="weekendModeAlertBanner" class="p-4 rounded-2xl bg-gradient-to-r from-purple-950/60 via-slate-900/80 to-indigo-950/60 border border-purple-500/30 backdrop-blur-xl flex flex-wrap justify-between items-center gap-3 shadow-lg">
+      <div id="weekendModeAlertBanner"
+        class="p-4 rounded-2xl bg-gradient-to-r from-purple-950/60 via-slate-900/80 to-indigo-950/60 border border-purple-500/30 backdrop-blur-xl flex flex-wrap justify-between items-center gap-3 shadow-lg">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-lg shadow-inner">
+          <div
+            class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-lg shadow-inner">
             <i class="fa-solid fa-calendar-week"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider">
+              <span
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider">
                 Weekend Protocol Active
               </span>
-              <span id="weekendBannerDayLabel" class="text-xs text-slate-300 font-semibold">Saturday & Sunday Target</span>
+              <span id="weekendBannerDayLabel" class="text-xs text-slate-300 font-semibold">Saturday & Sunday
+                Target</span>
             </div>
             <p class="text-xs text-slate-300 mt-1">
-              Weekend Routine: Study <strong class="text-purple-300 font-semibold">Engineering Maths</strong> + <strong class="text-amber-300 font-semibold">Aptitude</strong>, solve <strong class="text-emerald-400 font-semibold">&ge; 25 Questions</strong> daily with marks tracking, and revise <strong class="text-blue-300 font-semibold">2 Completed Core Subjects</strong>.
+              Weekend Routine: Study <strong class="text-purple-300 font-semibold">Engineering Maths</strong> + <strong
+                class="text-amber-300 font-semibold">Aptitude</strong>, solve <strong
+                class="text-emerald-400 font-semibold">&ge; 25 Questions</strong> daily with marks tracking, and revise
+              <strong class="text-blue-300 font-semibold">2 Completed Core Subjects</strong>.
             </p>
           </div>
         </div>
@@ -990,7 +1170,8 @@
       </div>
 
       <!-- QUICK TEST ACCESS BAR -->
-      <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
         <div class="flex items-center gap-2.5 text-xs">
           <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
           <span class="font-bold text-white flex items-center gap-1.5">
@@ -1187,10 +1368,12 @@
         <div class="flex flex-wrap justify-between items-start gap-4 border-b border-white/[0.08] pb-4">
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider flex items-center gap-1.5">
+              <span
+                class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider flex items-center gap-1.5">
                 <i class="fa-solid fa-calendar-week"></i> Weekend Command Protocol
               </span>
-              <span id="wkLiveDayBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/[0.08] text-slate-300 border border-white/[0.08]">
+              <span id="wkLiveDayBadge"
+                class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/[0.08] text-slate-300 border border-white/[0.08]">
                 Saturday & Sunday Routine
               </span>
             </div>
@@ -1198,7 +1381,11 @@
               <span>Saturday & Sunday Command Center</span>
             </h2>
             <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">
-              Strict Weekend Routine: Master <strong class="text-purple-300 font-semibold">Engineering Maths</strong> + <strong class="text-amber-300 font-semibold">General Aptitude</strong>, conquer the <strong class="text-emerald-400 font-semibold">Daily &ge; 25 Questions Challenge</strong> with real-time marks & accuracy tracking, and revise at least <strong class="text-blue-300 font-semibold">2 Completed Core Subjects</strong>.
+              Strict Weekend Routine: Master <strong class="text-purple-300 font-semibold">Engineering Maths</strong> +
+              <strong class="text-amber-300 font-semibold">General Aptitude</strong>, conquer the <strong
+                class="text-emerald-400 font-semibold">Daily &ge; 25 Questions Challenge</strong> with real-time marks &
+              accuracy tracking, and revise at least <strong class="text-blue-300 font-semibold">2 Completed Core
+                Subjects</strong>.
             </p>
           </div>
 
@@ -1236,7 +1423,8 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <span id="wkWeekendStreakBadge" class="text-xs font-mono font-bold text-amber-400 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center gap-1.5">
+            <span id="wkWeekendStreakBadge"
+              class="text-xs font-mono font-bold text-amber-400 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center gap-1.5">
               <i class="fa-solid fa-fire text-amber-400"></i> Weekend Focus Active
             </span>
           </div>
@@ -1252,17 +1440,22 @@
               <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Saturday Target</span>
               <h4 class="text-sm font-bold text-white mt-0.5">&ge; 25 Questions Challenge</h4>
             </div>
-            <div id="wkSatStatusIcon" class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-xs">
+            <div id="wkSatStatusIcon"
+              class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-xs">
               <i class="fa-solid fa-list-ol"></i>
             </div>
           </div>
           <div>
             <div class="flex items-baseline justify-between">
-              <h2 id="wkSatSolvedVal" class="text-2xl font-extrabold font-mono text-white">0 <span class="text-xs font-sans font-normal text-slate-400">/ 25 Qs</span></h2>
-              <span id="wkSatStatusBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-white/10">Pending</span>
+              <h2 id="wkSatSolvedVal" class="text-2xl font-extrabold font-mono text-white">0 <span
+                  class="text-xs font-sans font-normal text-slate-400">/ 25 Qs</span></h2>
+              <span id="wkSatStatusBadge"
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-white/10">Pending</span>
             </div>
             <div class="w-full bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
-              <div id="wkSatProgressBar" class="h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-500" style="width: 0%"></div>
+              <div id="wkSatProgressBar"
+                class="h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-500"
+                style="width: 0%"></div>
             </div>
             <div class="flex justify-between items-center text-[10px] text-slate-400 font-mono mt-1.5">
               <span id="wkSatMarksSnippet">+0.00 Marks</span>
@@ -1278,17 +1471,22 @@
               <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sunday Target</span>
               <h4 class="text-sm font-bold text-white mt-0.5">&ge; 25 Questions Challenge</h4>
             </div>
-            <div id="wkSunStatusIcon" class="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs">
+            <div id="wkSunStatusIcon"
+              class="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs">
               <i class="fa-solid fa-bullseye"></i>
             </div>
           </div>
           <div>
             <div class="flex items-baseline justify-between">
-              <h2 id="wkSunSolvedVal" class="text-2xl font-extrabold font-mono text-white">0 <span class="text-xs font-sans font-normal text-slate-400">/ 25 Qs</span></h2>
-              <span id="wkSunStatusBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-white/10">Pending</span>
+              <h2 id="wkSunSolvedVal" class="text-2xl font-extrabold font-mono text-white">0 <span
+                  class="text-xs font-sans font-normal text-slate-400">/ 25 Qs</span></h2>
+              <span id="wkSunStatusBadge"
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-white/10">Pending</span>
             </div>
             <div class="w-full bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
-              <div id="wkSunProgressBar" class="h-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-emerald-500 transition-all duration-500" style="width: 0%"></div>
+              <div id="wkSunProgressBar"
+                class="h-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-emerald-500 transition-all duration-500"
+                style="width: 0%"></div>
             </div>
             <div class="flex justify-between items-center text-[10px] text-slate-400 font-mono mt-1.5">
               <span id="wkSunMarksSnippet">+0.00 Marks</span>
@@ -1310,13 +1508,18 @@
           </div>
           <div>
             <div class="flex items-baseline justify-between">
-              <h2 id="wkNetMarksVal" class="text-2xl font-extrabold font-mono text-emerald-400">0.00 <span class="text-xs font-sans font-normal text-slate-400">Net Marks</span></h2>
-              <span id="wkAccuracyBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">0% Acc</span>
+              <h2 id="wkNetMarksVal" class="text-2xl font-extrabold font-mono text-emerald-400">0.00 <span
+                  class="text-xs font-sans font-normal text-slate-400">Net Marks</span></h2>
+              <span id="wkAccuracyBadge"
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">0%
+                Acc</span>
             </div>
             <div class="flex items-center gap-2 text-[11px] font-mono mt-2 text-slate-300">
-              <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check"></i> <span id="wkCorrectQsVal">0</span> Correct</span>
+              <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check"></i> <span
+                  id="wkCorrectQsVal">0</span> Correct</span>
               <span class="text-slate-500">&bull;</span>
-              <span class="text-rose-400 font-semibold"><i class="fa-solid fa-circle-xmark"></i> <span id="wkIncorrectQsVal">0</span> Incorrect</span>
+              <span class="text-rose-400 font-semibold"><i class="fa-solid fa-circle-xmark"></i> <span
+                  id="wkIncorrectQsVal">0</span> Incorrect</span>
             </div>
             <p id="wkPenaltySnippet" class="text-[10px] text-slate-400 mt-1 font-mono">-0.00 marks lost to penalties</p>
           </div>
@@ -1335,8 +1538,11 @@
           </div>
           <div>
             <div class="flex items-baseline justify-between">
-              <h2 id="wkCoreRevSelectedCount" class="text-2xl font-extrabold font-mono text-white">0 <span class="text-xs font-sans font-normal text-slate-400">/ 2 Selected</span></h2>
-              <span id="wkCoreRevRuleBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">Action Needed</span>
+              <h2 id="wkCoreRevSelectedCount" class="text-2xl font-extrabold font-mono text-white">0 <span
+                  class="text-xs font-sans font-normal text-slate-400">/ 2 Selected</span></h2>
+              <span id="wkCoreRevRuleBadge"
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">Action
+                Needed</span>
             </div>
             <p id="wkCoreRevRuleSubtext" class="text-[11px] text-slate-400 mt-1.5 leading-snug">
               Select 2 completed core subjects below to lock in weekend revision.
@@ -1355,13 +1561,16 @@
           <div class="glass-card p-5 rounded-2xl space-y-4 flex-1">
             <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/[0.08] pb-3">
               <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm shadow-inner">
+                <div
+                  class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm shadow-inner">
                   <i class="fa-solid fa-calculator"></i>
                 </div>
                 <div>
                   <div class="flex items-center gap-2">
                     <h3 class="text-sm font-bold text-white">Engineering Maths Study</h3>
-                    <span class="text-[9px] font-bold px-2 py-0.2 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">Weekend Target</span>
+                    <span
+                      class="text-[9px] font-bold px-2 py-0.2 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">Weekend
+                      Target</span>
                   </div>
                   <p class="text-[11px] text-slate-400">Study any Engineering Maths Subject on Saturday & Sunday</p>
                 </div>
@@ -1382,7 +1591,8 @@
             <div class="space-y-2">
               <div class="flex justify-between items-center text-xs">
                 <span class="font-semibold text-slate-300 flex items-center gap-1.5">
-                  <i class="fa-solid fa-shapes text-purple-400"></i> <span id="wkMathSubjectTitle">Engineering Mathematics</span> Syllabus Focus
+                  <i class="fa-solid fa-shapes text-purple-400"></i> <span id="wkMathSubjectTitle">Engineering
+                    Mathematics</span> Syllabus Focus
                 </span>
                 <span id="wkMathProgressPercent" class="font-mono text-purple-300 font-bold">0% Covered</span>
               </div>
@@ -1413,15 +1623,19 @@
           <div class="glass-card p-5 rounded-2xl space-y-4 flex-1">
             <div class="flex flex-wrap justify-between items-center gap-2 border-b border-white/[0.08] pb-3">
               <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center text-sm shadow-inner">
+                <div
+                  class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center text-sm shadow-inner">
                   <i class="fa-solid fa-brain"></i>
                 </div>
                 <div>
                   <div class="flex items-center gap-2">
                     <h3 class="text-sm font-bold text-white">General Aptitude Part</h3>
-                    <span class="text-[9px] font-bold px-2 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">15 Marks GATE Weightage</span>
+                    <span
+                      class="text-[9px] font-bold px-2 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">15
+                      Marks GATE Weightage</span>
                   </div>
-                  <p class="text-[11px] text-slate-400">High-scoring section: Quantitative, Analytical, Verbal & Spatial</p>
+                  <p class="text-[11px] text-slate-400">High-scoring section: Quantitative, Analytical, Verbal & Spatial
+                  </p>
                 </div>
               </div>
 
@@ -1440,7 +1654,8 @@
             </div>
 
             <!-- Aptitude Syllabus & Domain Highlights -->
-            <div id="wkAptitudeTopicDetails" class="p-3.5 rounded-xl bg-black/40 border border-white/[0.06] space-y-2 text-xs">
+            <div id="wkAptitudeTopicDetails"
+              class="p-3.5 rounded-xl bg-black/40 border border-white/[0.06] space-y-2 text-xs">
               <!-- Dynamically populated -->
             </div>
 
@@ -1472,15 +1687,19 @@
             <div class="space-y-3">
               <div class="flex flex-wrap justify-between items-start gap-2 border-b border-white/[0.08] pb-3">
                 <div class="flex items-center gap-2.5">
-                  <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-accent-blue flex items-center justify-center text-sm shadow-inner">
+                  <div
+                    class="w-8 h-8 rounded-lg bg-blue-500/20 text-accent-blue flex items-center justify-center text-sm shadow-inner">
                     <i class="fa-solid fa-repeat"></i>
                   </div>
                   <div>
                     <h3 class="text-sm font-bold text-white flex items-center gap-2">
                       <span>Core Engineering Revision</span>
-                      <span class="text-[9px] font-bold px-2 py-0.2 rounded-full bg-blue-500/20 text-accent-blue border border-blue-500/30">Mandatory Rule</span>
+                      <span
+                        class="text-[9px] font-bold px-2 py-0.2 rounded-full bg-blue-500/20 text-accent-blue border border-blue-500/30">Mandatory
+                        Rule</span>
                     </h3>
-                    <p class="text-[11px] text-slate-400">Select at least 2 completed subjects from Core Engineering for weekend revision</p>
+                    <p class="text-[11px] text-slate-400">Select at least 2 completed subjects from Core Engineering for
+                      weekend revision</p>
                   </div>
                 </div>
 
@@ -1510,7 +1729,8 @@
               <div class="space-y-3 pt-2">
                 <div class="flex justify-between items-center text-xs">
                   <span class="font-semibold text-slate-300">2. Active Revision Tasks for Selected Subjects:</span>
-                  <span id="wkRevisionChecklistProgressBadge" class="text-[10px] font-mono text-emerald-400">0/0 Tasks</span>
+                  <span id="wkRevisionChecklistProgressBadge" class="text-[10px] font-mono text-emerald-400">0/0
+                    Tasks</span>
                 </div>
 
                 <div id="wkSelectedCoreRevisionCards" class="space-y-3"></div>
@@ -1519,7 +1739,8 @@
 
             <!-- Bottom helpful guidance note -->
             <p class="text-[11px] text-slate-400 italic pt-3 border-t border-white/[0.08]">
-              💡 Active recall protocol: Revise summary formula sheets, analyze your personal mistake notebook, and solve 10-15 targeted PYQs per revised subject.
+              💡 Active recall protocol: Revise summary formula sheets, analyze your personal mistake notebook, and
+              solve 10-15 targeted PYQs per revised subject.
             </p>
           </div>
         </div>
@@ -1535,16 +1756,21 @@
               <span>Weekend Questions & Marks Evaluation History</span>
             </h3>
             <p class="text-xs text-slate-400 mt-0.5">
-              Comprehensive tracking for questions solved daily on Saturday and Sunday with accuracy and negative marks tracking.
+              Comprehensive tracking for questions solved daily on Saturday and Sunday with accuracy and negative marks
+              tracking.
             </p>
           </div>
 
           <!-- History Filter Pills & Log Button -->
           <div class="flex flex-wrap items-center gap-2">
-            <div class="flex items-center gap-1.5 bg-black/40 p-1 rounded-xl border border-white/[0.08] text-xs font-semibold">
-              <button onclick="setWeekendHistoryDayFilter('all')" id="wkHistDay-all" class="px-3 py-1 rounded-lg bg-white/20 text-white transition">All Days</button>
-              <button onclick="setWeekendHistoryDayFilter('Saturday')" id="wkHistDay-Saturday" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">Saturday</button>
-              <button onclick="setWeekendHistoryDayFilter('Sunday')" id="wkHistDay-Sunday" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">Sunday</button>
+            <div
+              class="flex items-center gap-1.5 bg-black/40 p-1 rounded-xl border border-white/[0.08] text-xs font-semibold">
+              <button onclick="setWeekendHistoryDayFilter('all')" id="wkHistDay-all"
+                class="px-3 py-1 rounded-lg bg-white/20 text-white transition">All Days</button>
+              <button onclick="setWeekendHistoryDayFilter('Saturday')" id="wkHistDay-Saturday"
+                class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">Saturday</button>
+              <button onclick="setWeekendHistoryDayFilter('Sunday')" id="wkHistDay-Sunday"
+                class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition">Sunday</button>
             </div>
 
             <button onclick="openWeekendLogModal()"
@@ -1587,26 +1813,32 @@
     <!-- ============================================================== -->
     <div id="view-tests" class="hidden space-y-5">
       <!-- HERO & ANALYTICS WRAPPER -->
-      <div class="glass-card p-6 sm:p-7 rounded-2xl relative overflow-hidden border border-white/10 shadow-2xl space-y-6">
+      <div
+        class="glass-card p-6 sm:p-7 rounded-2xl relative overflow-hidden border border-white/10 shadow-2xl space-y-6">
         <!-- Ambient Decorative Glows -->
-        <div class="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
 
         <!-- Header & Quick Launchers -->
         <div class="relative z-10 flex flex-wrap justify-between items-center gap-4 border-b border-white/10 pb-5">
           <div class="space-y-1">
             <div class="flex items-center gap-2.5">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 text-accent-amber flex items-center justify-center text-lg shadow-inner">
+              <div
+                class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 text-accent-amber flex items-center justify-center text-lg shadow-inner">
                 <i class="fa-solid fa-chart-line"></i>
               </div>
               <div>
                 <div class="flex items-center gap-2">
                   <h2 class="text-lg font-bold text-white tracking-wide">Test Series & Mock Assessment Hub</h2>
-                  <span id="testHubTotalBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span id="testHubTotalBadge"
+                    class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
                     0 Tests Logged
                   </span>
                 </div>
-                <p class="text-xs text-slate-400">Track Topic, Subject & Full Mocks with automated negative marks calculation & error diagnostics.</p>
+                <p class="text-xs text-slate-400">Track Topic, Subject & Full Mocks with automated negative marks
+                  calculation & error diagnostics.</p>
               </div>
             </div>
           </div>
@@ -1631,7 +1863,8 @@
         <!-- 4 KPI SUMMARY CARDS -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <!-- KPI 1: Total Tests Attempted -->
-          <div class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
+          <div
+            class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
             <div class="flex justify-between items-start">
               <span class="text-xs text-slate-400 font-medium">Tests Evaluated</span>
               <span class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs">
@@ -1649,10 +1882,12 @@
           </div>
 
           <!-- KPI 2: Overall Score Average % -->
-          <div class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
+          <div
+            class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
             <div class="flex justify-between items-start">
               <span class="text-xs text-slate-400 font-medium">Overall Score Avg</span>
-              <span id="testKpiGradeBadge" class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span id="testKpiGradeBadge"
+                class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 Foundational
               </span>
             </div>
@@ -1662,13 +1897,15 @@
                 <span class="text-[10px] text-slate-400">all attempts</span>
               </div>
               <div class="w-full bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
-                <div id="testKpiAvgBar" class="test-score-bar bg-emerald-400 h-1.5 rounded-full" style="width: 0%"></div>
+                <div id="testKpiAvgBar" class="test-score-bar bg-emerald-400 h-1.5 rounded-full" style="width: 0%">
+                </div>
               </div>
             </div>
           </div>
 
           <!-- KPI 3: Best / Top Mock Score -->
-          <div class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
+          <div
+            class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
             <div class="flex justify-between items-start">
               <span class="text-xs text-slate-400 font-medium">Best Mock / High Score</span>
               <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs">
@@ -1682,10 +1919,12 @@
           </div>
 
           <!-- KPI 4: High Accuracy (>=70%) -->
-          <div class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
+          <div
+            class="p-4 rounded-xl bg-white/[0.04] border border-white/10 relative overflow-hidden flex flex-col justify-between">
             <div class="flex justify-between items-start">
               <span class="text-xs text-slate-400 font-medium">Mastery Tests (&ge;70%)</span>
-              <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">
+              <span
+                class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">
                 <i class="fa-solid fa-bullseye"></i>
               </span>
             </div>
@@ -1706,25 +1945,29 @@
             <button onclick="filterTestsList('all')" id="testFilter-all"
               class="px-3.5 py-1.5 rounded-xl bg-white text-slate-950 font-bold flex items-center gap-1.5 transition">
               <span>All Tests</span>
-              <span id="testFilterBadge-all" class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-900 font-bold">0</span>
+              <span id="testFilterBadge-all"
+                class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-900 font-bold">0</span>
             </button>
             <button onclick="filterTestsList('topic')" id="testFilter-topic"
               class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:bg-white/10 flex items-center gap-1.5 transition">
               <i class="fa-solid fa-layer-group text-[10px] text-blue-400"></i>
               <span>Topic-Wise</span>
-              <span id="testFilterBadge-topic" class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-white/10 text-slate-300 font-bold">0</span>
+              <span id="testFilterBadge-topic"
+                class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-white/10 text-slate-300 font-bold">0</span>
             </button>
             <button onclick="filterTestsList('subject')" id="testFilter-subject"
               class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:bg-white/10 flex items-center gap-1.5 transition">
               <i class="fa-solid fa-book-open text-[10px] text-emerald-400"></i>
               <span>Subject-Wise</span>
-              <span id="testFilterBadge-subject" class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-white/10 text-slate-300 font-bold">0</span>
+              <span id="testFilterBadge-subject"
+                class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-white/10 text-slate-300 font-bold">0</span>
             </button>
             <button onclick="filterTestsList('mock')" id="testFilter-mock"
               class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:bg-white/10 flex items-center gap-1.5 transition">
               <i class="fa-solid fa-trophy text-[10px] text-amber-400"></i>
               <span>Combined / Full Mocks</span>
-              <span id="testFilterBadge-mock" class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-white/10 text-slate-300 font-bold">0</span>
+              <span id="testFilterBadge-mock"
+                class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-white/10 text-slate-300 font-bold">0</span>
             </button>
           </div>
 
@@ -1732,11 +1975,13 @@
           <div class="flex items-center gap-2">
             <!-- Search Input -->
             <div class="relative flex-1 sm:w-60">
-              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <i
+                class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
               <input type="text" id="testSearchInput" oninput="onTestSearchInput(this.value)"
                 placeholder="Search tests, subject, topic..."
                 class="w-full pl-8 pr-7 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-slate-500 focus:border-amber-500/50 outline-none transition" />
-              <button id="clearTestSearchBtn" onclick="clearTestSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs">
+              <button id="clearTestSearchBtn" onclick="clearTestSearch()"
+                class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs">
                 <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
@@ -1955,19 +2200,23 @@
             <h3 class="text-base font-bold text-white flex items-center gap-2">
               <i class="fa-solid fa-palette text-accent-blue"></i> Choose Theme & Animated Color Palette
             </h3>
-            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 uppercase tracking-wider">
+            <span
+              class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 uppercase tracking-wider">
               Dynamic UI-UX
             </span>
           </div>
-          <p class="text-xs text-slate-400 mt-0.5">Selecting a theme dynamically alters all UI colors, glowing accents, timer rings, and background banners.</p>
+          <p class="text-xs text-slate-400 mt-0.5">Selecting a theme dynamically alters all UI colors, glowing accents,
+            timer rings, and background banners.</p>
         </div>
-        <button onclick="closeWallpaperModal()" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm transition">
+        <button onclick="closeWallpaperModal()"
+          class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm transition">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
       <!-- Live Active Theme & Animated Color Palette Indicator Strip -->
-      <div class="p-3 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-wrap items-center justify-between gap-3 shadow-inner">
+      <div
+        class="p-3 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-wrap items-center justify-between gap-3 shadow-inner">
         <div class="flex items-center gap-2.5">
           <div class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></div>
           <div>
@@ -1978,7 +2227,8 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <div class="h-5 px-3 rounded-full flex items-center justify-center text-[10px] font-bold text-white animated-gradient-text border border-white/10 bg-black/40">
+          <div
+            class="h-5 px-3 rounded-full flex items-center justify-center text-[10px] font-bold text-white animated-gradient-text border border-white/10 bg-black/40">
             Live Palette Wave
           </div>
           <button onclick="setWallpaperPreset('alpine')"
@@ -1991,7 +2241,8 @@
       <!-- Superhero & Animated Themes (9 Dynamic Palettes) -->
       <div class="space-y-2.5">
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Superhero & Neon Palettes (Real-Time Accent Shift)
+          <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Superhero & Neon Palettes (Real-Time Accent
+          Shift)
         </span>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
 
@@ -1999,10 +2250,12 @@
           <button onclick="applyMarvelTheme('ironman')" id="themeCard-ironman"
             class="p-3 rounded-2xl bg-red-950/20 border border-red-500/25 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-red-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-red-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-microchip"></i>
               </div>
-              <span id="themeBadge-ironman" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">ACTIVE</span>
+              <span id="themeBadge-ironman"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-cyan-300 transition">Iron Man (Mark 85)</p>
@@ -2018,10 +2271,12 @@
           <button onclick="applyMarvelTheme('spiderman')" id="themeCard-spiderman"
             class="p-3 rounded-2xl bg-blue-950/20 border border-red-500/25 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-red-600/30 text-red-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-red-600/30 text-red-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-spider"></i>
               </div>
-              <span id="themeBadge-spiderman" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40">ACTIVE</span>
+              <span id="themeBadge-spiderman"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-red-300 transition">Spider-Man (Web)</p>
@@ -2037,10 +2292,12 @@
           <button onclick="applyMarvelTheme('captain')" id="themeCard-captain"
             class="p-3 rounded-2xl bg-blue-950/20 border border-blue-500/25 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-shield-halved"></i>
               </div>
-              <span id="themeBadge-captain" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40">ACTIVE</span>
+              <span id="themeBadge-captain"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-blue-300 transition">Captain America</p>
@@ -2056,10 +2313,12 @@
           <button onclick="applyMarvelTheme('tva')" id="themeCard-tva"
             class="p-3 rounded-2xl bg-amber-950/20 border border-amber-500/25 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-amber-600/30 text-amber-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-amber-600/30 text-amber-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-hourglass"></i>
               </div>
-              <span id="themeBadge-tva" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">ACTIVE</span>
+              <span id="themeBadge-tva"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-amber-300 transition">TVA (Time Variance)</p>
@@ -2075,10 +2334,12 @@
           <button onclick="applyMarvelTheme('cyberpunk')" id="themeCard-cyberpunk"
             class="p-3 rounded-2xl bg-pink-950/20 border border-pink-500/25 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-pink-600/30 text-pink-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-pink-600/30 text-pink-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-bolt"></i>
               </div>
-              <span id="themeBadge-cyberpunk" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 border border-pink-500/40">ACTIVE</span>
+              <span id="themeBadge-cyberpunk"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 border border-pink-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-pink-300 transition">Cyberpunk Neon</p>
@@ -2094,10 +2355,12 @@
           <button onclick="applyMarvelTheme('matrix')" id="themeCard-matrix"
             class="p-3 rounded-2xl bg-emerald-950/20 border border-emerald-500/25 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-emerald-600/30 text-emerald-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-emerald-600/30 text-emerald-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-terminal"></i>
               </div>
-              <span id="themeBadge-matrix" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ACTIVE</span>
+              <span id="themeBadge-matrix"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-emerald-300 transition">Matrix Terminal</p>
@@ -2113,10 +2376,12 @@
           <button onclick="applyMarvelTheme('solar')" id="themeCard-solar"
             class="p-3 rounded-2xl bg-orange-950/20 border border-orange-500/25 hover:border-amber-400 hover:shadow-lg hover:shadow-orange-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-orange-600/30 text-orange-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-orange-600/30 text-orange-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-sun"></i>
               </div>
-              <span id="themeBadge-solar" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-300 border border-orange-500/40">ACTIVE</span>
+              <span id="themeBadge-solar"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-300 border border-orange-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-amber-300 transition">Solar Flare</p>
@@ -2132,10 +2397,12 @@
           <button onclick="applyMarvelTheme('galactic')" id="themeCard-galactic"
             class="p-3 rounded-2xl bg-purple-950/20 border border-purple-500/25 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-purple-600/30 text-purple-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-purple-600/30 text-purple-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-meteor"></i>
               </div>
-              <span id="themeBadge-galactic" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40">ACTIVE</span>
+              <span id="themeBadge-galactic"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-purple-300 transition">Galactic Nebula</p>
@@ -2151,10 +2418,12 @@
           <button onclick="applyMarvelTheme('ocean')" id="themeCard-ocean"
             class="p-3 rounded-2xl bg-cyan-950/20 border border-cyan-500/25 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 flex flex-col justify-between gap-2 text-left transition group relative overflow-hidden">
             <div class="flex items-center justify-between">
-              <div class="w-8 h-8 rounded-xl bg-cyan-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm shadow-inner">
+              <div
+                class="w-8 h-8 rounded-xl bg-cyan-600/30 text-cyan-400 flex items-center justify-center font-bold text-sm shadow-inner">
                 <i class="fa-solid fa-water"></i>
               </div>
-              <span id="themeBadge-ocean" class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">ACTIVE</span>
+              <span id="themeBadge-ocean"
+                class="hidden text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">ACTIVE</span>
             </div>
             <div>
               <p class="font-bold text-white group-hover:text-cyan-300 transition">Aqua Abyss</p>
@@ -2219,13 +2488,16 @@
             <h3 class="text-base font-bold text-white flex items-center gap-2">
               <i class="fa-solid fa-file-pen text-accent-amber"></i> Log Test Series Result
             </h3>
-            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
+            <span
+              class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
               GATE CSE
             </span>
           </div>
-          <p class="text-xs text-slate-400 mt-0.5">Quickly record marks, compute negative marks & capture mistake patterns.</p>
+          <p class="text-xs text-slate-400 mt-0.5">Quickly record marks, compute negative marks & capture mistake
+            patterns.</p>
         </div>
-        <button onclick="closeAddTestModal()" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm transition">
+        <button onclick="closeAddTestModal()"
+          class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm transition">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -2293,7 +2565,8 @@
           </div>
           <div>
             <label class="font-semibold text-slate-300">Scored Marks:</label>
-            <input type="number" id="topicTestScoredMarks" step="0.33" placeholder="e.g. 20.67" oninput="onTestMarksInputLive('topic')"
+            <input type="number" id="topicTestScoredMarks" step="0.33" placeholder="e.g. 20.67"
+              oninput="onTestMarksInputLive('topic')"
               class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-emerald-400 focus:border-amber-500/50 outline-none" />
           </div>
           <div>
@@ -2307,7 +2580,8 @@
         <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="text-[11px] text-slate-400">Performance:</span>
-            <span id="topicLiveScorePill" class="text-[11px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            <span id="topicLiveScorePill"
+              class="text-[11px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
               0.0% &bull; Pending
             </span>
           </div>
@@ -2353,17 +2627,23 @@
           <!-- Clickable Weakness Chips -->
           <div class="flex flex-wrap items-center gap-1.5 mt-2">
             <button type="button" onclick="appendTestWeaknessTag('topic', 'Calculation Error')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Calculation Error</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Calculation Error</button>
             <button type="button" onclick="appendTestWeaknessTag('topic', 'Concept Gap')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Concept Gap</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Concept Gap</button>
             <button type="button" onclick="appendTestWeaknessTag('topic', 'Silly Mistake')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Silly Mistake</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Silly Mistake</button>
             <button type="button" onclick="appendTestWeaknessTag('topic', 'Time Pressure')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Time Pressure</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Time Pressure</button>
             <button type="button" onclick="appendTestWeaknessTag('topic', 'Formula Forgotten')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Formula Forgotten</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Formula Forgotten</button>
             <button type="button" onclick="appendTestWeaknessTag('topic', 'Revision Needed')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Revision Needed</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Revision Needed</button>
           </div>
         </div>
       </div>
@@ -2403,12 +2683,14 @@
         <div class="grid grid-cols-3 gap-2.5">
           <div>
             <label class="font-semibold text-slate-300">Total Marks:</label>
-            <input type="number" id="subjectTestTotalMarks" step="0.5" value="50" oninput="onTestMarksInputLive('subject')"
+            <input type="number" id="subjectTestTotalMarks" step="0.5" value="50"
+              oninput="onTestMarksInputLive('subject')"
               class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-white focus:border-amber-500/50 outline-none" />
           </div>
           <div>
             <label class="font-semibold text-slate-300">Scored Marks:</label>
-            <input type="number" id="subjectTestScoredMarks" step="0.33" placeholder="e.g. 41.33" oninput="onTestMarksInputLive('subject')"
+            <input type="number" id="subjectTestScoredMarks" step="0.33" placeholder="e.g. 41.33"
+              oninput="onTestMarksInputLive('subject')"
               class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-emerald-400 focus:border-amber-500/50 outline-none" />
           </div>
           <div>
@@ -2422,7 +2704,8 @@
         <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="text-[11px] text-slate-400">Performance:</span>
-            <span id="subjectLiveScorePill" class="text-[11px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            <span id="subjectLiveScorePill"
+              class="text-[11px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
               0.0% &bull; Pending
             </span>
           </div>
@@ -2433,7 +2716,8 @@
         </div>
 
         <!-- Expandable Negative Marks Calculator -->
-        <div id="subjectCalcHelper" class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2.5">
+        <div id="subjectCalcHelper"
+          class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2.5">
           <div class="flex justify-between items-center text-[11px]">
             <span class="font-bold text-amber-300 flex items-center gap-1">
               <i class="fa-solid fa-bolt"></i> GATE Negative Marking Assist
@@ -2468,17 +2752,23 @@
           <!-- Clickable Weakness Chips -->
           <div class="flex flex-wrap items-center gap-1.5 mt-2">
             <button type="button" onclick="appendTestWeaknessTag('subject', 'Calculation Error')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Calculation Error</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Calculation Error</button>
             <button type="button" onclick="appendTestWeaknessTag('subject', 'Concept Gap')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Concept Gap</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Concept Gap</button>
             <button type="button" onclick="appendTestWeaknessTag('subject', 'Silly Mistake')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Silly Mistake</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Silly Mistake</button>
             <button type="button" onclick="appendTestWeaknessTag('subject', 'Time Pressure')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Time Pressure</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Time Pressure</button>
             <button type="button" onclick="appendTestWeaknessTag('subject', 'Formula Forgotten')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Formula Forgotten</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Formula Forgotten</button>
             <button type="button" onclick="appendTestWeaknessTag('subject', 'Revision Needed')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Revision Needed</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Revision Needed</button>
           </div>
         </div>
       </div>
@@ -2524,7 +2814,8 @@
           </div>
           <div>
             <label class="font-semibold text-slate-300">Scored Marks:</label>
-            <input type="number" id="mockTestScoredMarks" step="0.33" placeholder="e.g. 74.33" oninput="onTestMarksInputLive('mock')"
+            <input type="number" id="mockTestScoredMarks" step="0.33" placeholder="e.g. 74.33"
+              oninput="onTestMarksInputLive('mock')"
               class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 font-mono text-xs font-bold text-emerald-400 focus:border-amber-500/50 outline-none" />
           </div>
           <div>
@@ -2538,7 +2829,8 @@
         <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="text-[11px] text-slate-400">Performance:</span>
-            <span id="mockLiveScorePill" class="text-[11px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            <span id="mockLiveScorePill"
+              class="text-[11px] font-bold font-mono px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
               0.0% &bull; Pending
             </span>
           </div>
@@ -2579,22 +2871,29 @@
             <label class="font-semibold text-slate-300">Rank / Percentile / Analysis Notes:</label>
             <span class="text-[10px] text-slate-400">Click tags below to append</span>
           </div>
-          <input type="text" id="mockTestNotes" placeholder="e.g. Rank 38/1800 &bull; Accuracy 89% &bull; Focus on Speed in Section B"
+          <input type="text" id="mockTestNotes"
+            placeholder="e.g. Rank 38/1800 &bull; Accuracy 89% &bull; Focus on Speed in Section B"
             class="w-full mt-1 bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white focus:border-amber-500/50 outline-none" />
           <!-- Clickable Weakness Chips -->
           <div class="flex flex-wrap items-center gap-1.5 mt-2">
             <button type="button" onclick="appendTestWeaknessTag('mock', 'Calculation Error')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Calculation Error</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Calculation Error</button>
             <button type="button" onclick="appendTestWeaknessTag('mock', 'Concept Gap')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Concept Gap</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Concept Gap</button>
             <button type="button" onclick="appendTestWeaknessTag('mock', 'Silly Mistake')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Silly Mistake</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Silly Mistake</button>
             <button type="button" onclick="appendTestWeaknessTag('mock', 'Time Pressure')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Time Pressure</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Time Pressure</button>
             <button type="button" onclick="appendTestWeaknessTag('mock', 'Formula Forgotten')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Formula Forgotten</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Formula Forgotten</button>
             <button type="button" onclick="appendTestWeaknessTag('mock', 'Revision Needed')"
-              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+ Revision Needed</button>
+              class="test-weakness-tag px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300">+
+              Revision Needed</button>
           </div>
         </div>
       </div>
@@ -2891,11 +3190,13 @@
       class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-purple-500/30 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
       <div class="flex justify-between items-start border-b border-white/10 pb-3">
         <div>
-          <span class="text-[10px] font-bold text-accent-purple uppercase tracking-wider">WEEKEND CHALLENGE &bull; MARKS TRACKING</span>
+          <span class="text-[10px] font-bold text-accent-purple uppercase tracking-wider">WEEKEND CHALLENGE &bull; MARKS
+            TRACKING</span>
           <h3 class="text-base font-bold text-white mt-0.5 flex items-center gap-2">
             <i class="fa-solid fa-pen-nib text-accent-purple"></i> Log Question Practice & Marks
           </h3>
-          <p class="text-xs text-slate-400">Record questions solved daily on Saturday/Sunday with accuracy and negative marks.</p>
+          <p class="text-xs text-slate-400">Record questions solved daily on Saturday/Sunday with accuracy and negative
+            marks.</p>
         </div>
         <button onclick="closeWeekendLogModal()" class="text-slate-400 hover:text-white text-sm"><i
             class="fa-solid fa-xmark"></i></button>
@@ -2980,7 +3281,8 @@
           </div>
 
           <!-- LIVE CALCULATED SCORE BANNER -->
-          <div class="p-2.5 rounded-lg bg-black/60 border border-purple-500/20 flex flex-wrap justify-between items-center gap-2">
+          <div
+            class="p-2.5 rounded-lg bg-black/60 border border-purple-500/20 flex flex-wrap justify-between items-center gap-2">
             <div>
               <span class="text-[10px] text-slate-400">Net Marks Scored:</span>
               <p id="wkCalcNetMarksLabel" class="text-base font-extrabold font-mono text-emerald-400">+18.35 / 25.0</p>
@@ -2994,7 +3296,8 @@
 
         <div>
           <label class="font-semibold text-slate-300">Mistake Analysis & Key Reflections (Optional):</label>
-          <textarea id="wkLogNotesInput" rows="2" placeholder="e.g. Lost 1 mark on matrix row transformation; revise rank theorems"
+          <textarea id="wkLogNotesInput" rows="2"
+            placeholder="e.g. Lost 1 mark on matrix row transformation; revise rank theorems"
             class="w-full mt-1 bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-sans text-xs focus:outline-none focus:border-purple-400"></textarea>
         </div>
       </div>
@@ -4079,48 +4382,8 @@
       if (elTodayStepsPct) elTodayStepsPct.innerText = `${stepsPctToday}%`;
       if (elTodayStepsBar) elTodayStepsBar.style.width = `${stepsPctToday}%`;
 
-      const barsContainer = document.getElementById("an7DayBarsContainer");
-      if (barsContainer) {
-        barsContainer.innerHTML = "";
-        let weekTotalMins = 0;
-        const days = [];
-        for (let i = 6; i >= 0; i--) {
-          const d = new Date();
-          d.setDate(d.getDate() - i);
-          days.push(d.toISOString().slice(0, 10));
-        }
-
-        const dayMinsArr = days.map(dStr => {
-          const dayM = logs.filter(l => l.date === dStr).reduce((a, c) => a + (c.minutes || 0), 0);
-          weekTotalMins += dayM;
-          return { date: dStr, mins: dayM };
-        });
-
-        const maxM = Math.max(120, ...dayMinsArr.map(x => x.mins));
-
-        dayMinsArr.forEach(item => {
-          const dt = new Date(item.date + "T00:00:00");
-          const dayName = dt.toLocaleDateString(undefined, { weekday: 'narrow' });
-          const barHeightPct = Math.max(6, Math.round((item.mins / maxM) * 100));
-          const isToday = item.date === todayIso;
-
-          const barCol = document.createElement("div");
-          barCol.className = "flex flex-col items-center justify-end h-full gap-1.5 group relative cursor-pointer";
-          barCol.onclick = () => showDayDetailLogs(item.date);
-
-          barCol.innerHTML = `
-            <div class="absolute -top-8 opacity-0 group-hover:opacity-100 transition bg-slate-950 text-white text-[10px] font-mono px-2 py-0.5 rounded shadow border border-white/10 whitespace-nowrap z-10 pointer-events-none">
-              ${Math.floor(item.mins / 60)}h ${item.mins % 60}m &bull; Click to view
-            </div>
-            <div class="w-full max-w-[28px] rounded-t-lg transition-all duration-300 group-hover:scale-105 group-hover:brightness-125 ${isToday ? 'bg-accent-blue shadow-lg shadow-blue-500/30' : (item.mins > 0 ? 'bg-white/40 hover:bg-white/60' : 'bg-white/10')}" style="height: ${barHeightPct}%"></div>
-            <span class="text-[10px] font-bold ${isToday ? 'text-accent-blue' : 'text-slate-400 group-hover:text-white'}">${dayName}</span>
-          `;
-          barsContainer.appendChild(barCol);
-        });
-
-        const el7DayTotal = document.getElementById("an7DayTotalHours");
-        if (el7DayTotal) el7DayTotal.innerText = `${(weekTotalMins / 60).toFixed(1)}h Total (Past 7 Days)`;
-      }
+      // Render Velocity Analytics Section
+      renderVelocitySection();
 
       const activeContainer = document.getElementById("anActiveCycleSubjectsList");
       const nameLabel = document.getElementById("anActiveCycleNameLabel");
@@ -4269,6 +4532,393 @@
       if (elDiagT) elDiagT.innerText = `${avgT}%`;
       if (elDiagS) elDiagS.innerText = `${avgS}%`;
       if (elDiagM) elDiagM.innerText = `${avgM}%`;
+    }
+
+    // ==============================================================
+    // ENHANCED STUDY TIME VELOCITY & MULTI-GRANULARITY ANALYTICS ENGINE
+    // ==============================================================
+    let currentVelocityRange = '7d'; // '7d', '14d', '30d', 'weeks', 'months', 'all_days'
+    let currentVelocityMetric = 'hours'; // 'hours', 'questions'
+
+    function setVelocityRange(range) {
+      currentVelocityRange = range;
+      
+      const tabs = ['7d', '14d', '30d', 'weeks', 'months', 'all_days'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`velTab-${t}`);
+        if (btn) {
+          if (t === range) {
+            btn.className = "vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-blue-600/30 text-white shadow-md border border-blue-400/50 vel-tab-active";
+          } else {
+            btn.className = "vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5";
+          }
+        }
+      });
+
+      const badge = document.getElementById("anVelocityBadge");
+      const title = document.getElementById("anVelocityTitle");
+      const subtext = document.getElementById("anVelocitySubtext");
+      const hint = document.getElementById("anVelocityHint");
+
+      const badgeMap = {
+        '7d': '7 Days Velocity',
+        '14d': '14 Days Velocity',
+        '30d': '30 Days Velocity',
+        'weeks': 'All Weeks Velocity',
+        'months': 'All Months Velocity',
+        'all_days': 'All Days Log Table'
+      };
+      const subtextMap = {
+        '7d': 'Daily study time & questions logged across the past 7 days',
+        '14d': '2-Week trend comparison of daily study investment',
+        '30d': 'Full 30-day activity trajectory & consistency breakdown',
+        'weeks': 'Aggregated weekly study hours & question velocity for every week',
+        'months': 'Monthly study milestones, aggregated hours & subject focus',
+        'all_days': 'Complete searchable & filterable table of all recorded study sessions'
+      };
+
+      if (badge) badge.innerText = badgeMap[range] || range;
+      if (title) title.innerText = range === 'all_days' ? 'All Days Study Log Archive' : 'Study Time Velocity & Progress';
+      if (subtext) subtext.innerText = subtextMap[range] || '';
+      if (hint) hint.innerText = range === 'all_days' ? 'Use filters to search logs or export to CSV spreadsheet' : 'Click any bar to inspect detailed session breakdown for that period';
+
+      renderVelocitySection();
+    }
+
+    function setVelocityMetric(metric) {
+      currentVelocityMetric = metric;
+      const btnHours = document.getElementById("anMetricHoursBtn");
+      const btnQs = document.getElementById("anMetricQsBtn");
+
+      if (btnHours && btnQs) {
+        if (metric === 'hours') {
+          btnHours.className = "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 bg-blue-600 text-white shadow-md";
+          btnQs.className = "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 text-slate-400 hover:text-white";
+        } else {
+          btnQs.className = "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 bg-emerald-600 text-white shadow-md";
+          btnHours.className = "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 text-slate-400 hover:text-white";
+        }
+      }
+
+      renderVelocitySection();
+    }
+
+    function renderVelocitySection() {
+      const logs = appState.dailyLogs || [];
+      const chartContainer = document.getElementById("anVelocityChartContainer");
+      const allDaysContainer = document.getElementById("anVelocityAllDaysContainer");
+      const todayIso = new Date().toISOString().slice(0, 10);
+
+      if (!chartContainer || !allDaysContainer) return;
+
+      if (currentVelocityRange === 'all_days') {
+        chartContainer.classList.add("hidden");
+        allDaysContainer.classList.remove("hidden");
+        populateSubjectFilterOptions();
+        renderVelocityAllDaysTable();
+
+        const totalMinsAll = logs.reduce((a, c) => a + (c.minutes || 0), 0);
+        const totalQsAll = logs.reduce((a, c) => a + (c.questions || 0), 0);
+        const uniqueDaysAll = new Set(logs.map(l => l.date)).size || 1;
+
+        const elTotal = document.getElementById("anVelStatTotal");
+        const elAvg = document.getElementById("anVelStatAvg");
+        const elPeak = document.getElementById("anVelStatPeak");
+        const elQs = document.getElementById("anVelStatQs");
+        const elHeaderTotal = document.getElementById("an7DayTotalHours");
+
+        if (elTotal) elTotal.innerText = `${Math.floor(totalMinsAll / 60)}h ${totalMinsAll % 60}m`;
+        if (elAvg) elAvg.innerText = `${((totalMinsAll / 60) / uniqueDaysAll).toFixed(1)}h / active day`;
+        if (elPeak) elPeak.innerText = `${uniqueDaysAll} Total Days`;
+        if (elQs) elQs.innerText = `${totalQsAll} Qs Total`;
+        if (elHeaderTotal) elHeaderTotal.innerText = `${(totalMinsAll / 60).toFixed(1)}h Total (All Time)`;
+        return;
+      }
+
+      chartContainer.classList.remove("hidden");
+      allDaysContainer.classList.add("hidden");
+      chartContainer.innerHTML = "";
+
+      let items = [];
+
+      if (['7d', '14d', '30d'].includes(currentVelocityRange)) {
+        const daysCount = currentVelocityRange === '7d' ? 7 : (currentVelocityRange === '14d' ? 14 : 30);
+        for (let i = daysCount - 1; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const dIso = d.toISOString().slice(0, 10);
+          const dayLogs = logs.filter(l => l.date === dIso);
+          const mins = dayLogs.reduce((a, c) => a + (c.minutes || 0), 0);
+          const qs = dayLogs.reduce((a, c) => a + (c.questions || 0), 0);
+          const dt = new Date(dIso + "T00:00:00");
+          let dayName = dt.toLocaleDateString(undefined, { weekday: 'narrow' });
+          if (daysCount === 14) {
+            dayName = `${dt.toLocaleDateString(undefined, { weekday: 'narrow' })}${dt.getDate()}`;
+          } else if (daysCount === 30) {
+            dayName = `${dt.getDate()}/${dt.getMonth()+1}`;
+          }
+
+          items.push({
+            label: dayName,
+            sublabel: dIso,
+            val: currentVelocityMetric === 'hours' ? Math.round((mins / 60) * 10) / 10 : qs,
+            minutes: mins,
+            questions: qs,
+            dateStart: dIso,
+            dateEnd: dIso,
+            isCurrent: dIso === todayIso,
+            clickHandler: () => showDayDetailLogs(dIso)
+          });
+        }
+      } else if (currentVelocityRange === 'weeks') {
+        const weekMap = {};
+        logs.forEach(l => {
+          if (!l.date) return;
+          const d = new Date(l.date + "T00:00:00");
+          const day = d.getDay();
+          const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+          const monday = new Date(d.setDate(diff));
+          const monStr = monday.toISOString().slice(0, 10);
+          if (!weekMap[monStr]) weekMap[monStr] = { mins: 0, qs: 0, daysSet: new Set() };
+          weekMap[monStr].mins += (l.minutes || 0);
+          weekMap[monStr].qs += (l.questions || 0);
+          weekMap[monStr].daysSet.add(l.date);
+        });
+
+        const currD = new Date();
+        const currDay = currD.getDay();
+        const currDiff = currD.getDate() - currDay + (currDay === 0 ? -6 : 1);
+        const currMonday = new Date(currD.setDate(currDiff));
+
+        const weekKeys = Object.keys(weekMap).sort();
+        const weeksList = [];
+        const minWeeks = 8;
+        for (let k = minWeeks - 1; k >= 0; k--) {
+          const wMon = new Date(currMonday);
+          wMon.setDate(wMon.getDate() - (k * 7));
+          const wStr = wMon.toISOString().slice(0, 10);
+          if (!weeksList.includes(wStr)) weeksList.push(wStr);
+        }
+        weekKeys.forEach(wk => { if (!weeksList.includes(wk)) weeksList.push(wk); });
+        weeksList.sort();
+
+        weeksList.forEach(wMonStr => {
+          const wMon = new Date(wMonStr + "T00:00:00");
+          const wSun = new Date(wMon);
+          wSun.setDate(wSun.getDate() + 6);
+          const sunStr = wSun.toISOString().slice(0, 10);
+
+          const wData = weekMap[wMonStr] || { mins: 0, qs: 0, daysSet: new Set() };
+          const label = `${wMon.getDate()}/${wMon.getMonth()+1}`;
+          const isCurrWeek = todayIso >= wMonStr && todayIso <= sunStr;
+
+          items.push({
+            label: `Wk ${label}`,
+            sublabel: `${wMon.toLocaleDateString(undefined,{month:'short',day:'numeric'})} - ${wSun.toLocaleDateString(undefined,{month:'short',day:'numeric'})}`,
+            val: currentVelocityMetric === 'hours' ? Math.round((wData.mins / 60) * 10) / 10 : wData.qs,
+            minutes: wData.mins,
+            questions: wData.qs,
+            activeDays: wData.daysSet.size,
+            dateStart: wMonStr,
+            dateEnd: sunStr,
+            isCurrent: isCurrWeek,
+            clickHandler: () => showWeekDetailLogs(wMonStr, sunStr, `Week of ${wMon.toLocaleDateString(undefined,{month:'short',day:'numeric'})}`)
+          });
+        });
+
+      } else if (currentVelocityRange === 'months') {
+        const monthMap = {};
+        logs.forEach(l => {
+          if (!l.date) return;
+          const ym = l.date.slice(0, 7);
+          if (!monthMap[ym]) monthMap[ym] = { mins: 0, qs: 0, daysSet: new Set() };
+          monthMap[ym].mins += (l.minutes || 0);
+          monthMap[ym].qs += (l.questions || 0);
+          monthMap[ym].daysSet.add(l.date);
+        });
+
+        const monthsList = [];
+        const dNow = new Date();
+        for (let m = 5; m >= 0; m--) {
+          const mDate = new Date(dNow.getFullYear(), dNow.getMonth() - m, 1);
+          const ymStr = mDate.toISOString().slice(0, 7);
+          if (!monthsList.includes(ymStr)) monthsList.push(ymStr);
+        }
+        Object.keys(monthMap).forEach(ym => { if (!monthsList.includes(ym)) monthsList.push(ym); });
+        monthsList.sort();
+
+        const currYM = todayIso.slice(0, 7);
+
+        monthsList.forEach(ymStr => {
+          const mParts = ymStr.split("-");
+          const mDt = new Date(parseInt(mParts[0]), parseInt(mParts[1]) - 1, 1);
+          const monthName = mDt.toLocaleDateString(undefined, { month: 'short' });
+          const mData = monthMap[ymStr] || { mins: 0, qs: 0, daysSet: new Set() };
+
+          items.push({
+            label: monthName,
+            sublabel: `${mDt.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}`,
+            val: currentVelocityMetric === 'hours' ? Math.round((mData.mins / 60) * 10) / 10 : mData.qs,
+            minutes: mData.mins,
+            questions: mData.qs,
+            activeDays: mData.daysSet.size,
+            dateStart: `${ymStr}-01`,
+            dateEnd: `${ymStr}-31`,
+            isCurrent: ymStr === currYM,
+            clickHandler: () => showMonthDetailLogs(ymStr, mDt.toLocaleDateString(undefined, { month: 'long', year: 'numeric' }))
+          });
+        });
+      }
+
+      const maxVal = Math.max(currentVelocityMetric === 'hours' ? 2 : 10, ...items.map(x => x.val));
+      const peakItem = items.reduce((max, it) => (it.val > (max ? max.val : -1) ? it : max), null);
+
+      const totalMinsRange = items.reduce((a, c) => a + c.minutes, 0);
+      const totalQsRange = items.reduce((a, c) => a + c.questions, 0);
+      const avgVal = currentVelocityMetric === 'hours' 
+        ? ((totalMinsRange / 60) / (items.length || 1)).toFixed(1) + 'h / period'
+        : Math.round(totalQsRange / (items.length || 1)) + ' Qs / period';
+
+      const elTotal = document.getElementById("anVelStatTotal");
+      const elAvg = document.getElementById("anVelStatAvg");
+      const elPeak = document.getElementById("anVelStatPeak");
+      const elQs = document.getElementById("anVelStatQs");
+      const elHeaderTotal = document.getElementById("an7DayTotalHours");
+
+      if (elTotal) elTotal.innerText = `${Math.floor(totalMinsRange / 60)}h ${totalMinsRange % 60}m`;
+      if (elAvg) elAvg.innerText = avgVal;
+      if (elPeak && peakItem) elPeak.innerText = currentVelocityMetric === 'hours' ? `${(peakItem.minutes/60).toFixed(1)}h (${peakItem.label})` : `${peakItem.questions} Qs (${peakItem.label})`;
+      if (elQs) elQs.innerText = `${totalQsRange} Qs Total`;
+      if (elHeaderTotal) elHeaderTotal.innerText = `${(totalMinsRange / 60).toFixed(1)}h Total`;
+
+      items.forEach(item => {
+        const barHeightPct = Math.max(8, Math.round((item.val / maxVal) * 100));
+        const isPeak = peakItem && item.val > 0 && item.val === peakItem.val;
+        
+        let colorClass = "bg-white/20 hover:bg-white/40 text-slate-300";
+        if (isPeak) {
+          colorClass = "bg-gradient-to-t from-amber-500 to-yellow-300 shadow-[0_0_15px_rgba(251,191,36,0.5)] border border-amber-300 text-amber-300";
+        } else if (item.isCurrent) {
+          colorClass = "bg-gradient-to-t from-cyan-500 to-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)] border border-cyan-300 text-cyan-300";
+        } else if (item.val > 0) {
+          colorClass = currentVelocityMetric === 'hours' 
+            ? "bg-gradient-to-t from-blue-600/80 to-indigo-400/90 hover:from-blue-500 hover:to-indigo-300 text-blue-300 border border-blue-400/30"
+            : "bg-gradient-to-t from-emerald-600/80 to-teal-400/90 hover:from-emerald-500 hover:to-teal-300 text-emerald-300 border border-emerald-400/30";
+        }
+
+        const barCol = document.createElement("div");
+        barCol.className = "flex-1 flex flex-col items-center justify-end h-full gap-1.5 group relative cursor-pointer min-w-[16px]";
+        barCol.onclick = item.clickHandler;
+
+        const timeStr = `${Math.floor(item.minutes / 60)}h ${item.minutes % 60}m`;
+        const tooltipValStr = currentVelocityMetric === 'hours' ? `${timeStr} &bull; ${item.questions} Qs` : `${item.questions} Qs &bull; ${timeStr}`;
+
+        barCol.innerHTML = `
+          <div class="absolute -top-10 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-slate-950 text-white text-[10px] font-mono px-2.5 py-1 rounded-xl shadow-2xl border border-white/20 whitespace-nowrap z-30 pointer-events-none transform -translate-y-1 group-hover:translate-y-0">
+            <span class="font-bold text-accent-blue">${item.sublabel}</span>: ${tooltipValStr}
+          </div>
+          
+          <div class="w-full max-w-[32px] rounded-t-xl transition-all duration-300 group-hover:scale-105 group-hover:brightness-125 animate-bar-grow ${colorClass}" style="height: ${barHeightPct}%">
+            ${isPeak ? '<div class="w-full flex justify-center -mt-2"><i class="fa-solid fa-crown text-[8px] text-amber-200"></i></div>' : ''}
+          </div>
+
+          <span class="text-[10px] font-bold truncate max-w-full ${item.isCurrent ? 'text-accent-blue font-extrabold' : (isPeak ? 'text-amber-300' : 'text-slate-400 group-hover:text-white')}">${item.label}</span>
+        `;
+        chartContainer.appendChild(barCol);
+      });
+    }
+
+    function populateSubjectFilterOptions() {
+      const select = document.getElementById("anAllDaysSubjectFilter");
+      if (!select) return;
+      select.innerHTML = '<option value="all">All Subjects</option>' + SUBJECTS.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+    }
+
+    function renderVelocityAllDaysTable() {
+      const tbody = document.getElementById("anAllDaysTableBody");
+      if (!tbody) return;
+
+      const searchText = (document.getElementById("anAllDaysSearchInput")?.value || "").toLowerCase();
+      const subjectFilter = document.getElementById("anAllDaysSubjectFilter")?.value || "all";
+
+      let logs = appState.dailyLogs || [];
+
+      if (subjectFilter !== "all") {
+        logs = logs.filter(l => l.subjectId === subjectFilter);
+      }
+      if (searchText) {
+        logs = logs.filter(l => 
+          (l.title || "").toLowerCase().includes(searchText) ||
+          (l.date || "").toLowerCase().includes(searchText) ||
+          (l.subjectId || "").toLowerCase().includes(searchText)
+        );
+      }
+
+      if (logs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 italic">No study logs matching the current filter.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = logs.map(l => {
+        const subj = SUBJECTS.find(s => s.id === l.subjectId);
+        const subjName = subj ? subj.name : (l.subjectId || "General Study");
+        const dt = new Date(l.date + "T00:00:00");
+        const dateStr = dt.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+
+        return `
+          <tr class="hover:bg-white/5 transition">
+            <td class="p-2.5 font-mono text-[11px] text-slate-300 whitespace-nowrap">${dateStr}</td>
+            <td class="p-2.5">
+              <span class="font-bold text-white text-xs block">${l.title || 'Study Session'}</span>
+              <span class="text-[10px] text-blue-400 font-semibold">${subjName}</span>
+            </td>
+            <td class="p-2.5 text-right font-mono font-bold text-slate-200 whitespace-nowrap">${Math.floor(l.minutes / 60)}h ${l.minutes % 60}m</td>
+            <td class="p-2.5 text-right font-mono font-bold text-accent-emerald whitespace-nowrap">${l.questions > 0 ? `+${l.questions} Qs` : '0 Qs'}</td>
+            <td class="p-2.5 text-center whitespace-nowrap">
+              <button onclick="showDayDetailLogs('${l.date}')" title="View details" class="px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-[10px] font-bold text-white transition">
+                <i class="fa-solid fa-eye"></i> View
+              </button>
+              <button onclick="deleteStudyLog(${l.id})" title="Delete entry" class="px-2 py-1 rounded bg-rose-500/20 hover:bg-rose-500/40 text-rose-300 text-[10px] font-bold transition ml-1">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function exportStudyLogsCSV() {
+      const logs = appState.dailyLogs || [];
+      if (logs.length === 0) {
+        alert("No study logs available to export.");
+        return;
+      }
+      const headers = ["Date", "Time Logged", "Subject ID", "Activity Title", "Duration (Mins)", "Questions Solved", "Net Marks", "Accuracy (%)"];
+      const rows = logs.map(l => [
+        `"${l.date || ''}"`,
+        `"${l.timeStr || ''}"`,
+        `"${l.subjectId || ''}"`,
+        `"${(l.title || '').replace(/"/g, '""')}"`,
+        l.minutes || 0,
+        l.questions || 0,
+        l.netMarks !== undefined ? l.netMarks : '',
+        l.accuracyPct !== undefined ? l.accuracyPct : ''
+      ]);
+      const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `gate2027_study_logs_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function deleteStudyLog(logId) {
+      if (!confirm("Are you sure you want to delete this study session log?")) return;
+      appState.dailyLogs = (appState.dailyLogs || []).filter(l => l.id !== logId);
+      saveState();
+      renderAnalyticsHub();
     }
 
     // 11. TESTS & MOCKS MODULE (HIGH-VELOCITY, ACCESSIBLE & ANIMATED)
@@ -4643,10 +5293,10 @@
           const notes = (t.notes || '').toLowerCase();
           const subjsList = (t.subjectsList || []).join(' ').toLowerCase();
           return name.includes(currentTestSearchQuery) ||
-                 subj.includes(currentTestSearchQuery) ||
-                 topic.includes(currentTestSearchQuery) ||
-                 notes.includes(currentTestSearchQuery) ||
-                 subjsList.includes(currentTestSearchQuery);
+            subj.includes(currentTestSearchQuery) ||
+            topic.includes(currentTestSearchQuery) ||
+            notes.includes(currentTestSearchQuery) ||
+            subjsList.includes(currentTestSearchQuery);
         });
       }
 
@@ -5811,6 +6461,88 @@
     function closeDayLogsDetailModal() {
       const modal = document.getElementById("dayLogsDetailModal");
       if (modal) modal.classList.add("hidden");
+    }
+
+    function showWeekDetailLogs(startDateStr, endDateStr, weekTitle) {
+      const modal = document.getElementById("dayLogsDetailModal");
+      if (!modal) return;
+
+      const logs = (appState.dailyLogs || []).filter(l => l.date >= startDateStr && l.date <= endDateStr);
+      const totalM = logs.reduce((a, c) => a + (c.minutes || 0), 0);
+      const totalQ = logs.reduce((a, c) => a + (c.questions || 0), 0);
+
+      document.getElementById("dayModalDateTitle").innerText = weekTitle;
+      document.getElementById("dayModalDateSub").innerText = `Weekly Activity (${startDateStr} to ${endDateStr})`;
+      document.getElementById("dayModalTotalTime").innerText = `${Math.floor(totalM / 60)}h ${totalM % 60}m`;
+      document.getElementById("dayModalTotalQs").innerText = `${totalQ} Qs`;
+
+      const listContainer = document.getElementById("dayModalSessionsList");
+      if (logs.length === 0) {
+        listContainer.innerHTML = `<p class="text-slate-400 italic text-center py-6">No study sessions logged during this week.</p>`;
+      } else {
+        listContainer.innerHTML = logs.map(l => {
+          const d = new Date(l.date + "T00:00:00");
+          const dLabel = d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+          return `
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center">
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300">${dLabel}</span>
+                  <p class="font-bold text-white text-xs truncate max-w-[180px]">${l.title}</p>
+                </div>
+                <span class="text-[10px] text-slate-400">${l.timeStr || "Logged session"}</span>
+              </div>
+              <div class="text-right font-mono text-xs">
+                <span class="text-slate-200">${l.minutes}m</span>
+                ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function showMonthDetailLogs(yearMonthStr, monthTitle) {
+      const modal = document.getElementById("dayLogsDetailModal");
+      if (!modal) return;
+
+      const logs = (appState.dailyLogs || []).filter(l => (l.date || "").startsWith(yearMonthStr));
+      const totalM = logs.reduce((a, c) => a + (c.minutes || 0), 0);
+      const totalQ = logs.reduce((a, c) => a + (c.questions || 0), 0);
+
+      document.getElementById("dayModalDateTitle").innerText = monthTitle;
+      document.getElementById("dayModalDateSub").innerText = `Monthly Summary (${yearMonthStr})`;
+      document.getElementById("dayModalTotalTime").innerText = `${Math.floor(totalM / 60)}h ${totalM % 60}m`;
+      document.getElementById("dayModalTotalQs").innerText = `${totalQ} Qs`;
+
+      const listContainer = document.getElementById("dayModalSessionsList");
+      if (logs.length === 0) {
+        listContainer.innerHTML = `<p class="text-slate-400 italic text-center py-6">No study sessions logged during this month.</p>`;
+      } else {
+        listContainer.innerHTML = logs.map(l => {
+          const d = new Date(l.date + "T00:00:00");
+          const dLabel = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+          return `
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center">
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">${dLabel}</span>
+                  <p class="font-bold text-white text-xs truncate max-w-[180px]">${l.title}</p>
+                </div>
+                <span class="text-[10px] text-slate-400">${l.timeStr || "Logged session"}</span>
+              </div>
+              <div class="text-right font-mono text-xs">
+                <span class="text-slate-200">${l.minutes}m</span>
+                ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      modal.classList.remove("hidden");
     }
 
     // ==============================================================
