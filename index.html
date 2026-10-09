@@ -2175,7 +2175,10 @@
       </div>
 
       <div class="space-y-1.5">
-        <span class="text-xs font-semibold text-slate-300">Sessions on this date:</span>
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-semibold text-slate-300">Sessions on this date:</span>
+          <div id="dayModalDeduplicateAction"></div>
+        </div>
         <div id="dayModalSessionsList" class="space-y-1.5 max-h-56 overflow-y-auto custom-scroll pr-1 text-xs"></div>
       </div>
 
@@ -4074,6 +4077,11 @@
         try {
           appState = { ...appState, ...JSON.parse(saved) };
           if (!appState.tests) appState.tests = [];
+          if (Array.isArray(appState.dailyLogs)) {
+            appState.dailyLogs.forEach((l, idx) => {
+              if (!l.id) l.id = Date.now() + idx + Math.floor(Math.random() * 10000);
+            });
+          }
         } catch (e) {
           console.error("State parse error", e);
         }
@@ -6101,11 +6109,14 @@
       }
 
       container.innerHTML = logs.map(l => `
-        <div class="flex justify-between items-center py-1 border-b border-white/10">
-          <span class="truncate max-w-[170px] font-medium text-slate-200">${l.title}</span>
-          <div class="flex items-center gap-2 font-mono text-[11px]">
+        <div class="flex justify-between items-center py-1 border-b border-white/10 group">
+          <span class="truncate max-w-[150px] font-medium text-slate-200" title="${l.title}">${l.title}</span>
+          <div class="flex items-center gap-1.5 font-mono text-[11px]">
             <span>${l.minutes}m</span>
             ${l.questions > 0 ? `<span class="text-emerald-400 font-bold">+${l.questions} Qs</span>` : ''}
+            <button onclick="deleteDayModalSessionLog('${l.id}')" title="Delete session timestamp log" class="p-1 text-rose-400 hover:text-rose-200 transition opacity-80 hover:opacity-100 ml-1">
+              <i class="fa-solid fa-trash-can text-[10px]"></i>
+            </button>
           </div>
         </div>
       `).join("");
@@ -6420,11 +6431,17 @@
     }
 
     // 16. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
+    // 16. MODAL HANDLERS FOR VIEWING SPECIFIC DAY LOGS ON BAR CLICK
+    window.currentDayLogsModalContext = null;
+
     function showDayDetailLogs(dateStr) {
+      window.currentDayLogsModalContext = { type: 'day', dateStr };
       const modal = document.getElementById("dayLogsDetailModal");
       if (!modal) return;
 
       const logs = (appState.dailyLogs || []).filter(l => l.date === dateStr);
+      logs.forEach((l, idx) => { if (!l.id) l.id = Date.now() + idx; });
+
       const totalM = logs.reduce((a, c) => a + (c.minutes || 0), 0);
       const totalQ = logs.reduce((a, c) => a + (c.questions || 0), 0);
 
@@ -6437,19 +6454,38 @@
       document.getElementById("dayModalTotalTime").innerText = `${Math.floor(totalM / 60)}h ${totalM % 60}m`;
       document.getElementById("dayModalTotalQs").innerText = `${totalQ} Qs`;
 
+      const actionContainer = document.getElementById("dayModalDeduplicateAction");
+      if (actionContainer) {
+        const hasDuplicates = logs.some((l, i) => logs.findIndex(other => other.title === l.title && other.minutes === l.minutes) !== i);
+        if (hasDuplicates) {
+          actionContainer.innerHTML = `
+            <button onclick="deduplicateDayLogs('${dateStr}')" title="Clean duplicate timestamps" class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 font-medium transition flex items-center gap-1">
+              <i class="fa-solid fa-broom"></i> Remove Duplicates
+            </button>
+          `;
+        } else {
+          actionContainer.innerHTML = '';
+        }
+      }
+
       const listContainer = document.getElementById("dayModalSessionsList");
       if (logs.length === 0) {
         listContainer.innerHTML = `<p class="text-slate-400 italic text-center py-6">No study sessions logged on this day.</p>`;
       } else {
         listContainer.innerHTML = logs.map(l => `
-          <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center">
-            <div>
-              <p class="font-bold text-white text-xs truncate max-w-[210px]">${l.title}</p>
+          <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center group hover:bg-white/10 transition">
+            <div class="flex-1 min-w-0 pr-2">
+              <p class="font-bold text-white text-xs truncate max-w-[200px]">${l.title}</p>
               <span class="text-[10px] text-slate-400">${l.timeStr || "Logged session"}</span>
             </div>
-            <div class="text-right font-mono text-xs">
-              <span class="text-slate-200">${l.minutes}m</span>
-              ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+            <div class="flex items-center gap-2">
+              <div class="text-right font-mono text-xs">
+                <span class="text-slate-200">${l.minutes}m</span>
+                ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+              </div>
+              <button onclick="deleteDayModalSessionLog('${l.id}')" title="Delete record timestamp" class="w-7 h-7 rounded-lg bg-rose-500/10 hover:bg-rose-500/30 text-rose-400 hover:text-rose-200 text-xs transition flex items-center justify-center border border-rose-500/20">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
             </div>
           </div>
         `).join("");
@@ -6461,13 +6497,17 @@
     function closeDayLogsDetailModal() {
       const modal = document.getElementById("dayLogsDetailModal");
       if (modal) modal.classList.add("hidden");
+      window.currentDayLogsModalContext = null;
     }
 
     function showWeekDetailLogs(startDateStr, endDateStr, weekTitle) {
+      window.currentDayLogsModalContext = { type: 'week', startDateStr, endDateStr, weekTitle };
       const modal = document.getElementById("dayLogsDetailModal");
       if (!modal) return;
 
       const logs = (appState.dailyLogs || []).filter(l => l.date >= startDateStr && l.date <= endDateStr);
+      logs.forEach((l, idx) => { if (!l.id) l.id = Date.now() + idx; });
+
       const totalM = logs.reduce((a, c) => a + (c.minutes || 0), 0);
       const totalQ = logs.reduce((a, c) => a + (c.questions || 0), 0);
 
@@ -6475,6 +6515,9 @@
       document.getElementById("dayModalDateSub").innerText = `Weekly Activity (${startDateStr} to ${endDateStr})`;
       document.getElementById("dayModalTotalTime").innerText = `${Math.floor(totalM / 60)}h ${totalM % 60}m`;
       document.getElementById("dayModalTotalQs").innerText = `${totalQ} Qs`;
+
+      const actionContainer = document.getElementById("dayModalDeduplicateAction");
+      if (actionContainer) actionContainer.innerHTML = '';
 
       const listContainer = document.getElementById("dayModalSessionsList");
       if (logs.length === 0) {
@@ -6484,17 +6527,22 @@
           const d = new Date(l.date + "T00:00:00");
           const dLabel = d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
           return `
-            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center">
-              <div>
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center group hover:bg-white/10 transition">
+              <div class="flex-1 min-w-0 pr-2">
                 <div class="flex items-center gap-1.5">
                   <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300">${dLabel}</span>
-                  <p class="font-bold text-white text-xs truncate max-w-[180px]">${l.title}</p>
+                  <p class="font-bold text-white text-xs truncate max-w-[160px]">${l.title}</p>
                 </div>
                 <span class="text-[10px] text-slate-400">${l.timeStr || "Logged session"}</span>
               </div>
-              <div class="text-right font-mono text-xs">
-                <span class="text-slate-200">${l.minutes}m</span>
-                ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+              <div class="flex items-center gap-2">
+                <div class="text-right font-mono text-xs">
+                  <span class="text-slate-200">${l.minutes}m</span>
+                  ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+                </div>
+                <button onclick="deleteDayModalSessionLog('${l.id}')" title="Delete record timestamp" class="w-7 h-7 rounded-lg bg-rose-500/10 hover:bg-rose-500/30 text-rose-400 hover:text-rose-200 text-xs transition flex items-center justify-center border border-rose-500/20">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
               </div>
             </div>
           `;
@@ -6505,10 +6553,13 @@
     }
 
     function showMonthDetailLogs(yearMonthStr, monthTitle) {
+      window.currentDayLogsModalContext = { type: 'month', yearMonthStr, monthTitle };
       const modal = document.getElementById("dayLogsDetailModal");
       if (!modal) return;
 
       const logs = (appState.dailyLogs || []).filter(l => (l.date || "").startsWith(yearMonthStr));
+      logs.forEach((l, idx) => { if (!l.id) l.id = Date.now() + idx; });
+
       const totalM = logs.reduce((a, c) => a + (c.minutes || 0), 0);
       const totalQ = logs.reduce((a, c) => a + (c.questions || 0), 0);
 
@@ -6516,6 +6567,9 @@
       document.getElementById("dayModalDateSub").innerText = `Monthly Summary (${yearMonthStr})`;
       document.getElementById("dayModalTotalTime").innerText = `${Math.floor(totalM / 60)}h ${totalM % 60}m`;
       document.getElementById("dayModalTotalQs").innerText = `${totalQ} Qs`;
+
+      const actionContainer = document.getElementById("dayModalDeduplicateAction");
+      if (actionContainer) actionContainer.innerHTML = '';
 
       const listContainer = document.getElementById("dayModalSessionsList");
       if (logs.length === 0) {
@@ -6525,17 +6579,22 @@
           const d = new Date(l.date + "T00:00:00");
           const dLabel = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
           return `
-            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center">
-              <div>
+            <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center group hover:bg-white/10 transition">
+              <div class="flex-1 min-w-0 pr-2">
                 <div class="flex items-center gap-1.5">
                   <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">${dLabel}</span>
-                  <p class="font-bold text-white text-xs truncate max-w-[180px]">${l.title}</p>
+                  <p class="font-bold text-white text-xs truncate max-w-[160px]">${l.title}</p>
                 </div>
                 <span class="text-[10px] text-slate-400">${l.timeStr || "Logged session"}</span>
               </div>
-              <div class="text-right font-mono text-xs">
-                <span class="text-slate-200">${l.minutes}m</span>
-                ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+              <div class="flex items-center gap-2">
+                <div class="text-right font-mono text-xs">
+                  <span class="text-slate-200">${l.minutes}m</span>
+                  ${l.questions > 0 ? `<span class="text-accent-emerald font-bold ml-1.5">+${l.questions} Qs</span>` : ''}
+                </div>
+                <button onclick="deleteDayModalSessionLog('${l.id}')" title="Delete record timestamp" class="w-7 h-7 rounded-lg bg-rose-500/10 hover:bg-rose-500/30 text-rose-400 hover:text-rose-200 text-xs transition flex items-center justify-center border border-rose-500/20">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
               </div>
             </div>
           `;
@@ -6543,6 +6602,64 @@
       }
 
       modal.classList.remove("hidden");
+    }
+
+    function deleteDayModalSessionLog(logId) {
+      if (!confirm("Are you sure you want to delete this study session record?")) return;
+
+      appState.dailyLogs = (appState.dailyLogs || []).filter(l => String(l.id) !== String(logId));
+      saveState();
+
+      renderDashboardStats();
+      renderTodayLogsList();
+      renderAnalyticsHub();
+      if (typeof renderWeekendSection === 'function') renderWeekendSection();
+
+      if (window.currentDayLogsModalContext) {
+        const ctx = window.currentDayLogsModalContext;
+        if (ctx.type === 'day') showDayDetailLogs(ctx.dateStr);
+        else if (ctx.type === 'week') showWeekDetailLogs(ctx.startDateStr, ctx.endDateStr, ctx.weekTitle);
+        else if (ctx.type === 'month') showMonthDetailLogs(ctx.yearMonthStr, ctx.monthTitle);
+      }
+    }
+
+    function deduplicateDayLogs(dateStr) {
+      const logs = (appState.dailyLogs || []).filter(l => l.date === dateStr);
+      if (logs.length <= 1) return;
+
+      const seen = new Set();
+      const uniqueLogs = [];
+      let removedCount = 0;
+
+      logs.forEach(l => {
+        const sig = `${l.title}_${l.minutes}_${l.questions}_${l.timeStr || ''}`;
+        if (!seen.has(sig)) {
+          seen.add(sig);
+          uniqueLogs.push(l);
+        } else {
+          removedCount++;
+        }
+      });
+
+      if (removedCount === 0) {
+        alert("No duplicate session entries found on this date.");
+        return;
+      }
+
+      if (confirm(`Found ${removedCount} duplicate session entry(ies). Remove them now?`)) {
+        const otherLogs = (appState.dailyLogs || []).filter(l => l.date !== dateStr);
+        appState.dailyLogs = [...otherLogs, ...uniqueLogs];
+        saveState();
+
+        renderDashboardStats();
+        renderTodayLogsList();
+        renderAnalyticsHub();
+        if (typeof renderWeekendSection === 'function') renderWeekendSection();
+
+        if (window.currentDayLogsModalContext && window.currentDayLogsModalContext.type === 'day') {
+          showDayDetailLogs(dateStr);
+        }
+      }
     }
 
     // ==============================================================
