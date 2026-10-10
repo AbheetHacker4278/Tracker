@@ -1088,15 +1088,14 @@
             <i class="fa-solid fa-calendar-week"></i>
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <span
-                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider">
-                Weekend Protocol Active
+            <div class="flex items-center gap-2 flex-wrap">
+              <span id="weekendBannerBadge"
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider flex items-center gap-1">
+                <i class="fa-solid fa-bolt text-amber-400"></i> Weekend Protocol Active
               </span>
-              <span id="weekendBannerDayLabel" class="text-xs text-slate-300 font-semibold">Saturday & Sunday
-                Target</span>
+              <span id="weekendBannerDayLabel" class="text-xs text-slate-300 font-semibold">Saturday &amp; Sunday Target</span>
             </div>
-            <p class="text-xs text-slate-300 mt-1">
+            <p id="weekendBannerSubtext" class="text-xs text-slate-300 mt-1">
               Weekend Routine: Study <strong class="text-purple-300 font-semibold">Engineering Maths</strong> + <strong
                 class="text-amber-300 font-semibold">Aptitude</strong>, solve <strong
                 class="text-emerald-400 font-semibold">&ge; 25 Questions</strong> daily with marks tracking, and revise
@@ -1104,7 +1103,13 @@
             </p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="toggleAutoWeekendScheduleSwitch()" id="btnToggleWeekendAuto"
+            class="px-3 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-slate-200 font-semibold text-xs transition border border-white/10 flex items-center gap-1.5"
+            title="Toggle automatic schedule changes on weekends">
+            <i class="fa-solid fa-toggle-on text-emerald-400 text-sm"></i>
+            <span>Auto Weekend: ON</span>
+          </button>
           <button onclick="switchTab('weekend')"
             class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs transition shadow-md flex items-center gap-1.5 hover:scale-[1.02]">
             <span>Open Weekend Command</span> <i class="fa-solid fa-arrow-right text-[11px]"></i>
@@ -4117,6 +4122,9 @@
           appState.weekendRoutine.activeDayFilter = "all";
         }
       }
+      if (appState.autoWeekendScheduleSwitch === undefined) {
+        appState.autoWeekendScheduleSwitch = true;
+      }
     }
 
     function saveState() {
@@ -4164,7 +4172,15 @@
       initISTClock();
       populateDropdowns();
       syncCycleConfigUI();
-      loadStepIntoTimer("core1_prev");
+
+      const isWk = isTodayWeekend().isWeekend;
+      if (isWk && appState.autoWeekendScheduleSwitch !== false) {
+        switchTab("weekend");
+      }
+      const initialSteps = getCurrentStepsMeta();
+      if (initialSteps.length > 0) {
+        loadStepIntoTimer(initialSteps[0].key);
+      }
       renderAll();
       initSupabase();
 
@@ -4358,7 +4374,9 @@
       const todayLogs = logs.filter(l => l.date === todayIso);
       const todayMins = todayLogs.reduce((a, c) => a + (c.minutes || 0), 0);
       const todayQs = todayLogs.reduce((a, c) => a + (c.questions || 0), 0);
-      const todayStepsDone = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+      const currentSteps = getCurrentStepsMeta();
+      const todayStepsDone = currentSteps.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+      const totalSteps = currentSteps.length || 8;
 
       const isWk = [0, 6].includes(new Date().getDay());
       const targetMins = 360;
@@ -4366,7 +4384,7 @@
 
       const timePctToday = Math.min(100, Math.round((todayMins / targetMins) * 100));
       const qsPctToday = Math.min(100, Math.round((todayQs / targetQs) * 100));
-      const stepsPctToday = Math.min(100, Math.round((todayStepsDone / 8) * 100));
+      const stepsPctToday = Math.min(100, Math.round((todayStepsDone / totalSteps) * 100));
 
       const elTodayHours = document.getElementById("anTodayHoursVal");
       const elTodayTimePct = document.getElementById("anTodayTimePct");
@@ -4386,7 +4404,7 @@
       if (elTodayQsPct) elTodayQsPct.innerText = `${qsPctToday}%`;
       if (elTodayQsBar) elTodayQsBar.style.width = `${qsPctToday}%`;
 
-      if (elTodaySteps) elTodaySteps.innerText = `${todayStepsDone}/8 Done`;
+      if (elTodaySteps) elTodaySteps.innerText = `${todayStepsDone}/${totalSteps} Done`;
       if (elTodayStepsPct) elTodayStepsPct.innerText = `${stepsPctToday}%`;
       if (elTodayStepsBar) elTodayStepsBar.style.width = `${stepsPctToday}%`;
 
@@ -5577,7 +5595,7 @@
     let isTimerRunning = false;
     let countdownTargetSeconds = 1200;
 
-    const STEPS_META = [
+    const WEEKDAY_STEPS_META = [
       { key: "core1_prev", label: "Step 1", title: "Yesterday's Concept Revision", subType: "prev_rev", slotKey: "core1", defaultMinutes: 20, icon: "fa-rotate-left" },
       { key: "core1_main", label: "Step 2", title: "Main Concept Study & Practice", subType: "main_study", slotKey: "core1", defaultMinutes: 70, icon: "fa-book-open" },
       { key: "core2_prev", label: "Step 3", title: "Yesterday's Concept Revision", subType: "prev_rev", slotKey: "core2", defaultMinutes: 20, icon: "fa-rotate-left" },
@@ -5588,8 +5606,43 @@
       { key: "rev", label: "Step 8", title: "1.5 Hr Comprehensive Master Revision", subType: "fixed", defaultMinutes: 90, icon: "fa-rotate" }
     ];
 
+    const WEEKEND_STEPS_META = [
+      { key: "wk_math_rev", label: "Step 1", title: "Weekend Math Formula & Concept Revision", subType: "wk_math_rev", defaultMinutes: 20, icon: "fa-square-root-variable" },
+      { key: "wk_math_practice", label: "Step 2", title: "Weekend Math Problem Practice & PYQs", subType: "wk_math_practice", defaultMinutes: 70, icon: "fa-calculator" },
+      { key: "wk_apt_rev", label: "Step 3", title: "GATE General Aptitude Concept Revision", subType: "wk_apt_rev", defaultMinutes: 20, icon: "fa-brain" },
+      { key: "wk_apt_practice", label: "Step 4", title: "GATE General Aptitude Practice & Sprint Test", subType: "wk_apt_practice", defaultMinutes: 60, icon: "fa-lightbulb" },
+      { key: "wk_core1_rev", label: "Step 5", title: "Core Subject 1 Weekend Review & Mistake Analysis", subType: "wk_core1_rev", defaultMinutes: 45, icon: "fa-book-bookmark" },
+      { key: "wk_core2_rev", label: "Step 6", title: "Core Subject 2 Weekend Review & Active Recall", subType: "wk_core2_rev", defaultMinutes: 45, icon: "fa-laptop-code" },
+      { key: "wk_qs_challenge", label: "Step 7", title: "Weekend Question Challenge (Target ≥25 Qs)", subType: "wk_qs_challenge", defaultMinutes: 60, icon: "fa-bullseye" },
+      { key: "wk_marks_eval", label: "Step 8", title: "Weekend Marks Evaluation & Performance Review", subType: "wk_marks_eval", defaultMinutes: 40, icon: "fa-chart-line" }
+    ];
+
+    function getCurrentStepsMeta() {
+      const isWk = isTodayWeekend().isWeekend;
+      const isAuto = appState.autoWeekendScheduleSwitch !== false;
+      if (isWk && isAuto) {
+        return WEEKEND_STEPS_META;
+      }
+      return WEEKDAY_STEPS_META;
+    }
+
+    function toggleAutoWeekendScheduleSwitch() {
+      const current = appState.autoWeekendScheduleSwitch !== false;
+      appState.autoWeekendScheduleSwitch = !current;
+      saveState();
+      const currentSteps = getCurrentStepsMeta();
+      if (currentSteps.length > 0) {
+        loadStepIntoTimer(currentSteps[0].key);
+      }
+      renderAll();
+    }
+
     function getStepName(stepKey) {
-      const step = STEPS_META.find(s => s.key === stepKey);
+      const steps = getCurrentStepsMeta();
+      let step = steps.find(s => s.key === stepKey);
+      if (!step) {
+        step = WEEKDAY_STEPS_META.find(s => s.key === stepKey) || WEEKEND_STEPS_META.find(s => s.key === stepKey);
+      }
       if (!step) return "Study Session";
 
       if (step.slotKey) {
@@ -5601,16 +5654,50 @@
         return `[Deep Study] ${subjName}`;
       }
 
+      const wk = appState.weekendRoutine || {};
+      if (stepKey === "wk_math_rev" || stepKey === "wk_math_practice") {
+        const mathSubj = SUBJECTS.find(s => s.id === (wk.mathSubjectId || "em"))?.name || "Engineering Mathematics";
+        return stepKey === "wk_math_rev" ? `[Weekend Rev] ${mathSubj}` : `[Weekend Practice] ${mathSubj}`;
+      }
+
+      if (stepKey === "wk_apt_rev" || stepKey === "wk_apt_practice") {
+        const aptTopic = wk.aptitudeTopic || "Quantitative Aptitude";
+        return stepKey === "wk_apt_rev" ? `[Aptitude Rev] ${aptTopic}` : `[Aptitude Test] ${aptTopic}`;
+      }
+
+      if (stepKey === "wk_core1_rev") {
+        const revIds = wk.selectedCoreRevisionSubjectIds || [];
+        const core1Id = revIds[0] || appState.activeCycle.core1;
+        const subjName = SUBJECTS.find(s => s.id === core1Id)?.name || "Core Subject 1";
+        return `[Weekend Core Rev] ${subjName}`;
+      }
+
+      if (stepKey === "wk_core2_rev") {
+        const revIds = wk.selectedCoreRevisionSubjectIds || [];
+        const core2Id = revIds[1] || appState.activeCycle.core2;
+        const subjName = SUBJECTS.find(s => s.id === core2Id)?.name || "Core Subject 2";
+        return `[Weekend Core Rev] ${subjName}`;
+      }
+
+      if (stepKey === "wk_qs_challenge") return "Weekend Question Challenge (≥25 Qs Target)";
+      if (stepKey === "wk_marks_eval") return "Weekend Marks & Accuracy Evaluation";
+
       if (stepKey === "dpp") return "Daily DPP Practice (All Subjects)";
       if (stepKey === "rev") return "1.5 Hr Master Revision";
-      return "Study Session";
+      return step.title || "Study Session";
     }
 
     function getStepSubjectId(stepKey) {
-      const step = STEPS_META.find(s => s.key === stepKey);
+      const steps = getCurrentStepsMeta();
+      const step = steps.find(s => s.key === stepKey);
       if (step && step.slotKey) {
         return appState.activeCycle[step.slotKey];
       }
+      const wk = appState.weekendRoutine || {};
+      if (stepKey === "wk_math_rev" || stepKey === "wk_math_practice") return wk.mathSubjectId || "em";
+      if (stepKey === "wk_apt_rev" || stepKey === "wk_apt_practice") return "aptitude";
+      if (stepKey === "wk_core1_rev") return (wk.selectedCoreRevisionSubjectIds && wk.selectedCoreRevisionSubjectIds[0]) || appState.activeCycle.core1;
+      if (stepKey === "wk_core2_rev") return (wk.selectedCoreRevisionSubjectIds && wk.selectedCoreRevisionSubjectIds[1]) || appState.activeCycle.core2;
       return stepKey;
     }
 
@@ -5620,27 +5707,36 @@
         resetMainTimer();
       }
 
+      const steps = getCurrentStepsMeta();
+      let meta = steps.find(s => s.key === stepKey);
+      if (!meta) {
+        meta = steps[0];
+        stepKey = meta.key;
+      }
+
       currentStepKey = stepKey;
-      const meta = STEPS_META.find(s => s.key === stepKey);
       const subjName = getStepName(stepKey);
 
       const tag = document.getElementById("activeStepTag");
       const title = document.getElementById("activeTimerTitle");
       const sub = document.getElementById("activeTimerSubtitle");
 
-      if (tag) tag.innerText = `${meta.label.toUpperCase()} OF 8`;
+      const stepIndex = steps.findIndex(s => s.key === stepKey) + 1;
+      const totalSteps = steps.length;
+
+      if (tag) tag.innerText = `STEP ${stepIndex} OF ${totalSteps}`;
       if (title) title.innerText = subjName;
       if (sub) sub.innerText = meta.title;
 
-      if (meta.subType === "prev_rev") {
+      if (meta.subType === "prev_rev" || meta.subType === "wk_math_rev" || meta.subType === "wk_apt_rev") {
         setTimerMode("countdown");
-        setPresetMinutes(meta.defaultMinutes);
-      } else if (stepKey === "rev") {
+        setPresetMinutes(meta.defaultMinutes || 20);
+      } else if (meta.subType === "wk_marks_eval" || stepKey === "rev") {
         setTimerMode("countdown");
-        setPresetMinutes(90);
-      } else if (stepKey === "dpp") {
+        setPresetMinutes(meta.defaultMinutes || 40);
+      } else if (meta.subType === "wk_qs_challenge" || meta.subType === "dpp") {
         setTimerMode("countdown");
-        setPresetMinutes(45);
+        setPresetMinutes(meta.defaultMinutes || 60);
       } else {
         setTimerMode("stopwatch");
       }
@@ -5894,7 +5990,8 @@
 
       appState.dailyCompletedSteps[`${todayIso}_${currentStepKey}`] = true;
 
-      const completedTodayCount = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+      const currentSteps = getCurrentStepsMeta();
+      const completedTodayCount = currentSteps.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
       if (completedTodayCount >= 4 && appState.lastStreakDate !== todayIso) {
         appState.streak += 1;
         appState.lastStreakDate = todayIso;
@@ -5904,7 +6001,7 @@
       resetMainTimer();
       saveState();
 
-      const nextStep = STEPS_META.find(s => !appState.dailyCompletedSteps[`${todayIso}_${s.key}`]);
+      const nextStep = currentSteps.find(s => !appState.dailyCompletedSteps[`${todayIso}_${s.key}`]);
       if (nextStep) {
         loadStepIntoTimer(nextStep.key);
       }
@@ -5913,11 +6010,14 @@
     function resetTodaySteps() {
       if (confirm("Reset today's routine checkboxes? Logged times remain saved.")) {
         const todayIso = new Date().toISOString().slice(0, 10);
-        STEPS_META.forEach(s => {
+        const currentSteps = getCurrentStepsMeta();
+        currentSteps.forEach(s => {
           delete appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
         });
         saveState();
-        loadStepIntoTimer("core1_prev");
+        if (currentSteps.length > 0) {
+          loadStepIntoTimer(currentSteps[0].key);
+        }
       }
     }
 
@@ -5939,14 +6039,16 @@
       const todayIso = new Date().toISOString().slice(0, 10);
       const todayLogs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
 
-      const doneCount = STEPS_META.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
-      const pct = Math.round((doneCount / 8) * 100);
+      const currentSteps = getCurrentStepsMeta();
+      const doneCount = currentSteps.filter(s => appState.dailyCompletedSteps[`${todayIso}_${s.key}`]).length;
+      const totalSteps = currentSteps.length || 8;
+      const pct = Math.round((doneCount / totalSteps) * 100);
 
       const stepFrac = document.getElementById("dashDailyStepFraction");
       const pctEl = document.getElementById("dashDailyProgressPercent");
       const bar = document.getElementById("dashDailyProgressBar");
 
-      if (stepFrac) stepFrac.innerText = `${doneCount}/8 Done`;
+      if (stepFrac) stepFrac.innerText = `${doneCount}/${totalSteps} Done`;
       if (pctEl) pctEl.innerText = `${pct}%`;
       if (bar) bar.style.width = `${pct}%`;
 
@@ -6054,12 +6156,13 @@
       if (!container) return;
       container.innerHTML = "";
       const todayIso = new Date().toISOString().slice(0, 10);
+      const steps = getCurrentStepsMeta();
 
-      STEPS_META.forEach(s => {
+      steps.forEach((s, idx) => {
         const isDone = !!appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
         const isCurrent = currentStepKey === s.key;
         const subjTitle = getStepName(s.key);
-        const isPrevRev = s.subType === "prev_rev";
+        const isRevType = (s.subType && s.subType.includes("rev")) || s.subType === "prev_rev";
 
         const card = document.createElement("div");
         card.className = `p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-between gap-3 ${isCurrent
@@ -6073,12 +6176,12 @@
 
         card.innerHTML = `
           <div class="flex items-center gap-2.5 truncate">
-            <div class="w-7 h-7 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : (isPrevRev ? 'bg-amber-500/20 text-accent-amber border border-amber-500/30' : 'bg-white/[0.08] text-slate-300')} flex items-center justify-center text-xs font-bold shrink-0">
-              ${isDone ? '<i class="fa-solid fa-check"></i>' : (isPrevRev ? '<i class="fa-solid fa-rotate-left"></i>' : s.label.replace('Step ', ''))}
+            <div class="w-7 h-7 rounded-lg ${isDone ? 'bg-emerald-500 text-white' : (isRevType ? 'bg-amber-500/20 text-accent-amber border border-amber-500/30' : 'bg-purple-500/20 text-purple-300 border border-purple-500/30')} flex items-center justify-center text-xs font-bold shrink-0">
+              ${isDone ? '<i class="fa-solid fa-check"></i>' : (idx + 1)}
             </div>
             <div class="truncate">
               <div class="flex items-center gap-1.5">
-                <span class="text-[9px] font-bold uppercase tracking-wider ${isPrevRev ? 'text-amber-400' : 'text-slate-400'}">${s.title}</span>
+                <span class="text-[9px] font-bold uppercase tracking-wider ${isRevType ? 'text-amber-400' : 'text-purple-300'}">${s.title}</span>
                 ${isCurrent ? '<span class="text-[8px] px-1.5 py-0.2 rounded bg-blue-500 text-white font-bold animate-pulse">ACTIVE</span>' : ''}
               </div>
               <p class="text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'} truncate">${subjTitle}</p>
@@ -6751,11 +6854,23 @@
       const banner = document.getElementById("weekendModeAlertBanner");
       const navBadge = document.getElementById("navWeekendBadge");
       const label = document.getElementById("weekendBannerDayLabel");
+      const badge = document.getElementById("weekendBannerBadge");
+      const subtext = document.getElementById("weekendBannerSubtext");
+      const btnToggle = document.getElementById("btnToggleWeekendAuto");
+
+      const isAuto = appState.autoWeekendScheduleSwitch !== false;
+
+      if (btnToggle) {
+        btnToggle.innerHTML = `
+          <i class="fa-solid ${isAuto ? 'fa-toggle-on text-emerald-400' : 'fa-toggle-off text-slate-400'} text-sm"></i>
+          <span>Auto Weekend: ${isAuto ? 'ON' : 'OFF'}</span>
+        `;
+      }
 
       if (navBadge) {
         if (weekendInfo.isWeekend) {
           navBadge.classList.remove("hidden");
-          navBadge.innerText = `${weekendInfo.dayName} Active`;
+          navBadge.innerText = isAuto ? `${weekendInfo.dayName} Schedule` : `${weekendInfo.dayName} (Manual)`;
         } else {
           navBadge.classList.add("hidden");
         }
@@ -6764,9 +6879,27 @@
       if (banner) {
         if (weekendInfo.isWeekend) {
           if (label) label.innerText = `${weekendInfo.dayName} Protocol Active`;
+          if (badge) {
+            badge.innerHTML = isAuto
+              ? `<i class="fa-solid fa-bolt text-amber-400"></i> Weekend Schedule Active (Auto-Loaded)`
+              : `<i class="fa-solid fa-calendar-day text-slate-400"></i> Weekday Schedule (Auto OFF)`;
+          }
+          if (subtext) {
+            if (isAuto) {
+              subtext.innerHTML = `Automatically loaded Weekend Schedule for <strong class="text-purple-300 font-semibold">${weekendInfo.dayName}</strong>: Study <strong class="text-purple-300 font-semibold">Engineering Maths</strong> + <strong class="text-amber-300 font-semibold">General Aptitude</strong>, solve <strong class="text-emerald-400 font-semibold">&ge; 25 Qs</strong>, &amp; revise <strong class="text-blue-300 font-semibold">Core Subjects</strong>.`;
+            } else {
+              subtext.innerHTML = `Standard weekday schedule active. Turn <strong class="text-emerald-300 font-semibold">Auto Weekend ON</strong> to automatically load Weekend Schedule on Saturdays &amp; Sundays.`;
+            }
+          }
           banner.classList.remove("hidden");
         } else {
           if (label) label.innerText = "Saturday & Sunday Target Preparation";
+          if (badge) {
+            badge.innerHTML = `<i class="fa-solid fa-calendar-week text-slate-400"></i> Weekday Mode Active`;
+          }
+          if (subtext) {
+            subtext.innerHTML = `Standard weekday schedule active. Weekend schedule will automatically activate on Saturday &amp; Sunday.`;
+          }
           banner.classList.remove("hidden");
         }
       }
