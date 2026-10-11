@@ -241,6 +241,7 @@
         transform: scaleY(0);
         opacity: 0;
       }
+
       100% {
         transform: scaleY(1);
         opacity: 1;
@@ -257,6 +258,21 @@
       color: #ffffff !important;
       border-color: rgba(59, 130, 246, 0.5) !important;
       box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+    }
+
+    @keyframes toastSlideIn {
+      from { transform: translateX(110%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes toastSlideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(110%); opacity: 0; }
+    }
+    .toast-anim-in {
+      animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .toast-anim-out {
+      animation: toastSlideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     /* ============================================================== */
@@ -824,36 +840,48 @@
         </div>
 
         <!-- ENHANCED STUDY TIME VELOCITY & MULTI-GRANULARITY ANALYTICS HUB -->
-        <div class="lg:col-span-7 glass-card p-5 sm:p-6 rounded-2xl space-y-4 flex flex-col justify-between border border-white/15 shadow-xl relative overflow-hidden group">
+        <div
+          class="lg:col-span-7 glass-card p-5 sm:p-6 rounded-2xl space-y-4 flex flex-col justify-between border border-white/15 shadow-xl relative overflow-hidden group">
           <!-- Background Ambient Glow Effect -->
-          <div class="absolute -top-24 -right-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none transition-all duration-700 group-hover:bg-purple-500/15"></div>
+          <div
+            class="absolute -top-24 -right-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none transition-all duration-700 group-hover:bg-purple-500/15">
+          </div>
 
           <!-- HEADER & NAVIGATION TABS -->
           <div class="space-y-3 border-b border-white/10 pb-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <div class="flex items-center gap-2">
-                  <div class="w-7 h-7 rounded-lg bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs shadow-inner border border-blue-500/30">
+                  <div
+                    class="w-7 h-7 rounded-lg bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs shadow-inner border border-blue-500/30">
                     <i class="fa-solid fa-chart-column"></i>
                   </div>
-                  <h3 id="anVelocityTitle" class="text-base font-extrabold text-white tracking-tight">Study Time Velocity & Progress</h3>
-                  <span id="anVelocityBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">7 Days</span>
+                  <h3 id="anVelocityTitle" class="text-base font-extrabold text-white tracking-tight">Study Time
+                    Velocity & Progress</h3>
+                  <span id="anVelocityBadge"
+                    class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">7
+                    Days</span>
                 </div>
-                <p id="anVelocitySubtext" class="text-xs text-slate-400 mt-1">Interactive velocity tracking across all days, weeks & months with full detail logs</p>
+                <p id="anVelocitySubtext" class="text-xs text-slate-400 mt-1">Interactive velocity tracking across all
+                  days, weeks & months with full detail logs</p>
               </div>
 
               <!-- Metric Switcher & Export Button -->
               <div class="flex items-center gap-2">
-                <div class="flex items-center bg-black/40 backdrop-blur-md p-1 rounded-xl border border-white/10 text-xs">
-                  <button id="anMetricHoursBtn" onclick="setVelocityMetric('hours')" class="px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 bg-blue-600 text-white shadow-md">
+                <div
+                  class="flex items-center bg-black/40 backdrop-blur-md p-1 rounded-xl border border-white/10 text-xs">
+                  <button id="anMetricHoursBtn" onclick="setVelocityMetric('hours')"
+                    class="px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 bg-blue-600 text-white shadow-md">
                     <i class="fa-solid fa-clock mr-1"></i> Hours
                   </button>
-                  <button id="anMetricQsBtn" onclick="setVelocityMetric('questions')" class="px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 text-slate-400 hover:text-white">
+                  <button id="anMetricQsBtn" onclick="setVelocityMetric('questions')"
+                    class="px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all duration-200 text-slate-400 hover:text-white">
                     <i class="fa-solid fa-brain mr-1"></i> Qs Solved
                   </button>
                 </div>
-                
-                <button onclick="exportStudyLogsCSV()" title="Export all study data to CSV" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+
+                <button onclick="exportStudyLogsCSV()" title="Export all study data to CSV"
+                  class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
                   <i class="fa-solid fa-download text-accent-blue"></i> CSV
                 </button>
               </div>
@@ -861,28 +889,36 @@
 
             <!-- Granularity Range Selector Tabs -->
             <div class="flex items-center justify-between flex-wrap gap-2 pt-1">
-              <div class="flex items-center gap-1.5 overflow-x-auto custom-scroll pb-1 max-w-full text-xs" id="velocityTabGroup">
-                <button onclick="setVelocityRange('7d')" id="velTab-7d" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-blue-600/30 text-white shadow-md border border-blue-400/50 vel-tab-active">
+              <div class="flex items-center gap-1.5 overflow-x-auto custom-scroll pb-1 max-w-full text-xs"
+                id="velocityTabGroup">
+                <button onclick="setVelocityRange('7d')" id="velTab-7d"
+                  class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-blue-600/30 text-white shadow-md border border-blue-400/50 vel-tab-active">
                   <i class="fa-solid fa-calendar-day mr-1 text-[10px]"></i> 7 Days
                 </button>
-                <button onclick="setVelocityRange('14d')" id="velTab-14d" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                <button onclick="setVelocityRange('14d')" id="velTab-14d"
+                  class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
                   14 Days
                 </button>
-                <button onclick="setVelocityRange('30d')" id="velTab-30d" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                <button onclick="setVelocityRange('30d')" id="velTab-30d"
+                  class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
                   30 Days
                 </button>
-                <button onclick="setVelocityRange('weeks')" id="velTab-weeks" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                <button onclick="setVelocityRange('weeks')" id="velTab-weeks"
+                  class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
                   <i class="fa-solid fa-calendar-week mr-1 text-[10px]"></i> All Weeks
                 </button>
-                <button onclick="setVelocityRange('months')" id="velTab-months" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                <button onclick="setVelocityRange('months')" id="velTab-months"
+                  class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
                   <i class="fa-solid fa-calendar-days mr-1 text-[10px]"></i> All Months
                 </button>
-                <button onclick="setVelocityRange('all_days')" id="velTab-all_days" class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
+                <button onclick="setVelocityRange('all_days')" id="velTab-all_days"
+                  class="vel-tab px-3 py-1.5 rounded-xl font-semibold transition-all duration-200 whitespace-nowrap bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
                   <i class="fa-solid fa-list-check mr-1 text-[10px]"></i> All Days Log
                 </button>
               </div>
 
-              <div class="flex items-center gap-2 font-mono text-xs font-bold text-slate-300 bg-white/5 px-3 py-1 rounded-xl border border-white/10 ml-auto">
+              <div
+                class="flex items-center gap-2 font-mono text-xs font-bold text-slate-300 bg-white/5 px-3 py-1 rounded-xl border border-white/10 ml-auto">
                 <span id="an7DayTotalHours" class="text-accent-blue">0h Total</span>
               </div>
             </div>
@@ -911,7 +947,8 @@
           <!-- CHART CONTAINER / CONTENT VIEW AREA -->
           <div class="relative min-h-[180px] flex flex-col justify-end pt-2">
             <!-- Dynamic Bar Chart View -->
-            <div id="anVelocityChartContainer" class="flex items-end justify-between gap-1.5 sm:gap-2 h-44 pt-4 overflow-x-auto custom-scroll pb-1">
+            <div id="anVelocityChartContainer"
+              class="flex items-end justify-between gap-1.5 sm:gap-2 h-44 pt-4 overflow-x-auto custom-scroll pb-1">
               <!-- Animated Bars injected dynamically -->
             </div>
             <!-- Keep hidden fallback for legacy selectors -->
@@ -922,9 +959,12 @@
               <div class="flex items-center justify-between gap-2">
                 <div class="relative flex-1">
                   <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-500 text-xs"></i>
-                  <input type="text" id="anAllDaysSearchInput" oninput="renderVelocityAllDaysTable()" placeholder="Search logs by subject, step title, or date..." class="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50">
+                  <input type="text" id="anAllDaysSearchInput" oninput="renderVelocityAllDaysTable()"
+                    placeholder="Search logs by subject, step title, or date..."
+                    class="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50">
                 </div>
-                <select id="anAllDaysSubjectFilter" onchange="renderVelocityAllDaysTable()" class="bg-slate-900 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none">
+                <select id="anAllDaysSubjectFilter" onchange="renderVelocityAllDaysTable()"
+                  class="bg-slate-900 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none">
                   <option value="all">All Subjects</option>
                 </select>
               </div>
@@ -1093,7 +1133,8 @@
                 class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider flex items-center gap-1">
                 <i class="fa-solid fa-bolt text-amber-400"></i> Weekend Protocol Active
               </span>
-              <span id="weekendBannerDayLabel" class="text-xs text-slate-300 font-semibold">Saturday &amp; Sunday Target</span>
+              <span id="weekendBannerDayLabel" class="text-xs text-slate-300 font-semibold">Saturday &amp; Sunday
+                Target</span>
             </div>
             <p id="weekendBannerSubtext" class="text-xs text-slate-300 mt-1">
               Weekend Routine: Study <strong class="text-purple-300 font-semibold">Engineering Maths</strong> + <strong
@@ -1130,15 +1171,33 @@
           </div>
         </div>
 
-        <div class="glass-card p-4 rounded-2xl">
-          <div class="flex justify-between items-start">
-            <span class="text-xs text-slate-400 font-medium">Today's Study Time</span>
-            <div class="w-7 h-7 rounded bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs">
-              <i class="fa-solid fa-clock"></i>
+        <div class="glass-card p-4 rounded-2xl flex flex-col justify-between relative group">
+          <div>
+            <div class="flex justify-between items-start">
+              <span class="text-xs text-slate-400 font-medium">Today's Study Time</span>
+              <div class="flex items-center gap-1.5">
+                <span id="dashMidnightBadge"
+                  class="hidden text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1">
+                  <i class="fa-solid fa-moon text-amber-400"></i> Past 12:00 AM
+                </span>
+                <div class="w-7 h-7 rounded bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-clock"></i>
+                </div>
+              </div>
             </div>
+            <h2 id="dashTotalTimeToday" class="text-2xl font-bold mt-2 font-mono text-white">0h 0m</h2>
+            <p id="dashTodayTimeSubtext" class="text-[11px] text-slate-400 mt-1">Across all logged sessions</p>
           </div>
-          <h2 id="dashTotalTimeToday" class="text-2xl font-bold mt-2 font-mono text-white">0h 0m</h2>
-          <p class="text-[11px] text-slate-400 mt-1">Across all logged sessions</p>
+
+          <!-- FORCE RECORD & RESET BUTTON -->
+          <div class="mt-2.5 pt-2 border-t border-white/[0.08] flex items-center gap-1.5">
+            <button onclick="openForceRecordModal()" id="btnForceRecordToday"
+              class="w-full py-1.5 px-2.5 text-[10.5px] font-bold rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 hover:text-white border border-purple-500/40 flex items-center justify-center gap-1.5 transition shadow-sm hover:scale-[1.01] active:scale-[0.98]"
+              title="Force record study time to weekend/daily log and reset counter to zero">
+              <i class="fa-solid fa-bolt text-amber-400 text-xs"></i>
+              <span id="btnForceRecordLabel">Force Record &amp; Reset to 0</span>
+            </button>
+          </div>
         </div>
 
         <div class="glass-card p-4 rounded-2xl">
@@ -3187,6 +3246,160 @@
           Cycle</button>
       </div>
     </div>
+  <!-- MODAL: FORCE RECORD TIME & RESET TO ZERO -->
+  <div id="forceRecordModal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div
+      class="bg-slate-900/95 dark:bg-[#18181b]/95 border border-purple-500/30 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative overflow-hidden">
+      
+      <!-- Top Glow Accent -->
+      <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Header -->
+      <div class="flex justify-between items-start border-b border-white/10 pb-3">
+        <div>
+          <span class="text-[10px] font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-bolt text-amber-400"></i> POST-MIDNIGHT &bull; STUDY TIME ROLLOVER
+          </span>
+          <h3 class="text-base font-bold text-white mt-0.5 flex items-center gap-2">
+            <i class="fa-solid fa-clock-rotate-left text-blue-400"></i> Force Record &amp; Reset to Zero
+          </h3>
+          <p class="text-xs text-slate-400">Archive completed study time to the weekend/daily log and restart today's timer from 0h 0m.</p>
+        </div>
+        <button onclick="closeForceRecordModal()" class="text-slate-400 hover:text-white text-sm p-1 rounded-lg hover:bg-white/10 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Dynamic Post-Midnight Notification Banner -->
+      <div id="forceRecordAlertNotice" class="p-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-xs text-purple-200 flex items-start gap-2.5">
+        <i class="fa-solid fa-moon text-amber-400 text-sm mt-0.5"></i>
+        <div class="flex-1">
+          <p class="font-semibold text-white" id="forceRecordAlertTitle">Post-Midnight Window (After Weekend)</p>
+          <p class="text-[11px] text-slate-300 mt-0.5" id="forceRecordAlertText">
+            It is past 12:00 AM. You can safely record your completed study session to <strong>Yesterday / Weekend</strong>, preserving all analytics while resetting Today's Study Time to <strong>0h 0m</strong>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Summary Card -->
+      <div class="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Current Study Time</span>
+          <div class="flex items-baseline gap-1 mt-1">
+            <span id="forceRecordCurrentDisplay" class="text-xl font-bold font-mono text-white">0h 0m</span>
+            <span class="text-[10px] text-slate-400 font-mono" id="forceRecordCurrentMins">0 mins</span>
+          </div>
+        </div>
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Questions Logged</span>
+          <div class="flex items-baseline gap-1 mt-1">
+            <span id="forceRecordQsDisplay" class="text-xl font-bold font-mono text-emerald-400">0 Qs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Inputs -->
+      <div class="space-y-3.5 text-xs">
+        <!-- Target Date -->
+        <div>
+          <label class="font-semibold text-slate-300 flex items-center justify-between">
+            <span>Target Date to Attribute &amp; Save Study Time:</span>
+            <span class="text-[10px] text-slate-400 font-normal">Where this time will be credited</span>
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1.5">
+            <label id="lblForceRecordTargetYesterday" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-purple-500/15 border border-purple-500/30 cursor-pointer hover:bg-purple-500/25 transition">
+              <input type="radio" name="forceRecordDateChoice" id="optForceRecordYesterday" value="yesterday" checked onchange="onForceRecordTargetChoiceChange()" class="accent-purple-500" />
+              <div>
+                <p class="font-bold text-white text-[11px]" id="forceRecordYesterdayLabel">Yesterday (Weekend)</p>
+                <p class="text-[10px] text-purple-300 font-mono" id="forceRecordYesterdayDateSub">--</p>
+              </div>
+            </label>
+            <label id="lblForceRecordTargetToday" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] cursor-pointer hover:bg-white/[0.08] transition">
+              <input type="radio" name="forceRecordDateChoice" id="optForceRecordToday" value="today" onchange="onForceRecordTargetChoiceChange()" class="accent-purple-500" />
+              <div>
+                <p class="font-bold text-white text-[11px]">Today</p>
+                <p class="text-[10px] text-slate-400 font-mono" id="forceRecordTodayDateSub">--</p>
+              </div>
+            </label>
+          </div>
+          <!-- Custom Date fallback -->
+          <div id="forceRecordCustomDateContainer" class="hidden mt-2">
+            <input type="date" id="forceRecordCustomDateInput" class="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-white font-mono text-xs" />
+          </div>
+        </div>
+
+        <!-- Duration Inputs (Hours & Mins) -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-300">Study Duration (Hours &amp; Mins):</label>
+            <div class="flex items-center gap-2 mt-1">
+              <div class="relative flex-1">
+                <input type="number" id="forceRecordHoursInput" min="0" max="24" value="0"
+                  class="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-center text-white font-mono font-bold text-sm" />
+                <span class="absolute right-2.5 top-2.5 text-[10px] text-slate-400">h</span>
+              </div>
+              <div class="relative flex-1">
+                <input type="number" id="forceRecordMinsInput" min="0" max="59" value="0"
+                  class="w-full bg-black/50 border border-white/10 rounded-xl p-2 text-center text-white font-mono font-bold text-sm" />
+                <span class="absolute right-2.5 top-2.5 text-[10px] text-slate-400">m</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="font-semibold text-slate-300">Questions Solved (DPP/PYQ):</label>
+            <input type="number" id="forceRecordQsInput" min="0" value="0"
+              class="w-full mt-1 bg-black/50 border border-white/10 rounded-xl p-2 text-white font-mono font-bold text-sm" />
+          </div>
+        </div>
+
+        <!-- Subject / Activity Tag -->
+        <div>
+          <label class="font-semibold text-slate-300">Session Name / Subject Tag:</label>
+          <select id="forceRecordSubjectSelect" class="w-full mt-1 bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-medium text-xs">
+            <option value="weekend_session">Weekend Practice &amp; Deep Study</option>
+            <option value="daily_core">Core Subject Focus</option>
+            <option value="math_apt">Engineering Maths &amp; Aptitude</option>
+            <option value="general_revision">General Revision / Test Practice</option>
+          </select>
+        </div>
+
+        <!-- Checkbox Options -->
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
+          <label class="flex items-center gap-2.5 cursor-pointer select-none">
+            <input type="checkbox" id="chkForceRecordResetSteps" checked class="w-4 h-4 rounded accent-emerald-500" />
+            <span class="text-slate-300 font-medium text-[11px]">Reset Today's Routine Steps (0/8 Done) for a clean start</span>
+          </label>
+          <label class="flex items-center gap-2.5 cursor-pointer select-none">
+            <input type="checkbox" id="chkForceRecordResetTimer" checked class="w-4 h-4 rounded accent-emerald-500" />
+            <span class="text-slate-300 font-medium text-[11px]">Reset Active Focus Timer to 00:00:00</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-white/10">
+        <button onclick="closeForceRecordModal()"
+          class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold text-white transition">
+          Cancel
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button onclick="confirmResetTodayToZeroOnly()" title="Keep previous logs untouched and just reset Today's display to 0"
+            class="px-3.5 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-xs font-semibold text-slate-300 hover:text-white border border-white/10 transition">
+            Reset to 0 Only
+          </button>
+          
+          <button onclick="confirmForceRecordAndReset()" id="btnConfirmForceRecordSubmit"
+            class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg transition flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+            <i class="fa-solid fa-bolt text-amber-300"></i>
+            <span>Force Record &amp; Reset to 0</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- ============================================================== -->
@@ -4152,6 +4365,329 @@
       setInterval(update, 1000);
     }
 
+    // 8B. DATE HELPERS (IST-AWARE) & FORCE RECORD SYSTEM
+    function getTodayIso(d = new Date()) {
+      try {
+        const parts = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Asia/Kolkata',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).formatToParts(d instanceof Date ? d : new Date(d));
+        const year = parts.find(p => p.type === 'year')?.value;
+        const month = parts.find(p => p.type === 'month')?.value;
+        const day = parts.find(p => p.type === 'day')?.value;
+        if (year && month && day) return `${year}-${month}-${day}`;
+      } catch (e) {}
+
+      const date = (typeof d === 'string' || typeof d === 'number') ? new Date(d) : (d || new Date());
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function getYesterdayIso(d = new Date()) {
+      const date = (typeof d === 'string' || typeof d === 'number') ? new Date(d) : new Date(d || Date.now());
+      date.setDate(date.getDate() - 1);
+      return getTodayIso(date);
+    }
+
+    function isPostMidnightHours() {
+      try {
+        const hrStr = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour: 'numeric',
+          hourCycle: 'h23'
+        }).format(new Date());
+        const hr = parseInt(hrStr, 10);
+        return hr >= 0 && hr < 6;
+      } catch (e) {
+        const hr = new Date().getHours();
+        return hr >= 0 && hr < 6;
+      }
+    }
+
+    function showAppToast(message, type = 'success') {
+      let container = document.getElementById("appToastContainer");
+      if (!container) {
+        container = document.createElement("div");
+        container.id = "appToastContainer";
+        container.className = "fixed top-5 right-5 z-[99999] pointer-events-none flex flex-col gap-2 max-w-sm w-full";
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement("div");
+      toast.className = `pointer-events-auto p-3.5 rounded-2xl border backdrop-blur-xl shadow-2xl flex items-start gap-3 toast-anim-in transition ${
+        type === 'success' ? 'bg-slate-900/95 border-emerald-500/40 text-emerald-200' :
+        type === 'info' ? 'bg-slate-900/95 border-purple-500/40 text-purple-200' :
+        'bg-slate-900/95 border-amber-500/40 text-amber-200'
+      }`;
+
+      const iconHtml = type === 'success'
+        ? '<div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-circle-check"></i></div>'
+        : (type === 'info'
+            ? '<div class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-bolt"></i></div>'
+            : '<div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-clock-rotate-left"></i></div>');
+
+      toast.innerHTML = `
+        ${iconHtml}
+        <div class="flex-1 text-xs">
+          <p class="font-bold text-white text-[12px]">${type === 'success' ? 'Study Record Updated' : 'System Notice'}</p>
+          <p class="text-[11px] text-slate-300 mt-0.5 leading-relaxed">${message}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white text-xs p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove("toast-anim-in");
+        toast.classList.add("toast-anim-out");
+        setTimeout(() => toast.remove(), 320);
+      }, 4200);
+    }
+
+    function openForceRecordModal() {
+      const todayIso = getTodayIso();
+      const yesterdayIso = getYesterdayIso();
+      const isPastMidnight = isPostMidnightHours();
+      const dayNum = new Date().getDay();
+      const wasWeekend = (dayNum === 1 || dayNum === 0);
+
+      const todayLogs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
+      const yesterdayLogs = (appState.dailyLogs || []).filter(l => l.date === yesterdayIso);
+
+      const currentMins = todayLogs.reduce((acc, curr) => acc + (curr.minutes || 0), 0);
+      const currentQs = todayLogs.reduce((acc, curr) => acc + (curr.questions || 0), 0);
+
+      const yesterdayMins = yesterdayLogs.reduce((acc, curr) => acc + (curr.minutes || 0), 0);
+      const yesterdayQs = yesterdayLogs.reduce((acc, curr) => acc + (curr.questions || 0), 0);
+
+      let activeTimerMins = 0;
+      if (typeof timerSeconds !== 'undefined') {
+        const elapsedSecs = timerMode === 'countdown' ? Math.max(0, countdownTargetSeconds - timerSeconds) : timerSeconds;
+        activeTimerMins = Math.floor(elapsedSecs / 60);
+      }
+
+      let displayMins = currentMins;
+      let displayQs = currentQs;
+
+      if (displayMins === 0 && yesterdayMins > 0 && isPastMidnight) {
+        displayMins = activeTimerMins > 0 ? activeTimerMins : yesterdayMins;
+        displayQs = yesterdayQs;
+      } else if (displayMins === 0 && activeTimerMins > 0) {
+        displayMins = activeTimerMins;
+      }
+
+      const curDisplay = document.getElementById("forceRecordCurrentDisplay");
+      const curMinsEl = document.getElementById("forceRecordCurrentMins");
+      const qsDisplay = document.getElementById("forceRecordQsDisplay");
+      const hoursInp = document.getElementById("forceRecordHoursInput");
+      const minsInp = document.getElementById("forceRecordMinsInput");
+      const qsInp = document.getElementById("forceRecordQsInput");
+
+      if (curDisplay) curDisplay.innerText = `${Math.floor(displayMins / 60)}h ${displayMins % 60}m`;
+      if (curMinsEl) curMinsEl.innerText = `${displayMins} mins total`;
+      if (qsDisplay) qsDisplay.innerText = `${displayQs} Qs`;
+
+      if (hoursInp) hoursInp.value = Math.floor(displayMins / 60);
+      if (minsInp) minsInp.value = displayMins % 60;
+      if (qsInp) qsInp.value = displayQs;
+
+      const yDateObj = new Date();
+      yDateObj.setDate(yDateObj.getDate() - 1);
+      const yDayName = yDateObj.toLocaleDateString(undefined, { weekday: 'long' });
+      const yDateStr = yDateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+
+      const tDateObj = new Date();
+      const tDayName = tDateObj.toLocaleDateString(undefined, { weekday: 'long' });
+      const tDateStr = tDateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+
+      const yLbl = document.getElementById("forceRecordYesterdayLabel");
+      const ySub = document.getElementById("forceRecordYesterdayDateSub");
+      const tSub = document.getElementById("forceRecordTodayDateSub");
+
+      if (yLbl) yLbl.innerText = `Yesterday (${yDayName}${wasWeekend ? ' \u2022 Weekend' : ''})`;
+      if (ySub) ySub.innerText = `${yesterdayIso} (${yDateStr})`;
+      if (tSub) tSub.innerText = `${todayIso} (${tDateStr})`;
+
+      const optYesterday = document.getElementById("optForceRecordYesterday");
+      const optToday = document.getElementById("optForceRecordToday");
+      if (isPastMidnight || wasWeekend) {
+        if (optYesterday) optYesterday.checked = true;
+      } else {
+        if (optToday) optToday.checked = true;
+      }
+      onForceRecordTargetChoiceChange();
+
+      const alertTitle = document.getElementById("forceRecordAlertTitle");
+      const alertText = document.getElementById("forceRecordAlertText");
+      if (isPastMidnight) {
+        if (alertTitle) alertTitle.innerText = `\u{1F319} Post-Midnight Window (After Weekend \u2022 ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})`;
+        if (alertText) alertText.innerHTML = `It is past 12:00 AM (${wasWeekend ? 'after weekend' : 'new day'}). You can safely record your session to <strong>${yDayName} (${yesterdayIso})</strong> and reset Today's Study Time to <strong>0h 0m</strong>.`;
+      } else {
+        if (alertTitle) alertTitle.innerText = `\u26A1 Force Record & Reset Console`;
+        if (alertText) alertText.innerHTML = `Force record your study session into logs and reset Today's Study Time counter back to <strong>0h 0m</strong>.`;
+      }
+
+      document.getElementById("forceRecordModal")?.classList.remove("hidden");
+    }
+
+    function closeForceRecordModal() {
+      document.getElementById("forceRecordModal")?.classList.add("hidden");
+    }
+
+    function onForceRecordTargetChoiceChange() {
+      const optYesterday = document.getElementById("optForceRecordYesterday");
+      const optToday = document.getElementById("optForceRecordToday");
+      const customDiv = document.getElementById("forceRecordCustomDateContainer");
+
+      const lblYesterday = document.getElementById("lblForceRecordTargetYesterday");
+      const lblToday = document.getElementById("lblForceRecordTargetToday");
+
+      if (optYesterday && optYesterday.checked) {
+        if (lblYesterday) lblYesterday.className = "flex items-center gap-2.5 p-2.5 rounded-xl bg-purple-500/20 border border-purple-500/50 cursor-pointer transition";
+        if (lblToday) lblToday.className = "flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] cursor-pointer hover:bg-white/[0.08] transition";
+        if (customDiv) customDiv.classList.add("hidden");
+      } else if (optToday && optToday.checked) {
+        if (lblYesterday) lblYesterday.className = "flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] cursor-pointer hover:bg-white/[0.08] transition";
+        if (lblToday) lblToday.className = "flex items-center gap-2.5 p-2.5 rounded-xl bg-blue-500/20 border border-blue-500/50 cursor-pointer transition";
+        if (customDiv) customDiv.classList.add("hidden");
+      }
+    }
+
+    function confirmResetTodayToZeroOnly() {
+      if (confirm("Reset Today's Study Time and routine progress to 0? Existing history logs remain saved.")) {
+        const todayIso = getTodayIso();
+        appState.dailyLogs = (appState.dailyLogs || []).filter(l => l.date !== todayIso);
+        
+        const currentSteps = getCurrentStepsMeta();
+        currentSteps.forEach(s => {
+          delete appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
+        });
+
+        if (document.getElementById("chkForceRecordResetTimer")?.checked !== false) {
+          resetMainTimer();
+        }
+
+        saveState();
+        renderAll();
+        closeForceRecordModal();
+        showAppToast("Today's Study Time reset to 0h 0m!", "info");
+      }
+    }
+
+    function confirmForceRecordAndReset() {
+      const todayIso = getTodayIso();
+      const yesterdayIso = getYesterdayIso();
+
+      const hrs = parseInt(document.getElementById("forceRecordHoursInput")?.value, 10) || 0;
+      const minsPart = parseInt(document.getElementById("forceRecordMinsInput")?.value, 10) || 0;
+      const totalMinsToRecord = hrs * 60 + minsPart;
+      const qsToRecord = parseInt(document.getElementById("forceRecordQsInput")?.value, 10) || 0;
+      const subjSelect = document.getElementById("forceRecordSubjectSelect")?.value || "weekend_session";
+
+      const optYesterday = document.getElementById("optForceRecordYesterday")?.checked;
+      const targetDate = optYesterday ? yesterdayIso : todayIso;
+
+      // 1. Move any existing logs for today to targetDate if targetDate is yesterday
+      if (targetDate !== todayIso) {
+        (appState.dailyLogs || []).forEach(l => {
+          if (l.date === todayIso) {
+            l.date = targetDate;
+          }
+        });
+      }
+
+      // 2. If user specified custom/adjusted minutes or if no logs exist on targetDate, record/update
+      if (totalMinsToRecord > 0 || qsToRecord > 0) {
+        const targetLogs = (appState.dailyLogs || []).filter(l => l.date === targetDate);
+        const existingTargetMins = targetLogs.reduce((acc, curr) => acc + (curr.minutes || 0), 0);
+
+        if (existingTargetMins === 0 || totalMinsToRecord !== existingTargetMins) {
+          const diffMins = Math.max(0, totalMinsToRecord - existingTargetMins);
+          const diffQs = Math.max(0, qsToRecord - targetLogs.reduce((acc, curr) => acc + (curr.questions || 0), 0));
+
+          if (diffMins > 0 || diffQs > 0 || targetLogs.length === 0) {
+            const subjName = subjSelect === "weekend_session"
+              ? "Weekend Deep Study & Practice"
+              : (subjSelect === "math_apt" ? "Engineering Maths & Aptitude" : "Force Recorded Study Session");
+
+            appState.dailyLogs.unshift({
+              id: Date.now(),
+              date: targetDate,
+              stepKey: "force_record",
+              subjectId: subjSelect,
+              title: subjName,
+              minutes: diffMins > 0 ? diffMins : totalMinsToRecord,
+              questions: diffQs > 0 ? diffQs : qsToRecord,
+              timeStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              note: "Force recorded via Midnight/Weekend rollover"
+            });
+          }
+        }
+      }
+
+      // 3. Ensure today's logs for todayIso are strictly cleared so Today's Time is strictly 0
+      if (targetDate === yesterdayIso) {
+        appState.dailyLogs = (appState.dailyLogs || []).filter(l => l.date !== todayIso);
+      }
+
+      // 4. Also register questions in weekend routine questionLogs if applicable
+      const targetDateObj = new Date(targetDate + "T12:00:00");
+      const targetDay = targetDateObj.getDay();
+      if ((targetDay === 0 || targetDay === 6) && qsToRecord > 0) {
+        if (!appState.weekendRoutine) appState.weekendRoutine = {};
+        if (!Array.isArray(appState.weekendRoutine.questionLogs)) appState.weekendRoutine.questionLogs = [];
+
+        appState.weekendRoutine.questionLogs.unshift({
+          id: Date.now() + 2,
+          date: targetDate,
+          dayOfWeek: targetDay === 6 ? "Saturday" : "Sunday",
+          category: "core_rev",
+          subjectName: "Weekend Recorded Practice",
+          topic: "Force Recorded Session",
+          totalQuestions: qsToRecord,
+          correct: qsToRecord,
+          incorrect: 0,
+          markingScheme: "gate1",
+          positiveMarks: qsToRecord * 1.0,
+          negativeMarks: 0,
+          netMarks: qsToRecord * 1.0,
+          maxMarks: qsToRecord * 1.0,
+          accuracyPct: 100,
+          timeSpentMins: totalMinsToRecord,
+          notes: "Force recorded via Midnight rollover"
+        });
+      }
+
+      // 5. Reset Today's Routine Steps if checkbox checked
+      if (document.getElementById("chkForceRecordResetSteps")?.checked !== false) {
+        const currentSteps = getCurrentStepsMeta();
+        currentSteps.forEach(s => {
+          delete appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
+          if (targetDate === todayIso) {
+            delete appState.dailyCompletedSteps[`${targetDate}_${s.key}`];
+          }
+        });
+      }
+
+      // 6. Reset Focus Timer if checkbox checked
+      if (document.getElementById("chkForceRecordResetTimer")?.checked !== false) {
+        resetMainTimer();
+      }
+
+      saveState();
+      renderAll();
+      closeForceRecordModal();
+
+      const targetLabel = targetDate === yesterdayIso ? "Yesterday (Weekend)" : "Today";
+      showAppToast(`\u26A1 Force Recorded ${hrs}h ${minsPart}m to ${targetLabel}! Today reset to 0h 0m.`, "success");
+    }
+
     // 9. INITIALIZATION & DROPDOWNS
     window.addEventListener("DOMContentLoaded", () => {
       loadState();
@@ -4184,7 +4720,7 @@
       renderAll();
       initSupabase();
 
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
       if (document.getElementById("topicTestDate")) document.getElementById("topicTestDate").value = todayIso;
       if (document.getElementById("subjectTestDate")) document.getElementById("subjectTestDate").value = todayIso;
       if (document.getElementById("mockTestDate")) document.getElementById("mockTestDate").value = todayIso;
@@ -4247,7 +4783,7 @@
       const start = new Date(appState.activeCycle.startDate || Date.now());
       const end = new Date(start.getTime() + d * 86400000);
       const el = document.getElementById("cfgEndDateInput");
-      if (el) el.value = end.toISOString().slice(0, 10);
+      if (el) el.value = getTodayIso(end);
     }
 
     function populateDropdowns() {
@@ -4312,7 +4848,7 @@
 
     // 10. ANALYTICS CALCULATION ENGINE
     function renderAnalyticsHub() {
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
       const logs = appState.dailyLogs || [];
 
       const totalMinutes = logs.reduce((a, c) => a + (c.minutes || 0), 0);
@@ -4568,7 +5104,7 @@
 
     function setVelocityRange(range) {
       currentVelocityRange = range;
-      
+
       const tabs = ['7d', '14d', '30d', 'weeks', 'months', 'all_days'];
       tabs.forEach(t => {
         const btn = document.getElementById(`velTab-${t}`);
@@ -4633,7 +5169,7 @@
       const logs = appState.dailyLogs || [];
       const chartContainer = document.getElementById("anVelocityChartContainer");
       const allDaysContainer = document.getElementById("anVelocityAllDaysContainer");
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
 
       if (!chartContainer || !allDaysContainer) return;
 
@@ -4672,7 +5208,7 @@
         for (let i = daysCount - 1; i >= 0; i--) {
           const d = new Date();
           d.setDate(d.getDate() - i);
-          const dIso = d.toISOString().slice(0, 10);
+          const dIso = getTodayIso(d);
           const dayLogs = logs.filter(l => l.date === dIso);
           const mins = dayLogs.reduce((a, c) => a + (c.minutes || 0), 0);
           const qs = dayLogs.reduce((a, c) => a + (c.questions || 0), 0);
@@ -4681,7 +5217,7 @@
           if (daysCount === 14) {
             dayName = `${dt.toLocaleDateString(undefined, { weekday: 'narrow' })}${dt.getDate()}`;
           } else if (daysCount === 30) {
-            dayName = `${dt.getDate()}/${dt.getMonth()+1}`;
+            dayName = `${dt.getDate()}/${dt.getMonth() + 1}`;
           }
 
           items.push({
@@ -4704,7 +5240,7 @@
           const day = d.getDay();
           const diff = d.getDate() - day + (day === 0 ? -6 : 1);
           const monday = new Date(d.setDate(diff));
-          const monStr = monday.toISOString().slice(0, 10);
+          const monStr = getTodayIso(monday);
           if (!weekMap[monStr]) weekMap[monStr] = { mins: 0, qs: 0, daysSet: new Set() };
           weekMap[monStr].mins += (l.minutes || 0);
           weekMap[monStr].qs += (l.questions || 0);
@@ -4722,7 +5258,7 @@
         for (let k = minWeeks - 1; k >= 0; k--) {
           const wMon = new Date(currMonday);
           wMon.setDate(wMon.getDate() - (k * 7));
-          const wStr = wMon.toISOString().slice(0, 10);
+          const wStr = getTodayIso(wMon);
           if (!weeksList.includes(wStr)) weeksList.push(wStr);
         }
         weekKeys.forEach(wk => { if (!weeksList.includes(wk)) weeksList.push(wk); });
@@ -4732,15 +5268,15 @@
           const wMon = new Date(wMonStr + "T00:00:00");
           const wSun = new Date(wMon);
           wSun.setDate(wSun.getDate() + 6);
-          const sunStr = wSun.toISOString().slice(0, 10);
+          const sunStr = getTodayIso(wSun);
 
           const wData = weekMap[wMonStr] || { mins: 0, qs: 0, daysSet: new Set() };
-          const label = `${wMon.getDate()}/${wMon.getMonth()+1}`;
+          const label = `${wMon.getDate()}/${wMon.getMonth() + 1}`;
           const isCurrWeek = todayIso >= wMonStr && todayIso <= sunStr;
 
           items.push({
             label: `Wk ${label}`,
-            sublabel: `${wMon.toLocaleDateString(undefined,{month:'short',day:'numeric'})} - ${wSun.toLocaleDateString(undefined,{month:'short',day:'numeric'})}`,
+            sublabel: `${wMon.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} - ${wSun.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`,
             val: currentVelocityMetric === 'hours' ? Math.round((wData.mins / 60) * 10) / 10 : wData.qs,
             minutes: wData.mins,
             questions: wData.qs,
@@ -4748,7 +5284,7 @@
             dateStart: wMonStr,
             dateEnd: sunStr,
             isCurrent: isCurrWeek,
-            clickHandler: () => showWeekDetailLogs(wMonStr, sunStr, `Week of ${wMon.toLocaleDateString(undefined,{month:'short',day:'numeric'})}`)
+            clickHandler: () => showWeekDetailLogs(wMonStr, sunStr, `Week of ${wMon.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`)
           });
         });
 
@@ -4767,7 +5303,7 @@
         const dNow = new Date();
         for (let m = 5; m >= 0; m--) {
           const mDate = new Date(dNow.getFullYear(), dNow.getMonth() - m, 1);
-          const ymStr = mDate.toISOString().slice(0, 7);
+          const ymStr = getTodayIso(mDate).slice(0, 7);
           if (!monthsList.includes(ymStr)) monthsList.push(ymStr);
         }
         Object.keys(monthMap).forEach(ym => { if (!monthsList.includes(ym)) monthsList.push(ym); });
@@ -4801,7 +5337,7 @@
 
       const totalMinsRange = items.reduce((a, c) => a + c.minutes, 0);
       const totalQsRange = items.reduce((a, c) => a + c.questions, 0);
-      const avgVal = currentVelocityMetric === 'hours' 
+      const avgVal = currentVelocityMetric === 'hours'
         ? ((totalMinsRange / 60) / (items.length || 1)).toFixed(1) + 'h / period'
         : Math.round(totalQsRange / (items.length || 1)) + ' Qs / period';
 
@@ -4813,21 +5349,21 @@
 
       if (elTotal) elTotal.innerText = `${Math.floor(totalMinsRange / 60)}h ${totalMinsRange % 60}m`;
       if (elAvg) elAvg.innerText = avgVal;
-      if (elPeak && peakItem) elPeak.innerText = currentVelocityMetric === 'hours' ? `${(peakItem.minutes/60).toFixed(1)}h (${peakItem.label})` : `${peakItem.questions} Qs (${peakItem.label})`;
+      if (elPeak && peakItem) elPeak.innerText = currentVelocityMetric === 'hours' ? `${(peakItem.minutes / 60).toFixed(1)}h (${peakItem.label})` : `${peakItem.questions} Qs (${peakItem.label})`;
       if (elQs) elQs.innerText = `${totalQsRange} Qs Total`;
       if (elHeaderTotal) elHeaderTotal.innerText = `${(totalMinsRange / 60).toFixed(1)}h Total`;
 
       items.forEach(item => {
         const barHeightPct = Math.max(8, Math.round((item.val / maxVal) * 100));
         const isPeak = peakItem && item.val > 0 && item.val === peakItem.val;
-        
+
         let colorClass = "bg-white/20 hover:bg-white/40 text-slate-300";
         if (isPeak) {
           colorClass = "bg-gradient-to-t from-amber-500 to-yellow-300 shadow-[0_0_15px_rgba(251,191,36,0.5)] border border-amber-300 text-amber-300";
         } else if (item.isCurrent) {
           colorClass = "bg-gradient-to-t from-cyan-500 to-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)] border border-cyan-300 text-cyan-300";
         } else if (item.val > 0) {
-          colorClass = currentVelocityMetric === 'hours' 
+          colorClass = currentVelocityMetric === 'hours'
             ? "bg-gradient-to-t from-blue-600/80 to-indigo-400/90 hover:from-blue-500 hover:to-indigo-300 text-blue-300 border border-blue-400/30"
             : "bg-gradient-to-t from-emerald-600/80 to-teal-400/90 hover:from-emerald-500 hover:to-teal-300 text-emerald-300 border border-emerald-400/30";
         }
@@ -4873,7 +5409,7 @@
         logs = logs.filter(l => l.subjectId === subjectFilter);
       }
       if (searchText) {
-        logs = logs.filter(l => 
+        logs = logs.filter(l =>
           (l.title || "").toLowerCase().includes(searchText) ||
           (l.date || "").toLowerCase().includes(searchText) ||
           (l.subjectId || "").toLowerCase().includes(searchText)
@@ -4955,7 +5491,7 @@
 
     function openAddTestModal(type = 'topic') {
       switchTestTypeForm(type);
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
       const topicDate = document.getElementById("topicTestDate");
       const subjDate = document.getElementById("subjectTestDate");
       const mockDate = document.getElementById("mockTestDate");
@@ -5103,7 +5639,7 @@
         const topic = document.getElementById("topicTestTopicSelect").value;
         const total = parseFloat(document.getElementById("topicTestTotalMarks").value) || 25;
         const scored = parseFloat(document.getElementById("topicTestScoredMarks").value) || 0;
-        const date = document.getElementById("topicTestDate").value || new Date().toISOString().slice(0, 10);
+        const date = document.getElementById("topicTestDate").value || getTodayIso();
         const notes = document.getElementById("topicTestNotes").value.trim();
         const pct = Math.round((scored / total) * 1000) / 10;
 
@@ -5126,7 +5662,7 @@
         const subj = SUBJECTS.find(s => s.id === subjId);
         const total = parseFloat(document.getElementById("subjectTestTotalMarks").value) || 50;
         const scored = parseFloat(document.getElementById("subjectTestScoredMarks").value) || 0;
-        const date = document.getElementById("subjectTestDate").value || new Date().toISOString().slice(0, 10);
+        const date = document.getElementById("subjectTestDate").value || getTodayIso();
         const notes = document.getElementById("subjectTestNotes").value.trim();
         const pct = Math.round((scored / total) * 1000) / 10;
 
@@ -5148,7 +5684,7 @@
         const subjectsList = Array.from(chks).map(c => c.value);
         const total = parseFloat(document.getElementById("mockTestTotalMarks").value) || 100;
         const scored = parseFloat(document.getElementById("mockTestScoredMarks").value) || 0;
-        const date = document.getElementById("mockTestDate").value || new Date().toISOString().slice(0, 10);
+        const date = document.getElementById("mockTestDate").value || getTodayIso();
         const notes = document.getElementById("mockTestNotes").value.trim();
         const pct = Math.round((scored / total) * 1000) / 10;
 
@@ -5936,7 +6472,7 @@
       const qs = parseInt(document.getElementById("modalQuestionsInput").value, 10) || 0;
       const cVal = parseInt(document.getElementById("modalCorrectInput")?.value, 10) || 0;
       const iVal = parseInt(document.getElementById("modalIncorrectInput")?.value, 10) || 0;
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
       const subjId = getStepSubjectId(currentStepKey);
 
       const hasMarks = (cVal > 0 || iVal > 0);
@@ -6009,7 +6545,7 @@
 
     function resetTodaySteps() {
       if (confirm("Reset today's routine checkboxes? Logged times remain saved.")) {
-        const todayIso = new Date().toISOString().slice(0, 10);
+        const todayIso = getTodayIso();
         const currentSteps = getCurrentStepsMeta();
         currentSteps.forEach(s => {
           delete appState.dailyCompletedSteps[`${todayIso}_${s.key}`];
@@ -6036,7 +6572,8 @@
     }
 
     function renderDashboardStats() {
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
+      const yesterdayIso = getYesterdayIso();
       const todayLogs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
 
       const currentSteps = getCurrentStepsMeta();
@@ -6055,9 +6592,48 @@
       const totalMinutes = todayLogs.reduce((acc, curr) => acc + curr.minutes, 0);
       const timeEl = document.getElementById("dashTotalTimeToday");
       const qsEl = document.getElementById("dashTotalQsToday");
+      const timeSubtext = document.getElementById("dashTodayTimeSubtext");
 
       if (timeEl) timeEl.innerText = `${Math.floor(totalMinutes / 60)}h ${totalMinutes % 60}m`;
       if (qsEl) qsEl.innerText = `${todayLogs.reduce((acc, curr) => acc + curr.questions, 0)} Qs`;
+
+      const isPastMidnight = isPostMidnightHours();
+      const dayNum = new Date().getDay();
+      const wasWeekend = (dayNum === 1 || dayNum === 0);
+
+      const midnightBadge = document.getElementById("dashMidnightBadge");
+      const btnForceRecordLabel = document.getElementById("btnForceRecordLabel");
+
+      if (midnightBadge) {
+        if (isPastMidnight) {
+          midnightBadge.classList.remove("hidden");
+          midnightBadge.innerHTML = wasWeekend
+            ? `<i class="fa-solid fa-moon text-amber-400"></i> Past 12:00 &bull; Weekend End`
+            : `<i class="fa-solid fa-moon text-amber-400"></i> Past 12:00 AM`;
+        } else {
+          midnightBadge.classList.add("hidden");
+        }
+      }
+
+      if (btnForceRecordLabel) {
+        if (isPastMidnight && wasWeekend && totalMinutes > 0) {
+          btnForceRecordLabel.innerText = "Force Record to Weekend & Reset";
+        } else if (totalMinutes > 0) {
+          btnForceRecordLabel.innerText = "Force Record & Reset to 0";
+        } else {
+          btnForceRecordLabel.innerText = "Force Record & Reset to 0";
+        }
+      }
+
+      if (timeSubtext) {
+        const yesterdayLogs = (appState.dailyLogs || []).filter(l => l.date === yesterdayIso);
+        const yMins = yesterdayLogs.reduce((acc, curr) => acc + (curr.minutes || 0), 0);
+        if (totalMinutes === 0 && yMins > 0) {
+          timeSubtext.innerHTML = `Across all logged sessions &bull; <span class="text-purple-300 font-semibold">Yesterday: ${Math.floor(yMins / 60)}h ${yMins % 60}m</span>`;
+        } else {
+          timeSubtext.innerText = "Across all logged sessions";
+        }
+      }
 
       const remaining = getDaysRemaining(appState.activeCycle.endDate);
       const daysDisplay = document.getElementById("dashCycleDaysLeft");
@@ -6155,7 +6731,7 @@
       const container = document.getElementById("stepsQueueContainer");
       if (!container) return;
       container.innerHTML = "";
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
       const steps = getCurrentStepsMeta();
 
       steps.forEach((s, idx) => {
@@ -6203,7 +6779,7 @@
     function renderTodayLogsList() {
       const container = document.getElementById("todayCompletedSessionsList");
       if (!container) return;
-      const todayIso = new Date().toISOString().slice(0, 10);
+      const todayIso = getTodayIso();
       const logs = (appState.dailyLogs || []).filter(l => l.date === todayIso);
 
       if (logs.length === 0) {
@@ -6550,7 +7126,7 @@
 
       const dt = new Date(dateStr + "T00:00:00");
       const dateFormatted = dt.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
-      const isToday = dateStr === new Date().toISOString().slice(0, 10);
+      const isToday = dateStr === getTodayIso();
 
       document.getElementById("dayModalDateTitle").innerText = dateFormatted;
       document.getElementById("dayModalDateSub").innerText = isToday ? "Today's Activity" : "Historical Day Log";
@@ -6842,8 +7418,8 @@
       }
 
       return {
-        satDate: sat.toISOString().slice(0, 10),
-        sunDate: sun.toISOString().slice(0, 10),
+        satDate: getTodayIso(sat),
+        sunDate: getTodayIso(sun),
         satDisplay: sat.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
         sunDisplay: sun.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
       };
@@ -7595,7 +8171,7 @@
       }
 
       if (dateInp) {
-        const todayIso = new Date().toISOString().slice(0, 10);
+        const todayIso = getTodayIso();
         dateInp.value = weekendInfo.isWeekend ? todayIso : (daySel && daySel.value === "Sunday" ? weekendDates.sunDate : weekendDates.satDate);
       }
 
@@ -7711,7 +8287,7 @@
       }
 
       const dayOfWeek = document.getElementById("wkLogDaySelect")?.value || "Saturday";
-      const date = document.getElementById("wkLogDateInput")?.value || new Date().toISOString().slice(0, 10);
+      const date = document.getElementById("wkLogDateInput")?.value || getTodayIso();
       const category = document.getElementById("wkLogCategorySelect")?.value || "math";
       const subjectName = document.getElementById("wkLogSubjectNameInput")?.value.trim() || "Practice Session";
       const topic = document.getElementById("wkLogTopicInput")?.value.trim() || "";
