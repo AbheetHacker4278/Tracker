@@ -1,0 +1,943 @@
+/* ==========================================================================
+   GATE 2027 CSE - TCS iON SCIENTIFIC CALCULATOR STYLES
+   Authentic GATE Virtual Scientific Calculator with Float Mode & Dynamic Resizing
+   ========================================================================== */
+
+:root {
+  --gate-calc-scale: 1;
+  --gate-calc-opacity: 1;
+  --gate-calc-base-width: 463px;
+  --gate-calc-base-height: 385px;
+}
+
+/* FLOATING WIDGET OUTER CONTAINER */
+#gateCalculatorWidget {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  background: #1e2029;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  opacity: var(--gate-calc-opacity, 1);
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  overflow: visible;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  box-sizing: border-box;
+}
+
+#gateCalculatorWidget * {
+  box-sizing: border-box;
+}
+
+/* MODAL / BACKDROP MODE */
+#gateCalculatorWidget.gate-calc-modal-mode {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 999999 !important;
+  box-shadow: 0 25px 65px -5px rgba(0, 0, 0, 0.85), 0 0 0 2px rgba(99, 102, 241, 0.35) !important;
+}
+
+.gate-calc-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999998;
+  animation: gateCalcFadeIn 0.2s ease-out;
+}
+
+/* ALWAYS-ON-TOP PICTURE-IN-PICTURE (PIP) WINDOW MODE */
+#gateCalculatorWidget.gate-calc-pip-mode {
+  position: static !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100vh !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+#gateCalculatorWidget.gate-calc-pip-mode .gate-calc-titlebar {
+  border-radius: 0 !important;
+  cursor: default !important;
+}
+
+#gateCalculatorWidget.gate-calc-pip-mode .gate-calc-scale-wrapper {
+  margin: 0 auto !important;
+  transform-origin: top center !important;
+}
+
+#gateCalculatorWidget.gate-calc-pip-mode .gate-calc-resize-handle {
+  display: none !important;
+}
+
+@keyframes gateCalcFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* TOP COMMAND TITLEBAR / DRAG HANDLE */
+.gate-calc-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, #272a38 0%, #1c1e28 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.gate-calc-titlebar.dragging {
+  cursor: grabbing !important;
+  background: linear-gradient(180deg, #33384a 0%, #222634 100%);
+}
+
+.gate-calc-title-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.gate-calc-brand-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+.gate-calc-title-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.gate-calc-title-main {
+  font-size: 11px;
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: 0.03em;
+}
+
+.gate-calc-title-sub {
+  font-size: 9.5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* TITLEBAR ACTION CONTROLS */
+.gate-calc-titlebar-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gate-calc-action-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  width: 26px;
+  height: 24px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.gate-calc-action-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.gate-calc-action-btn.active {
+  background: rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.gate-calc-btn-close:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #dc2626 !important;
+}
+
+.gate-calc-btn-pip {
+  color: #38bdf8 !important;
+}
+
+.gate-calc-btn-pip:hover {
+  background: rgba(56, 189, 248, 0.25) !important;
+  color: #ffffff !important;
+  border-color: rgba(56, 189, 248, 0.6) !important;
+}
+
+.gate-calc-btn-pip.active {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  border-color: #38bdf8 !important;
+}
+
+/* SCALE CONTROLS IN TITLEBAR */
+.gate-calc-scale-control {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 1px 3px;
+  gap: 2px;
+}
+
+.gate-calc-scale-control .gate-calc-action-btn {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  font-size: 9px;
+}
+
+.gate-calc-scale-control .gate-calc-action-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.gate-calc-scale-indicator {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #38bdf8;
+  padding: 0 4px;
+  cursor: pointer;
+  min-width: 36px;
+  text-align: center;
+}
+
+.gate-calc-scale-indicator:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+/* SCALE PRESETS POPUP MENU */
+.gate-calc-scale-menu {
+  position: absolute;
+  top: 42px;
+  right: 65px;
+  z-index: 99999;
+  background: #181920;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  min-width: 140px;
+}
+
+.gate-calc-scale-menu-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gate-calc-scale-menu-options {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gate-calc-scale-menu-options button {
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  padding: 5px 8px;
+  font-size: 11px;
+  text-align: left;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.gate-calc-scale-menu-options button:hover {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.gate-calc-scale-menu-options button.active {
+  background: #3b82f6;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* SCALABLE CONTENT WRAPPER */
+.gate-calc-scale-wrapper {
+  overflow: hidden;
+  display: block;
+  transform-origin: top left;
+  transform: scale(var(--gate-calc-scale, 1));
+  width: var(--gate-calc-base-width);
+  height: var(--gate-calc-base-height);
+  background: #dadada;
+}
+
+/* ==========================================================================
+   AUTHENTIC TCS iON CALCULATOR DOM & STYLING
+   ========================================================================== */
+
+.calc_container {
+  background: none repeat scroll 0 0 #dadada;
+  border: 1px solid #aaa;
+  border-radius: 0px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1) inset;
+  padding: 0px;
+  width: 463px;
+  border-bottom: 7px solid #999;
+  position: relative;
+  box-sizing: border-box;
+}
+
+#helptopDiv {
+  margin-bottom: 5px;
+  padding: 8px 10px;
+  background-color: #4286f3;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+.helptop-title {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+}
+
+.help_tab {
+  color: #000;
+  background: #ffffff;
+  border: 1px solid #2563eb;
+  border-radius: 4px;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 18px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background 0.15s;
+}
+
+.help_tab:hover {
+  background: #e2e8f0;
+}
+
+.calc_min_icon {
+  background: #ffffff;
+  border: 1px solid #2563eb;
+  border-radius: 3px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.calc_min_icon::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 2px;
+  background: #1e3a8a;
+}
+
+#mainContentArea {
+  margin-top: 0px;
+  padding: 10px;
+  background: #dadada;
+}
+
+.gate-calc-screen-wrap {
+  position: relative;
+}
+
+/* DUAL TEXT BOXES */
+.keyPad_TextBox,
+.keyPad_TextBox1 {
+  background: none repeat scroll 0 0 #fff;
+  border-color: #aaa;
+  border-image: none;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px 1px 3px;
+  font-size: 20px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+  text-indent: 10px;
+  vertical-align: middle;
+  width: 441px;
+  float: left;
+  margin-bottom: 7px;
+  padding-right: 32px;
+  padding-left: 8px;
+  font-family: Arial, sans-serif;
+  color: #111;
+  box-sizing: border-box;
+}
+
+.keyPad_TextBox1 {
+  font-size: 13px;
+  height: 24px;
+  line-height: 24px;
+  color: #555;
+  margin-bottom: 4px;
+  background: #fbfbfb;
+}
+
+.text_container {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+
+/* MEMORY INDICATOR */
+.memoryhide {
+  visibility: hidden;
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  opacity: 0;
+  transition: opacity 0.5s, visibility 0.5s;
+  font-weight: bold;
+  color: #1e40af;
+}
+
+.memoryshow {
+  visibility: visible;
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  opacity: 1;
+  font-weight: bold;
+  color: #1e40af;
+}
+
+/* QUICK CLIPBOARD COPY BUTTON */
+.gate-calc-copy-btn {
+  position: absolute;
+  right: 6px;
+  top: 5px;
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.gate-calc-copy-btn:hover {
+  color: #2563eb;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.gate-calc-copy-btn.copied {
+  color: #16a34a;
+}
+
+.left_sec {
+  float: left;
+  width: 100%;
+}
+
+.calc_row {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+/* ALL BUTTONS */
+#keyPad a {
+  background: #f1f1f1;
+  border-color: #aaa;
+  border-image: none;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px 1px 3px;
+  color: #444;
+  cursor: pointer;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+  height: 25px;
+  line-height: 20px;
+  margin-right: 5px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  width: 35px;
+  font-family: Arial, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#keyPad a.min {
+  font-size: 10.5px;
+}
+
+#keyPad a:active {
+  position: relative;
+  height: 25px;
+  border-bottom: 1px solid #aaa;
+  transform: translateY(1px);
+}
+
+#keyPad a:hover {
+  background: #eaeaea;
+}
+
+.degree_radian {
+  float: left;
+  height: 25px;
+  width: 80px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  margin-top: 1px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #333;
+}
+
+.degree_radian label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.degree_radian input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+#keyPad #keyPad_btnDot {
+  width: 35px !important;
+}
+
+#keyPad #keyPad_btn0 {
+  width: 76px !important;
+}
+
+.calc_arrows {
+  font-size: 20px !important;
+}
+
+/* ENTER KEY */
+#keyPad #keyPad_btnEnter {
+  background: #2ecc71;
+  border-color: #27ae60;
+  bottom: 15px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 47px;
+  right: 10px;
+  width: 35px;
+  height: 55px;
+  position: absolute;
+}
+
+#keyPad #keyPad_btnEnter:hover {
+  background: #27ae60;
+}
+
+#keyPad #keyPad_btnEnter:active {
+  position: absolute !important;
+  bottom: 14px !important;
+  border-bottom: 1px solid #1e824c;
+}
+
+/* CLEAR & BACK BUTTONS */
+#keyPad #keyPad_btnClr,
+#keyPad #keyPad_btnInverseSign,
+#keyPad #keyPad_btnAllClr {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #c0392b;
+  width: 35px !important;
+}
+
+#keyPad #keyPad_btnClr:hover,
+#keyPad #keyPad_btnInverseSign:hover,
+#keyPad #keyPad_btnAllClr:hover {
+  background: #c0392b;
+}
+
+#keyPad #keyPad_btnBack {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #c0392b;
+  width: 76px !important;
+}
+
+#keyPad #keyPad_btnBack:hover {
+  background: #c0392b;
+}
+
+#keyPad #keyPad_btnSquare,
+#keyPad #keyPad_btnCube,
+#keyPad #keyPad_btnExp,
+#keyPad #keyPad_btnYpowX {
+  font-size: 12px;
+}
+
+.clear {
+  clear: both;
+}
+
+.superscript,
+.subscript {
+  font-size: 0.7em;
+  position: relative;
+  top: -0.5em;
+}
+
+.subscript {
+  top: 0.5em;
+}
+
+/* HELP INSTRUCTIONS PANE */
+#helpContent {
+  height: 250px;
+  margin-right: 0px;
+  overflow-y: auto;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1.45;
+  color: #222;
+}
+
+#helpContent h3 {
+  margin: 8px 0 4px 0;
+  font-size: 12px;
+}
+
+#helpContent ul {
+  padding-left: 18px;
+  margin: 4px 0 8px 0;
+}
+
+#helpContent li {
+  margin-bottom: 3px;
+}
+
+/* ==========================================================================
+   STATUSBAR & CORNER RESIZE HANDLE
+   ========================================================================== */
+
+.gate-calc-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: #181920;
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.gate-calc-status-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gate-calc-status-badge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.gate-calc-status-hint {
+  font-size: 9.5px;
+  color: #64748b;
+}
+
+/* CORNER DRAG RESIZE HANDLE */
+.gate-calc-resize-handle {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: se-resize;
+  color: #64748b;
+  transition: color 0.15s, transform 0.15s;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  border-radius: 3px;
+}
+
+.gate-calc-resize-handle:hover,
+.gate-calc-resize-handle.active {
+  color: #38bdf8;
+  transform: scale(1.15);
+}
+
+/* ==========================================================================
+   MINIMIZED FLOATING PILL BADGE
+   ========================================================================== */
+
+.gate-calc-minimized-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999999;
+  background: #181920;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 9999px;
+  padding: 6px 14px 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(59, 130, 246, 0.25);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  animation: gateCalcPillBounce 0.3s ease-out;
+}
+
+@keyframes gateCalcPillBounce {
+  0% { transform: scale(0.8) translateY(10px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.gate-calc-minimized-pill:hover {
+  transform: translateY(-3px) scale(1.03);
+  border-color: #3b82f6;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(59, 130, 246, 0.4);
+}
+
+.gate-calc-pill-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.gate-calc-pill-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.gate-calc-pill-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.gate-calc-pill-val {
+  font-size: 13px;
+  font-weight: 800;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #f8fafc;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gate-calc-pill-restore-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #94a3b8;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  margin-left: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gate-calc-pill-restore-btn:hover {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.gate-calc-pill-pip-btn {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.gate-calc-pill-pip-btn:hover {
+  background: #0284c7;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   MODERN DARK THEME VARIANT
+   ========================================================================== */
+
+#gateCalculatorWidget.theme-dark-command .calc_container,
+#gateCalculatorWidget.theme-dark-command .gate-calc-scale-wrapper {
+  background: #14151b !important;
+  border-color: #2e303c !important;
+  border-bottom-color: #22242e !important;
+}
+
+#gateCalculatorWidget.theme-dark-command #mainContentArea {
+  background: #14151b !important;
+}
+
+#gateCalculatorWidget.theme-dark-command #helptopDiv {
+  background: linear-gradient(90deg, #1e1b4b, #312e81) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#gateCalculatorWidget.theme-dark-command .keyPad_TextBox,
+#gateCalculatorWidget.theme-dark-command .keyPad_TextBox1 {
+  background: #090a0f !important;
+  color: #38bdf8 !important;
+  border-color: #2a2c3a !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+#gateCalculatorWidget.theme-dark-command .keyPad_TextBox1 {
+  color: #94a3b8 !important;
+}
+
+#gateCalculatorWidget.theme-dark-command #keyPad a {
+  background: #1e2029 !important;
+  color: #e2e8f0 !important;
+  border-color: #303342 !important;
+  border-bottom-color: #171820 !important;
+}
+
+#gateCalculatorWidget.theme-dark-command #keyPad a:hover {
+  background: #282b37 !important;
+  color: #ffffff !important;
+}
+
+#gateCalculatorWidget.theme-dark-command #keyPad a:active {
+  background: #14151c !important;
+  border-bottom-color: #303342 !important;
+}
+
+#gateCalculatorWidget.theme-dark-command .degree_radian {
+  color: #cbd5e1 !important;
+}
+
+#gateCalculatorWidget.theme-dark-command #helpContent {
+  background: #14151b !important;
+  color: #cbd5e1 !important;
+  border-color: #2e303c !important;
+}
+
+#gateCalculatorWidget.theme-dark-command #helpContent h3 {
+  color: #60a5fa !important;
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE RULES
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  #gateCalculatorWidget:not(.gate-calc-modal-mode) {
+    max-width: 96vw;
+  }
+  
+  .gate-calc-status-hint {
+    display: none;
+  }
+}
