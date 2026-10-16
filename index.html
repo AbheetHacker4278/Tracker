@@ -1672,13 +1672,13 @@
         </div>
       </div>
 
-      <!-- ROW 3: ALL 12 SUBJECTS DISTRIBUTION -->
+      <!-- ROW 3: ALL 15 SUBJECTS DISTRIBUTION -->
       <div class="glass-card p-6 rounded-2xl space-y-5">
         <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/10 pb-3">
           <div>
             <h3 class="text-sm font-bold flex items-center gap-2 text-white">
               <i class="fa-solid fa-layer-group text-accent-blue"></i> Subject-Wise Effort & Syllabus Distribution (All
-              12 Subjects)
+              15 Subjects)
             </h3>
             <p class="text-xs text-slate-400">Track time invested and syllabus completion across each GATE CS subject.
             </p>
@@ -1710,7 +1710,7 @@
 
             <div>
               <div class="flex justify-between items-center mb-1">
-                <span class="font-semibold text-slate-200">Mathematics (Discrete & Engg Math)</span>
+                <span class="font-semibold text-slate-200">Mathematics (Discrete, Linear Algebra, Calculus, Prob &amp; Stats)</span>
                 <span id="anMathSyllabusPct" class="font-mono font-bold text-accent-purple">0.0%</span>
               </div>
               <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
@@ -2526,8 +2526,10 @@
                 <label for="wkMathSubjectSelect" class="sr-only">Select Engineering Maths Subject</label>
                 <select id="wkMathSubjectSelect" onchange="onWeekendMathSubjectChange(this.value)"
                   class="bg-black/50 border border-purple-500/30 text-white text-xs font-semibold rounded-xl px-3 py-1.5 focus:outline-none focus:border-purple-400">
-                  <option value="em">Engineering Mathematics</option>
                   <option value="dm">Discrete Mathematics</option>
+                  <option value="la">Linear Algebra</option>
+                  <option value="calc">Calculus</option>
+                  <option value="prob">Probability &amp; Statistics</option>
                 </select>
               </div>
             </div>
@@ -2976,7 +2978,7 @@
           <div
             class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold text-xs border border-emerald-500/30"
             id="completedCountBadge">
-            0 / 12 Subjects Mastered
+            0 / 15 Subjects Mastered
           </div>
         </div>
 
@@ -3095,8 +3097,16 @@
         </div>
       </div>
 
-      <!-- STATUS SUMMARY STRIP -->
-      <div id="syllabusStatusSummary" class="flex flex-wrap gap-2.5 text-xs" role="status"></div>
+      <!-- STATUS & CATEGORY FILTER STRIP -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div id="syllabusStatusSummary" class="flex flex-wrap gap-2.5 text-xs" role="status"></div>
+        <div class="flex flex-wrap items-center gap-1.5 p-1 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold">
+          <button type="button" onclick="setSyllabusCategoryFilter('all')" data-cat="all" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/20 text-white border border-white/30 shadow-sm transition">All (<span id="sylCountAll">15</span>)</button>
+          <button type="button" onclick="setSyllabusCategoryFilter('core')" data-cat="core" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 border border-white/10 hover:text-white transition">Core CS (<span id="sylCountCore">10</span>)</button>
+          <button type="button" onclick="setSyllabusCategoryFilter('math')" data-cat="math" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-purple-300 border border-purple-500/20 hover:text-purple-200 transition">Engineering Maths (<span id="sylCountMath">4</span>)</button>
+          <button type="button" onclick="setSyllabusCategoryFilter('aptitude')" data-cat="aptitude" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-amber-300 border border-amber-500/20 hover:text-amber-200 transition">General Aptitude (<span id="sylCountApt">1</span>)</button>
+        </div>
+      </div>
 
       <div id="syllabusCardsGrid" class="space-y-4"></div>
     </div>
@@ -4585,7 +4595,7 @@
           </div>
           <div>
             <label class="font-semibold text-slate-300">Subject Name:</label>
-            <input type="text" id="wkLogSubjectNameInput" placeholder="e.g. Engineering Mathematics"
+            <input type="text" id="wkLogSubjectNameInput" placeholder="e.g. Linear Algebra / Discrete Math"
               class="w-full mt-1 bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-medium" />
           </div>
         </div>
@@ -4870,18 +4880,39 @@
         ]
       },
       {
-        id: "em",
-        name: "Engineering Mathematics",
+        id: "la",
+        name: "Linear Algebra",
+        type: "Math",
+        icon: "fa-arrow-trend-up",
+        subtopics: [
+          "Matrices, Determinants & System of Linear Equations",
+          "Eigenvalues & Eigenvectors, LU Decomposition & Cayley-Hamilton",
+          "Vector Spaces, Basis, Linear Independence, Span & Dimension",
+          "Rank & Nullity of Matrices, Rank-Nullity Theorem & Orthogonal Projections"
+        ]
+      },
+      {
+        id: "calc",
+        name: "Calculus",
         type: "Math",
         icon: "fa-calculator",
         subtopics: [
-          "Linear Algebra: Matrices, Determinants, System of Equations",
-          "Linear Algebra: Eigenvalues & Eigenvectors, LU Decomposition",
-          "Calculus: Limits, Continuity, Differentiability, Maxima/Minima",
-          "Calculus: Mean Value Theorems, Definite & Indefinite Integrals",
-          "Probability: Random Variables, Conditional Probability, Bayes Theorem",
-          "Probability Distributions: Uniform, Normal, Exponential, Poisson, Binomial",
-          "Statistics: Mean, Median, Mode, Standard Deviation"
+          "Limits, Continuity & Differentiability, L'Hôpital's Rule",
+          "Maxima and Minima (Single Variable & Critical Points)",
+          "Mean Value Theorems (Rolle's, Lagrange's MVT) & Taylor Series",
+          "Definite & Indefinite Integrals, Properties & Applications"
+        ]
+      },
+      {
+        id: "prob",
+        name: "Probability & Statistics",
+        type: "Math",
+        icon: "fa-chart-pie",
+        subtopics: [
+          "Random Variables, Sample Space, Conditional Probability & Bayes Theorem",
+          "Discrete Distributions: Binomial, Poisson & Uniform Distributions",
+          "Continuous Distributions: Normal & Exponential Distributions",
+          "Statistics: Mean, Median, Mode, Standard Deviation, Variance & Covariance"
         ]
       },
       {
@@ -5020,7 +5051,7 @@
       tests: [],
       syllabusProgress: {},
       weekendRoutine: {
-        mathSubjectId: "em",
+        mathSubjectId: "la",
         aptitudeTopic: "Quantitative Aptitude",
         selectedCoreRevisionSubjectIds: [],
         revisionChecklist: {},
@@ -5149,6 +5180,7 @@
 
         if (data && data.state_data && Object.keys(data.state_data).length > 0) {
           appState = { ...appState, ...data.state_data };
+          migrateEmToStandaloneMathSubjects();
           localStorage.setItem("gate2027_v14_state", JSON.stringify(appState));
           if (appState.wallpaper) {
             applyWallpaper(WALLPAPERS[appState.wallpaper] || appState.wallpaper);
@@ -5421,6 +5453,71 @@
       }
     }
 
+    function migrateEmToStandaloneMathSubjects() {
+      if (!appState) return;
+
+      // 1. Migrate syllabusProgress
+      if (appState.syllabusProgress) {
+        const mapping = {
+          "em_0": "la_0",
+          "em_1": "la_1",
+          "em_2": "calc_0",
+          "em_3": "calc_2",
+          "em_4": "prob_0",
+          "em_5": "prob_1",
+          "em_6": "prob_3"
+        };
+        Object.keys(mapping).forEach(oldKey => {
+          const newKey = mapping[oldKey];
+          if (appState.syllabusProgress[oldKey]) {
+            if (!appState.syllabusProgress[newKey]) {
+              appState.syllabusProgress[newKey] = { ...appState.syllabusProgress[oldKey] };
+            }
+          }
+        });
+      }
+
+      // 2. Migrate activeCycle.math
+      if (appState.activeCycle && (appState.activeCycle.math === "em" || !appState.activeCycle.math)) {
+        appState.activeCycle.math = "la";
+      }
+
+      // 3. Migrate weekendRoutine.mathSubjectId
+      if (appState.weekendRoutine && (appState.weekendRoutine.mathSubjectId === "em" || !appState.weekendRoutine.mathSubjectId)) {
+        appState.weekendRoutine.mathSubjectId = "la";
+      }
+
+      // 4. Migrate completedSubjects if em was present
+      if (appState.completedSubjects && Array.isArray(appState.completedSubjects)) {
+        const emIdx = appState.completedSubjects.findIndex(c => c.id === "em");
+        if (emIdx !== -1) {
+          const oldEm = appState.completedSubjects[emIdx];
+          appState.completedSubjects.splice(emIdx, 1);
+          ["la", "calc", "prob"].forEach(newId => {
+            if (!appState.completedSubjects.some(c => c.id === newId)) {
+              const s = SUBJECTS.find(sub => sub.id === newId);
+              appState.completedSubjects.push({
+                id: newId,
+                name: s ? s.name : newId,
+                dateCompleted: oldEm.dateCompleted || new Date().toISOString().slice(0, 10),
+                daysTaken: oldEm.daysTaken || 15
+              });
+            }
+          });
+        }
+      }
+
+      // 5. Migrate dailyLogs if subjectId === "em"
+      if (appState.dailyLogs && Array.isArray(appState.dailyLogs)) {
+        appState.dailyLogs.forEach(l => {
+          if (l.subjectId === "em") {
+            l.subjectId = "la";
+            if (l.subjectName === "Engineering Mathematics") l.subjectName = "Linear Algebra";
+          }
+        });
+      }
+    }
+
     // 7. LOCAL STORAGE & PERSISTENCE
     function loadState() {
       const saved = localStorage.getItem("gate2027_v14_state");
@@ -5438,9 +5535,11 @@
         }
       }
 
+      migrateEmToStandaloneMathSubjects();
+
       if (!appState.weekendRoutine) {
         appState.weekendRoutine = {
-          mathSubjectId: "em",
+          mathSubjectId: "la",
           aptitudeTopic: "Quantitative Aptitude",
           selectedCoreRevisionSubjectIds: [],
           revisionChecklist: {},
@@ -5458,8 +5557,8 @@
         if (!Array.isArray(appState.weekendRoutine.questionLogs)) {
           appState.weekendRoutine.questionLogs = [];
         }
-        if (!appState.weekendRoutine.mathSubjectId) {
-          appState.weekendRoutine.mathSubjectId = "em";
+        if (!appState.weekendRoutine.mathSubjectId || appState.weekendRoutine.mathSubjectId === "em") {
+          appState.weekendRoutine.mathSubjectId = "la";
         }
         if (!appState.weekendRoutine.aptitudeTopic) {
           appState.weekendRoutine.aptitudeTopic = "Quantitative Aptitude";
@@ -7331,7 +7430,7 @@
 
       const wk = appState.weekendRoutine || {};
       if (stepKey === "wk_math_rev" || stepKey === "wk_math_practice") {
-        const mathSubj = SUBJECTS.find(s => s.id === (wk.mathSubjectId || "em"))?.name || "Engineering Mathematics";
+        const mathSubj = SUBJECTS.find(s => s.id === (wk.mathSubjectId || "la"))?.name || "Linear Algebra";
         return stepKey === "wk_math_rev" ? `[Weekend Rev] ${mathSubj}` : `[Weekend Practice] ${mathSubj}`;
       }
 
@@ -7369,7 +7468,7 @@
         return appState.activeCycle[step.slotKey];
       }
       const wk = appState.weekendRoutine || {};
-      if (stepKey === "wk_math_rev" || stepKey === "wk_math_practice") return wk.mathSubjectId || "em";
+      if (stepKey === "wk_math_rev" || stepKey === "wk_math_practice") return wk.mathSubjectId || "la";
       if (stepKey === "wk_apt_rev" || stepKey === "wk_apt_practice") return "aptitude";
       if (stepKey === "wk_core1_rev") return (wk.selectedCoreRevisionSubjectIds && wk.selectedCoreRevisionSubjectIds[0]) || appState.activeCycle.core1;
       if (stepKey === "wk_core2_rev") return (wk.selectedCoreRevisionSubjectIds && wk.selectedCoreRevisionSubjectIds[1]) || appState.activeCycle.core2;
@@ -8287,7 +8386,7 @@
       if (!container) return;
 
       const count = (appState.completedSubjects || []).length;
-      if (badge) badge.innerText = `${count} / 12 Subjects Mastered`;
+      if (badge) badge.innerText = `${count} / ${SUBJECTS.length} Subjects Mastered`;
       if (tabBadge) tabBadge.innerText = count;
 
       if (count === 0) {
@@ -8331,13 +8430,14 @@
         if (p.pyq) checksDone++;
       });
       const pct = Math.round((checksDone / (totalChecks || 1)) * 100);
+      const isMastered = (appState.completedSubjects || []).some(c => c.id === subj.id);
       let status = "pending";
-      if (pct === 100) status = "completed";
+      if (pct === 100 || isMastered) status = "completed";
       else if (checksDone > 0) status = "progress";
 
       const isActiveNow = [appState.activeCycle.core1, appState.activeCycle.core2, appState.activeCycle.math].includes(subj.id);
 
-      return { pct, checksDone, totalChecks, status, isActiveNow };
+      return { pct, checksDone, totalChecks, status, isActiveNow, isMastered };
     }
 
     function statusBadgeHtml(status) {
@@ -8363,6 +8463,15 @@
         <span class="status-badge status-progress"><i class="fa-solid fa-spinner"></i> ${progress} In Progress</span>
         <span class="status-badge status-pending"><i class="fa-regular fa-circle"></i> ${pending} Not Started</span>
       `;
+
+      const allCountEl = document.getElementById("sylCountAll");
+      const coreCountEl = document.getElementById("sylCountCore");
+      const mathCountEl = document.getElementById("sylCountMath");
+      const aptCountEl = document.getElementById("sylCountApt");
+      if (allCountEl) allCountEl.innerText = SUBJECTS.length;
+      if (coreCountEl) coreCountEl.innerText = SUBJECTS.filter(s => s.type === "Core").length;
+      if (mathCountEl) mathCountEl.innerText = SUBJECTS.filter(s => s.type === "Math").length;
+      if (aptCountEl) aptCountEl.innerText = SUBJECTS.filter(s => s.type === "Aptitude").length;
     }
 
     function renderSyllabusMatrix() {
@@ -8373,8 +8482,12 @@
       renderSyllabusStatusSummary();
 
       SUBJECTS.forEach(s => {
-        const { pct, status, isActiveNow } = getSubjectStatus(s);
+        const { pct, status, isActiveNow, isMastered } = getSubjectStatus(s);
         const barClass = status === "completed" ? "syllabus-bar-completed" : status === "progress" ? "syllabus-bar-progress" : "syllabus-bar-pending";
+
+        const logs = (appState.dailyLogs || []).filter(l => l.subjectId === s.id || (l.title && l.title.includes(s.name)));
+        const subjMins = logs.reduce((a, c) => a + (c.minutes || 0), 0);
+        const subjQs = logs.reduce((a, c) => a + (c.questions || 0), 0);
 
         const card = document.createElement("div");
         card.className = "bg-slate-900/80 dark:bg-matte-surface/85 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl";
@@ -8392,17 +8505,29 @@
             <!-- LEFT: name + badges, always two stacked lines -->
             <div class="flex flex-col gap-1.5 min-w-0 flex-1">
               <div class="flex items-center gap-2.5 min-w-0">
-                <span class="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${s.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : 'bg-blue-500/20 text-accent-blue'}">${s.type}</span>
+                <span class="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${s.type === 'Math' ? 'bg-purple-500/20 text-purple-300' : (s.type === 'Aptitude' ? 'bg-amber-500/20 text-amber-300' : 'bg-blue-500/20 text-accent-blue')}">${s.type === 'Math' ? 'Engg Math' : s.type}</span>
                 <h3 class="font-bold text-sm sm:text-base text-white truncate">${s.name}</h3>
               </div>
               <div class="flex items-center gap-2 flex-wrap">
                 ${statusBadgeHtml(status)}
+                ${isMastered ? `<span class="status-badge bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"><i class="fa-solid fa-award"></i> Mastered Archive</span>` : ''}
                 ${isActiveNow ? `<span class="status-badge status-active-now"><i class="fa-solid fa-bolt"></i> Active Now</span>` : ''}
               </div>
             </div>
         
-            <!-- RIGHT: progress, fixed width, never wraps -->
-            <div class="flex items-center gap-3 shrink-0 pt-0.5">
+            <!-- RIGHT: actions + progress, fixed width, never wraps -->
+            <div class="flex items-center gap-2.5 shrink-0 pt-0.5">
+              ${isMastered ? `
+                <button type="button" onclick="event.stopPropagation(); reopenSubjectFromSyllabus('${s.id}')" title="Reopen from archive"
+                  class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold transition">
+                  <i class="fa-solid fa-check"></i> Mastered
+                </button>
+              ` : `
+                <button type="button" onclick="event.stopPropagation(); markSubjectCompleteFromSyllabus('${s.id}')" title="Mark complete and move to archive"
+                  class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold transition">
+                  <i class="fa-solid fa-circle-check"></i> Complete
+                </button>
+              `}
               <span class="text-xs font-semibold text-slate-300 w-9 text-right">${pct}%</span>
               <div class="w-20 bg-white/10 rounded-full h-1.5 overflow-hidden">
                 <div class="${barClass} h-1.5 rounded-full" style="width: ${pct}%"></div>
@@ -8434,10 +8559,36 @@
                 </div>
               `;
         }).join("")}
+
+            <!-- CARD FOOTER ACTION BAR -->
+            <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+              <div class="text-slate-400 text-[11px] flex items-center gap-2">
+                <span><i class="fa-solid fa-clock mr-1 text-slate-400"></i> ${(subjMins / 60).toFixed(1)}h logged</span>
+                <span>&bull;</span>
+                <span><i class="fa-solid fa-pen mr-1 text-slate-400"></i> ${subjQs} Qs solved</span>
+              </div>
+              <div class="flex items-center gap-2">
+                ${isMastered ? `
+                  <span class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-award text-emerald-400"></i> In Completed Archive
+                  </span>
+                  <button type="button" onclick="reopenSubjectFromSyllabus('${s.id}')"
+                    class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-rotate-left"></i> Reopen Subject
+                  </button>
+                ` : `
+                  <button type="button" onclick="markSubjectCompleteFromSyllabus('${s.id}')"
+                    class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-300 hover:text-emerald-200 border border-emerald-500/40 font-bold text-xs transition flex items-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-circle-check text-emerald-400"></i> Mark as Completed &amp; Move to Completed Archive
+                  </button>
+                `}
+              </div>
+            </div>
           </div>
         `;
         container.appendChild(card);
       });
+      filterSyllabusList();
     }
 
     function toggleSyllabusAccordion(id) {
@@ -8460,17 +8611,92 @@
       saveState();
     }
 
+    function markSubjectCompleteFromSyllabus(subjId) {
+      const subj = SUBJECTS.find(s => s.id === subjId);
+      if (!subj) return;
+
+      const isAlready = (appState.completedSubjects || []).some(c => c.id === subjId);
+      if (isAlready) {
+        showAppToast(`"${subj.name}" is already in Completed Subjects Archive.`, "info");
+        return;
+      }
+
+      if (!confirm(`Mark "${subj.name}" as Completed?\n\nIt will be moved to the Completed Subjects Archive and its syllabus progress marked 100%.`)) {
+        return;
+      }
+
+      const logs = (appState.dailyLogs || []).filter(l => l.subjectId === subjId || (l.title && l.title.includes(subj.name)));
+      const totalM = logs.reduce((a, c) => a + (c.minutes || 0), 0);
+      const totalQ = logs.reduce((a, c) => a + (c.questions || 0), 0);
+
+      // Mark all theory, dpp, pyq as complete in syllabusProgress
+      subj.subtopics.forEach((_, idx) => {
+        appState.syllabusProgress[`${subj.id}_${idx}`] = { theory: true, dpp: true, pyq: true };
+      });
+
+      if (!appState.completedSubjects) appState.completedSubjects = [];
+      appState.completedSubjects.unshift({
+        id: subjId,
+        name: subj.name,
+        type: subj.type,
+        dateCompleted: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+        totalMins: totalM,
+        totalQs: totalQ
+      });
+
+      saveState();
+      showAppToast(`"${subj.name}" marked complete & added to Completed Archive!`, "success");
+
+      // Check if this subject is currently active in activeCycle slots
+      const activeSlotKey = appState.activeCycle ? Object.keys(appState.activeCycle).find(k => ["core1", "core2", "math"].includes(k) && appState.activeCycle[k] === subjId) : null;
+      if (activeSlotKey) {
+        if (confirm(`"${subj.name}" was active in your ${activeSlotKey.toUpperCase()} slot.\n\nWould you like to select a replacement subject for this slot now?`)) {
+          openReplaceSubjectModal(activeSlotKey);
+        }
+      }
+    }
+
+    function reopenSubjectFromSyllabus(subjId) {
+      const subj = SUBJECTS.find(s => s.id === subjId);
+      const name = subj ? subj.name : subjId;
+      if (confirm(`Reopen "${name}"?\n\nThis will remove it from Completed Subjects Archive and restore it to Active study status.`)) {
+        appState.completedSubjects = (appState.completedSubjects || []).filter(c => c.id !== subjId);
+        saveState();
+        showAppToast(`"${name}" moved back to Active status.`, "info");
+      }
+    }
+
+    let currentSyllabusCategoryFilter = "all";
+
+    function setSyllabusCategoryFilter(cat) {
+      currentSyllabusCategoryFilter = cat;
+      document.querySelectorAll(".syllabus-cat-btn").forEach(btn => {
+        const isActive = btn.dataset.cat === cat;
+        if (isActive) {
+          btn.className = "syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/20 text-white border border-white/30 shadow-sm transition";
+        } else {
+          btn.className = "syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 border border-white/10 hover:text-white transition";
+        }
+      });
+      filterSyllabusList();
+    }
+
     function filterSyllabusList() {
       const input = document.getElementById("syllabusSearchInput");
-      if (!input) return;
-      const q = input.value.toLowerCase();
+      const q = input ? input.value.toLowerCase().trim() : "";
       let visibleCount = 0;
       SUBJECTS.forEach(s => {
         const card = document.getElementById(`sub-card-${s.id}`);
         if (!card) return;
         const matchesSubj = s.name.toLowerCase().includes(q);
         const matchesTopic = s.subtopics.some(t => t.toLowerCase().includes(q));
-        const show = matchesSubj || matchesTopic;
+        const matchesQuery = !q || matchesSubj || matchesTopic;
+        const matchesCat = currentSyllabusCategoryFilter === "all" ||
+          (currentSyllabusCategoryFilter === "core" && s.type === "Core") ||
+          (currentSyllabusCategoryFilter === "math" && s.type === "Math") ||
+          (currentSyllabusCategoryFilter === "aptitude" && s.type === "Aptitude");
+
+        const show = matchesQuery && matchesCat;
         card.classList.toggle("hidden", !show);
         if (show) visibleCount++;
       });
@@ -9380,7 +9606,7 @@
     function renderWeekendSection() {
       if (!appState.weekendRoutine) {
         appState.weekendRoutine = {
-          mathSubjectId: "em",
+          mathSubjectId: "la",
           aptitudeTopic: "Quantitative Aptitude",
           selectedCoreRevisionSubjectIds: [],
           revisionChecklist: {},
@@ -9589,7 +9815,7 @@
 
     function renderWeekendMathCard() {
       const wk = appState.weekendRoutine;
-      const mathId = wk.mathSubjectId || "em";
+      const mathId = wk.mathSubjectId || "la";
       const mathSubj = SUBJECTS.find(s => s.id === mathId) || SUBJECTS.find(s => s.type === "Math");
       if (!mathSubj) return;
 
@@ -10078,7 +10304,7 @@
           subjInp.value = defaultSubjName;
         } else if (defaultCategory === "math") {
           const mSub = SUBJECTS.find(s => s.id === appState.weekendRoutine.mathSubjectId);
-          subjInp.value = mSub ? mSub.name : "Engineering Mathematics";
+          subjInp.value = mSub ? mSub.name : "Linear Algebra";
         } else if (defaultCategory === "aptitude") {
           subjInp.value = `General Aptitude: ${appState.weekendRoutine.aptitudeTopic || "Quantitative"}`;
         } else {
@@ -10115,7 +10341,7 @@
 
       if (cat === "math") {
         const mSub = SUBJECTS.find(s => s.id === appState.weekendRoutine.mathSubjectId);
-        subjInp.value = mSub ? mSub.name : "Engineering Mathematics";
+        subjInp.value = mSub ? mSub.name : "Linear Algebra";
       } else if (cat === "aptitude") {
         subjInp.value = `General Aptitude: ${appState.weekendRoutine.aptitudeTopic || "Quantitative"}`;
       } else if (cat === "core_rev") {
@@ -10267,9 +10493,9 @@
 
     // Direct Timer Launchers from Weekend Cards
     function startWeekendMathTimer() {
-      const mathId = appState.weekendRoutine.mathSubjectId || "em";
-      const mathSub = SUBJECTS.find(s => s.id === mathId);
-      const name = mathSub ? mathSub.name : "Engineering Mathematics";
+      const mathId = appState.weekendRoutine.mathSubjectId || "la";
+      const mathSub = SUBJECTS.find(s => s.id === mathId) || SUBJECTS.find(s => s.type === "Math");
+      const name = mathSub ? mathSub.name : "Linear Algebra";
 
       switchTab("daily-flow");
       loadStepIntoTimer("math_main");
