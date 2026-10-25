@@ -134,6 +134,20 @@
       background: rgba(255, 255, 255, 0.25) !important;
     }
 
+    /* Aptitude Topic Strikeout Styles */
+    .apt-topic-struck {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-decoration-color: #f59e0b;
+      opacity: 0.65;
+      transition: all 0.25s ease;
+    }
+
+    .apt-topic-card-struck {
+      background: rgba(16, 185, 129, 0.05) !important;
+      border-color: rgba(16, 185, 129, 0.25) !important;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -163,95 +177,78 @@
       z-index: 0;
     }
 
-    /* Tactile Glassmorphism Card Style */
+    /* Tactile Glassmorphism Card Style (Clean, Non-Neon, 60fps) */
     .glass-card {
-      background: rgba(20, 22, 28, 0.78);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(18, 22, 30, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     .glass-card:hover {
-      border-color: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.55);
+      transform: translateY(-2px) translateZ(0);
     }
 
-    /* Ambient Timer Glow when Running */
+    /* Ambient Timer Glow (Disabled for clean non-neon aesthetic) */
     .timer-glow {
       position: relative;
     }
 
     .timer-glow::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 280px;
-      height: 120px;
-      background: radial-gradient(circle, var(--theme-glow, rgba(59, 130, 246, 0.22)) 0%, transparent 70%);
-      filter: blur(30px);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      display: none !important;
     }
 
     .timer-running .timer-glow::before {
-      opacity: 1;
-      animation: pulse-glow 3s infinite alternate;
-    }
-
-    @keyframes pulse-glow {
-      0% {
-        transform: translate(-50%, -50%) scale(0.95);
-        opacity: 0.6;
-      }
-
-      100% {
-        transform: translate(-50%, -50%) scale(1.1);
-        opacity: 1;
-      }
+      display: none !important;
     }
 
     /* ============================================================== */
-    /* THEMED FOCUS TIMER CONSOLE SYSTEM */
+    /* THEMED FOCUS TIMER CONSOLE SYSTEM (CLEAN, 60FPS) */
     /* ============================================================== */
     #mainTimerCard {
-      --timer-accent: #06b6d4;
-      --timer-accent-secondary: #3b82f6;
-      --timer-glow: rgba(6, 182, 212, 0.4);
-      --timer-bg-glow: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.16) 0%, rgba(15, 23, 42, 0) 70%);
+      --timer-accent: #38bdf8;
+      --timer-accent-secondary: #818cf8;
+      --timer-glow: transparent;
+      --timer-bg-glow: none;
       --timer-track: rgba(255, 255, 255, 0.08);
-      --timer-border: rgba(6, 182, 212, 0.28);
-      --timer-grad-start: #06b6d4;
-      --timer-grad-end: #3b82f6;
-      border: 1px solid var(--timer-border);
-      box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6), 0 0 25px -6px var(--timer-glow);
-      transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      --timer-border: rgba(255, 255, 255, 0.1);
+      --timer-grad-start: #38bdf8;
+      --timer-grad-end: #818cf8;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     #mainTimerCard.timer-running {
-      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.75), 0 0 45px -4px var(--timer-glow);
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.65);
     }
 
-    /* THEME PRESETS */
+    /* THEME PRESETS (CLEAN & NON-NEON) */
     #mainTimerCard.theme-cyber {
-      --timer-accent: #06b6d4;
+      --timer-accent: #0ea5e9;
       --timer-accent-secondary: #3b82f6;
-      --timer-glow: rgba(6, 182, 212, 0.45);
-      --timer-bg-glow: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
-      --timer-border: rgba(6, 182, 212, 0.35);
-      --timer-grad-start: #06b6d4;
+      --timer-glow: transparent;
+      --timer-bg-glow: none;
+      --timer-border: rgba(255, 255, 255, 0.1);
+      --timer-grad-start: #0ea5e9;
       --timer-grad-end: #3b82f6;
     }
 
     #mainTimerCard.theme-obsidian {
       --timer-accent: #a855f7;
       --timer-accent-secondary: #ec4899;
-      --timer-glow: rgba(168, 85, 247, 0.45);
-      --timer-bg-glow: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
-      --timer-border: rgba(168, 85, 247, 0.35);
+      --timer-glow: transparent;
+      --timer-bg-glow: none;
+      --timer-border: rgba(255, 255, 255, 0.1);
       --timer-grad-start: #a855f7;
       --timer-grad-end: #ec4899;
     }
@@ -259,9 +256,9 @@
     #mainTimerCard.theme-emerald {
       --timer-accent: #10b981;
       --timer-accent-secondary: #06b6d4;
-      --timer-glow: rgba(168, 85, 247, 0.45);
-      --timer-bg-glow: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
-      --timer-border: rgba(16, 185, 129, 0.35);
+      --timer-glow: transparent;
+      --timer-bg-glow: none;
+      --timer-border: rgba(255, 255, 255, 0.1);
       --timer-grad-start: #10b981;
       --timer-grad-end: #06b6d4;
     }
@@ -269,9 +266,9 @@
     #mainTimerCard.theme-amber {
       --timer-accent: #f59e0b;
       --timer-accent-secondary: #ef4444;
-      --timer-glow: rgba(245, 158, 11, 0.45);
-      --timer-bg-glow: radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
-      --timer-border: rgba(245, 158, 11, 0.35);
+      --timer-glow: transparent;
+      --timer-bg-glow: none;
+      --timer-border: rgba(255, 255, 255, 0.1);
       --timer-grad-start: #f59e0b;
       --timer-grad-end: #ef4444;
     }
@@ -279,9 +276,9 @@
     #mainTimerCard.theme-crimson {
       --timer-accent: #f43f5e;
       --timer-accent-secondary: #e11d48;
-      --timer-glow: rgba(244, 63, 94, 0.45);
-      --timer-bg-glow: radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
-      --timer-border: rgba(244, 63, 94, 0.35);
+      --timer-glow: transparent;
+      --timer-bg-glow: none;
+      --timer-border: rgba(255, 255, 255, 0.1);
       --timer-grad-start: #f43f5e;
       --timer-grad-end: #e11d48;
     }
@@ -289,9 +286,9 @@
     #mainTimerCard.theme-monolith {
       --timer-accent: #f8fafc;
       --timer-accent-secondary: #94a3b8;
-      --timer-glow: rgba(255, 255, 255, 0.25);
-      --timer-bg-glow: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(15, 23, 42, 0) 70%);
-      --timer-border: rgba(255, 255, 255, 0.28);
+      --timer-glow: transparent;
+      --timer-bg-glow: none;
+      --timer-border: rgba(255, 255, 255, 0.1);
       --timer-grad-start: #ffffff;
       --timer-grad-end: #94a3b8;
     }
@@ -309,31 +306,7 @@
     }
 
     .timer-dial-ambient-glow {
-      position: absolute;
-      inset: 8%;
-      border-radius: 50%;
-      background: var(--timer-bg-glow);
-      filter: blur(32px);
-      pointer-events: none;
-      opacity: 0.65;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .timer-running .timer-dial-ambient-glow {
-      opacity: 1;
-      animation: timerAmbientPulse 2.8s ease-in-out infinite alternate;
-    }
-
-    @keyframes timerAmbientPulse {
-      0% {
-        transform: scale(0.92);
-        opacity: 0.7;
-      }
-
-      100% {
-        transform: scale(1.12);
-        opacity: 1;
-      }
+      display: none !important;
     }
 
     .timer-svg-dial {
@@ -360,8 +333,7 @@
       fill: none;
       stroke-width: 8.5;
       stroke-linecap: round;
-      transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: drop-shadow(0 0 12px var(--timer-glow));
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .timer-dial-center {
@@ -381,7 +353,6 @@
       font-variant-numeric: tabular-nums;
       letter-spacing: -0.04em;
       color: #ffffff;
-      text-shadow: 0 0 25px var(--timer-glow), 0 2px 10px rgba(0, 0, 0, 0.6);
       user-select: none;
       line-height: 1;
     }
@@ -421,7 +392,6 @@
       height: 7px;
       border-radius: 50%;
       background: var(--timer-accent);
-      box-shadow: 0 0 8px var(--timer-accent);
       flex-shrink: 0;
     }
 
@@ -438,8 +408,8 @@
       }
 
       50% {
-        transform: scale(1.6);
-        opacity: 0.4;
+        transform: scale(1.4);
+        opacity: 0.5;
       }
     }
 
@@ -468,7 +438,7 @@
       background: var(--timer-accent) !important;
       color: #030712 !important;
       border-color: var(--timer-accent) !important;
-      box-shadow: 0 0 14px var(--timer-glow) !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
       font-weight: 700 !important;
     }
 
@@ -498,12 +468,12 @@
       right: 0;
       z-index: 50;
       width: 220px;
-      background: rgba(10, 15, 29, 0.95);
+      background: rgba(18, 22, 30, 0.96);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 0.85rem;
       padding: 0.5rem;
-      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 20px var(--timer-glow);
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7);
       display: none;
     }
 
@@ -552,19 +522,21 @@
     .timer-hero-start-btn {
       background: linear-gradient(135deg, var(--timer-grad-start), var(--timer-grad-end)) !important;
       color: #ffffff !important;
-      box-shadow: 0 6px 20px -2px var(--timer-glow) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
       border: 1px solid rgba(255, 255, 255, 0.25) !important;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     .timer-hero-start-btn:hover {
-      filter: brightness(1.12);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 25px 0 var(--timer-glow) !important;
+      filter: brightness(1.08);
+      transform: translateY(-1px) translateZ(0);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45) !important;
     }
 
     .timer-hero-start-btn:active {
-      transform: scale(0.98);
+      transform: scale(0.98) translateZ(0);
     }
 
     /* ZEN FULLSCREEN FOCUS MODE */
@@ -646,64 +618,52 @@
       transform: scale(0.99) translateX(2px);
     }
 
-    /* ACTIVE PROTOCOL STEP ITEM */
+    /* ACTIVE PROTOCOL STEP ITEM (CLEAN & NON-NEON) */
     .protocol-step-active {
-      background: linear-gradient(90deg, rgba(6, 182, 212, 0.16) 0%, rgba(59, 130, 246, 0.1) 60%, rgba(255, 255, 255, 0.02) 100%) !important;
-      border-color: rgba(6, 182, 212, 0.5) !important;
-      border-left: 4px solid #06b6d4 !important;
-      box-shadow: 0 8px 24px -4px rgba(6, 182, 212, 0.25), inset 0 0 12px rgba(6, 182, 212, 0.08) !important;
-      transform: translateX(3px);
+      background: rgba(14, 165, 233, 0.08) !important;
+      border-color: rgba(14, 165, 233, 0.35) !important;
+      border-left: 3px solid #0ea5e9 !important;
+      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.35) !important;
+      transform: translateX(2px) translateZ(0);
+      will-change: transform;
     }
 
     .protocol-step-active:hover {
-      border-color: rgba(6, 182, 212, 0.75) !important;
-      box-shadow: 0 8px 28px -2px rgba(6, 182, 212, 0.35) !important;
+      border-color: rgba(14, 165, 233, 0.55) !important;
+      box-shadow: 0 6px 20px -2px rgba(0, 0, 0, 0.45) !important;
     }
 
     /* COMPLETED PROTOCOL STEP ITEM */
     .protocol-step-done {
       background: rgba(16, 185, 129, 0.05) !important;
       border-color: rgba(16, 185, 129, 0.22) !important;
-      border-left: 3px solid rgba(16, 185, 129, 0.7) !important;
+      border-left: 3px solid #10b981 !important;
+      transform: translateZ(0);
+      will-change: transform;
     }
 
     .protocol-step-done:hover {
       background: rgba(16, 185, 129, 0.09) !important;
       border-color: rgba(16, 185, 129, 0.35) !important;
-      transform: translateX(3px);
+      transform: translateX(2px) translateZ(0);
     }
 
     /* SEGMENTED MULTI-STEP PROGRESS BAR */
     .protocol-segment {
-      height: 6px;
+      height: 5px;
       border-radius: 9999px;
       background: rgba(255, 255, 255, 0.08);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .protocol-segment.done {
       background: #10b981;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      box-shadow: none;
     }
 
     .protocol-segment.active {
-      background: #06b6d4;
-      box-shadow: 0 0 10px rgba(6, 182, 212, 0.8);
-      animation: segmentPulse 1.8s infinite ease-in-out;
-    }
-
-    @keyframes segmentPulse {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scaleY(1);
-      }
-
-      50% {
-        opacity: 0.6;
-        transform: scaleY(1.3);
-      }
+      background: #0ea5e9;
+      box-shadow: none;
     }
 
     /* MICRO ANIMATION ON STEP ENTRANCE */
@@ -724,15 +684,18 @@
     }
 
     /* ============================================================== */
-    /* ACTIVE CYCLE FOCUS SLOT CARDS SYSTEM */
+    /* ACTIVE CYCLE FOCUS SLOT CARDS SYSTEM (CLEAN & NON-NEON) */
     /* ============================================================== */
     .cycle-slot-card {
       position: relative;
       border-radius: 1.15rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(20px);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(18, 22, 30, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+      will-change: transform;
+      transform: translateZ(0);
       overflow: hidden;
     }
 
@@ -742,67 +705,66 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      opacity: 0.85;
-      transition: opacity 0.3s ease, height 0.3s ease;
+      height: 2px;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
     }
 
     .cycle-slot-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 25px -4px var(--slot-glow);
-      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px) translateZ(0);
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.55);
+      border-color: rgba(255, 255, 255, 0.16);
     }
 
     .cycle-slot-card:hover::before {
-      height: 4px;
       opacity: 1;
     }
 
     /* THEME 1: CORE 1 (CYAN / BLUE) */
     .slot-theme-core1 {
       --slot-accent: #06b6d4;
-      --slot-glow: rgba(6, 182, 212, 0.35);
+      --slot-glow: transparent;
       --slot-grad-start: #06b6d4;
       --slot-grad-end: #3b82f6;
-      background: linear-gradient(145deg, rgba(6, 182, 212, 0.07) 0%, rgba(15, 23, 42, 0.75) 55%, rgba(15, 23, 42, 0.9) 100%);
-      border-color: rgba(6, 182, 212, 0.2);
+      background: rgba(18, 22, 30, 0.82);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .slot-theme-core1::before {
-      background: linear-gradient(90deg, #06b6d4, #3b82f6);
+      background: #06b6d4;
     }
 
     /* THEME 2: CORE 2 (PURPLE / VIOLET) */
     .slot-theme-core2 {
-      --slot-accent: #a855f7;
-      --slot-glow: rgba(168, 85, 247, 0.35);
-      --slot-grad-start: #a855f7;
-      --slot-grad-end: #ec4899;
-      background: linear-gradient(145deg, rgba(168, 85, 247, 0.07) 0%, rgba(15, 23, 42, 0.75) 55%, rgba(15, 23, 42, 0.9) 100%);
-      border-color: rgba(168, 85, 247, 0.2);
+      --slot-accent: #8b5cf6;
+      --slot-glow: transparent;
+      --slot-grad-start: #8b5cf6;
+      --slot-grad-end: #6366f1;
+      background: rgba(18, 22, 30, 0.82);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .slot-theme-core2::before {
-      background: linear-gradient(90deg, #a855f7, #ec4899);
+      background: #8b5cf6;
     }
 
     /* THEME 3: MATH (AMBER / EMERALD) */
     .slot-theme-math {
       --slot-accent: #f59e0b;
-      --slot-glow: rgba(245, 158, 11, 0.35);
+      --slot-glow: transparent;
       --slot-grad-start: #f59e0b;
       --slot-grad-end: #10b981;
-      background: linear-gradient(145deg, rgba(245, 158, 11, 0.07) 0%, rgba(15, 23, 42, 0.75) 55%, rgba(15, 23, 42, 0.9) 100%);
-      border-color: rgba(245, 158, 11, 0.2);
+      background: rgba(18, 22, 30, 0.82);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .slot-theme-math::before {
-      background: linear-gradient(90deg, #f59e0b, #10b981);
+      background: #f59e0b;
     }
 
-    /* GLOWING PROGRESS TRACK */
+    /* PROGRESS TRACK */
     .slot-progress-bar {
-      height: 7px;
+      height: 6px;
       border-radius: 9999px;
       background: rgba(255, 255, 255, 0.08);
       overflow: hidden;
@@ -813,8 +775,8 @@
       height: 100%;
       border-radius: 9999px;
       background: linear-gradient(90deg, var(--slot-grad-start), var(--slot-grad-end));
-      box-shadow: 0 0 10px var(--slot-glow);
-      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: none;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* ANIMATED GRADIENT TEXT */
@@ -859,10 +821,10 @@
     }
 
     .vel-tab-active {
-      background: rgba(59, 130, 246, 0.25) !important;
+      background: rgba(59, 130, 246, 0.2) !important;
       color: #ffffff !important;
-      border-color: rgba(59, 130, 246, 0.5) !important;
-      box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.4) !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     }
 
     @keyframes toastSlideIn {
@@ -1122,22 +1084,22 @@
       animation: gradient-text-anim 5s ease infinite;
     }
 
-    /* GLOBAL THEME ACCENT REACTIVITY */
+    /* GLOBAL THEME ACCENT REACTIVITY (CLEAN, NON-NEON, 60FPS) */
     [data-theme] .tab-btn.bg-white {
-      background: var(--theme-accent-gradient) !important;
-      color: #ffffff !important;
-      box-shadow: 0 4px 20px var(--theme-glow) !important;
-      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      background: #ffffff !important;
+      color: #0f172a !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
     }
 
     [data-theme] .glass-card:hover {
-      border-color: var(--theme-border-active) !important;
-      box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.65), 0 0 20px -3px var(--theme-glow-sm) !important;
+      border-color: rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.55) !important;
     }
 
     [data-theme] .test-card:hover {
-      border-color: var(--theme-border-active) !important;
-      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.65), 0 0 18px -3px var(--theme-glow-sm) !important;
+      border-color: rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.55) !important;
     }
 
     [data-theme] ::selection {
@@ -1148,12 +1110,12 @@
     [data-theme] button:focus-visible,
     [data-theme] input:focus-visible,
     [data-theme] select:focus-visible {
-      outline-color: var(--theme-accent) !important;
-      box-shadow: 0 0 0 3px var(--theme-glow-sm) !important;
+      outline: 2px solid rgba(255, 255, 255, 0.35) !important;
+      box-shadow: none !important;
     }
 
     [data-theme] .timer-running .timer-glow::before {
-      background: radial-gradient(circle, var(--theme-glow) 0%, transparent 70%) !important;
+      display: none !important;
     }
 
     [data-theme] #timerCircle {
@@ -1165,27 +1127,27 @@
     }
 
     [data-theme] #weekendModeAlertBanner {
-      border-color: var(--theme-border-active) !important;
-      box-shadow: 0 8px 25px -4px var(--theme-glow-sm) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.4) !important;
     }
 
     [data-theme] .status-active-now {
-      background: var(--theme-bg-subtle) !important;
-      color: var(--theme-accent) !important;
-      border-color: var(--theme-border-active) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
     }
 
     /* TEST SERIES & MOCK HUB ULTRA-SMOOTH HARDWARE-ACCELERATED STYLES */
     .test-card {
-      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
       will-change: transform;
       transform: translateZ(0);
     }
 
     .test-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(245, 158, 11, 0.38);
-      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.65), 0 0 16px -3px rgba(245, 158, 11, 0.15);
+      transform: translateY(-2px) translateZ(0);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.55);
     }
 
     .test-score-bar {
@@ -1332,6 +1294,10 @@
         <span id="navWeekendBadge"
           class="hidden text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold">Weekend
           Active</span>
+      </button>
+      <button onclick="switchTab('aptitude')" id="tab-aptitude"
+        class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition relative">
+        <i class="fa-solid fa-brain text-amber-400"></i> Aptitude Tracker (<span id="aptitudeTabBadge">0/41</span>)
       </button>
       <button onclick="switchTab('tests')" id="tab-tests"
         class="tab-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2 shrink-0 transition">
@@ -1710,7 +1676,8 @@
 
             <div>
               <div class="flex justify-between items-center mb-1">
-                <span class="font-semibold text-slate-200">Mathematics (Discrete, Linear Algebra, Calculus, Prob &amp; Stats)</span>
+                <span class="font-semibold text-slate-200">Mathematics (Discrete, Linear Algebra, Calculus, Prob &amp;
+                  Stats)</span>
                 <span id="anMathSyllabusPct" class="font-mono font-bold text-accent-purple">0.0%</span>
               </div>
               <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
@@ -1760,25 +1727,25 @@
     <!-- ============================================================== -->
     <div id="view-daily-flow" class="hidden space-y-5">
 
-      <!-- WEEKEND PROTOCOL ACTIVE BANNER -->
+      <!-- WEEKEND PROTOCOL ACTIVE BANNER (CLEAN & NON-NEON) -->
       <div id="weekendModeAlertBanner"
-        class="p-4 rounded-2xl bg-gradient-to-r from-purple-950/60 via-slate-900/80 to-indigo-950/60 border border-purple-500/30 backdrop-blur-xl flex flex-wrap justify-between items-center gap-3 shadow-lg">
+        class="p-4 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-xl flex flex-wrap justify-between items-center gap-3 shadow-sm">
         <div class="flex items-center gap-3">
           <div
-            class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-lg shadow-inner">
+            class="w-10 h-10 rounded-xl bg-white/[0.06] text-slate-300 border border-white/10 flex items-center justify-center text-lg">
             <i class="fa-solid fa-calendar-week"></i>
           </div>
           <div>
             <div class="flex items-center gap-2 flex-wrap">
               <span id="weekendBannerBadge"
-                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider flex items-center gap-1">
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/[0.08] text-slate-200 border border-white/10 uppercase tracking-wider flex items-center gap-1">
                 <i class="fa-solid fa-bolt text-amber-400"></i> Weekend Protocol Active
               </span>
               <span id="weekendBannerDayLabel" class="text-xs text-slate-300 font-semibold">Saturday &amp; Sunday
                 Target</span>
             </div>
             <p id="weekendBannerSubtext" class="text-xs text-slate-300 mt-1">
-              Weekend Routine: Study <strong class="text-purple-300 font-semibold">Engineering Maths</strong> + <strong
+              Weekend Routine: Study <strong class="text-white font-semibold">Engineering Maths</strong> + <strong
                 class="text-amber-300 font-semibold">Aptitude</strong>, solve <strong
                 class="text-emerald-400 font-semibold">&ge; 25 Questions</strong> daily with marks tracking, and revise
               <strong class="text-blue-300 font-semibold">2 Completed Core Subjects</strong>.
@@ -1787,13 +1754,13 @@
         </div>
         <div class="flex items-center gap-2 flex-wrap">
           <button onclick="toggleAutoWeekendScheduleSwitch()" id="btnToggleWeekendAuto"
-            class="px-3 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-slate-200 font-semibold text-xs transition border border-white/10 flex items-center gap-1.5"
+            class="px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-slate-200 font-semibold text-xs transition border border-white/10 flex items-center gap-1.5"
             title="Toggle automatic schedule changes on weekends">
             <i class="fa-solid fa-toggle-on text-emerald-400 text-sm"></i>
             <span>Auto Weekend: ON</span>
           </button>
           <button onclick="switchTab('weekend')"
-            class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs transition shadow-md flex items-center gap-1.5 hover:scale-[1.02]">
+            class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs transition shadow-sm flex items-center gap-1.5 active:scale-[0.98]">
             <span>Open Weekend Command</span> <i class="fa-solid fa-arrow-right text-[11px]"></i>
           </button>
         </div>
@@ -1818,10 +1785,10 @@
               <span class="text-xs text-slate-400 font-medium">Today's Study Time</span>
               <div class="flex items-center gap-1.5">
                 <span id="dashMidnightBadge"
-                  class="hidden text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1">
+                  class="hidden text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/[0.08] text-slate-300 border border-white/10 flex items-center gap-1">
                   <i class="fa-solid fa-moon text-amber-400"></i> Past 12:00 AM
                 </span>
-                <div class="w-7 h-7 rounded bg-blue-500/20 text-accent-blue flex items-center justify-center text-xs">
+                <div class="w-7 h-7 rounded bg-blue-500/15 text-accent-blue flex items-center justify-center text-xs">
                   <i class="fa-solid fa-clock"></i>
                 </div>
               </div>
@@ -1833,7 +1800,7 @@
           <!-- FORCE RECORD & RESET BUTTON -->
           <div class="mt-2.5 pt-2 border-t border-white/[0.08] flex items-center gap-1.5">
             <button onclick="openForceRecordModal()" id="btnForceRecordToday"
-              class="w-full py-1.5 px-2.5 text-[10.5px] font-bold rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 hover:text-white border border-purple-500/40 flex items-center justify-center gap-1.5 transition shadow-sm hover:scale-[1.01] active:scale-[0.98]"
+              class="w-full py-1.5 px-2.5 text-[10.5px] font-semibold rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-slate-200 hover:text-white border border-white/10 flex items-center justify-center gap-1.5 transition active:scale-[0.98]"
               title="Force record study time to weekend/daily log and reset counter to zero">
               <i class="fa-solid fa-bolt text-amber-400 text-xs"></i>
               <span id="btnForceRecordLabel">Force Record &amp; Reset to 0</span>
@@ -1874,11 +1841,11 @@
         </div>
       </div>
 
-      <!-- QUICK TEST ACCESS BAR -->
+      <!-- QUICK TEST ACCESS BAR (CLEAN & NON-NEON) -->
       <div
         class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
         <div class="flex items-center gap-2.5 text-xs">
-          <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
           <span class="font-bold text-white flex items-center gap-1.5">
             <i class="fa-solid fa-file-pen text-amber-400"></i> Daily Test Log:
           </span>
@@ -1886,37 +1853,37 @@
         </div>
         <div class="flex items-center gap-2">
           <button onclick="openAddTestModal('topic')"
-            class="test-preset-chip px-3 py-1.5 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-300 text-xs font-bold transition flex items-center gap-1.5">
-            <i class="fa-solid fa-plus text-[10px]"></i> Topic Test
+            class="test-preset-chip px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-slate-200 hover:text-white text-xs font-semibold transition flex items-center gap-1.5 active:scale-[0.98]">
+            <i class="fa-solid fa-plus text-[10px] text-blue-400"></i> Topic Test
           </button>
           <button onclick="openAddTestModal('subject')"
-            class="test-preset-chip px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition flex items-center gap-1.5">
-            <i class="fa-solid fa-plus text-[10px]"></i> Subject Test
+            class="test-preset-chip px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-slate-200 hover:text-white text-xs font-semibold transition flex items-center gap-1.5 active:scale-[0.98]">
+            <i class="fa-solid fa-plus text-[10px] text-emerald-400"></i> Subject Test
           </button>
           <button onclick="openAddTestModal('mock')"
-            class="test-preset-chip px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-300 text-xs font-bold transition flex items-center gap-1.5">
-            <i class="fa-solid fa-trophy text-[10px]"></i> Full Mock
+            class="test-preset-chip px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-slate-200 hover:text-white text-xs font-semibold transition flex items-center gap-1.5 active:scale-[0.98]">
+            <i class="fa-solid fa-trophy text-[10px] text-amber-400"></i> Full Mock
           </button>
           <button onclick="switchTab('tests')"
-            class="test-preset-chip px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition flex items-center gap-1">
+            class="test-preset-chip px-3 py-1.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-semibold transition flex items-center gap-1 active:scale-[0.98]">
             <span>Hub &rarr;</span>
           </button>
         </div>
       </div>
 
       <!-- ACTIVE MONTH SUBJECTS CARDS (SUPPORTS MATHEMATICAL SUBJECTS IN CORE SLOTS) -->
-      <div class="glass-card p-5 sm:p-6 rounded-2xl space-y-4 border border-white/[0.08] shadow-xl">
+      <div class="glass-card p-5 sm:p-6 rounded-2xl space-y-4 border border-white/[0.08] shadow-lg">
         <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/[0.08] pb-3.5">
           <div class="flex items-center gap-3">
             <div
-              class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/10 text-indigo-400 border border-indigo-500/30 flex items-center justify-center text-xs shadow-xs">
+              class="w-8 h-8 rounded-xl bg-white/[0.06] text-slate-300 border border-white/10 flex items-center justify-center text-xs">
               <i class="fa-solid fa-cubes-stacked"></i>
             </div>
             <div>
               <h2 class="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
                 Active Cycle Focus
                 <span
-                  class="text-[10px] font-semibold font-mono px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/25 hidden sm:inline">
+                  class="text-[10px] font-semibold font-mono px-2 py-0.5 rounded-full bg-white/[0.06] text-slate-300 border border-white/10 hidden sm:inline">
                   Flexible Slots
                 </span>
               </h2>
@@ -1926,15 +1893,15 @@
           </div>
           <div class="flex items-center gap-2">
             <button onclick="switchTab('curriculum')"
-              class="px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.1] text-xs font-semibold text-slate-200 hover:text-white transition flex items-center gap-1.5 cursor-pointer shadow-xs"
+              class="px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.1] text-xs font-semibold text-slate-200 hover:text-white transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-[0.98]"
               title="View full curriculum progress">
-              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-cyan-400"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-300"></i>
               <span>Curriculum Hub</span>
             </button>
             <span
-              class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 shadow-xs flex items-center gap-1.5"
+              class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-white/[0.06] border border-white/10 text-slate-200 shadow-xs flex items-center gap-1.5"
               id="activeCycleTitlePill">
-              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               Cycle Slot
             </span>
           </div>
@@ -2069,7 +2036,7 @@
                   class="h-8 px-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer"
                   title="Pause or Resume automatic logging of 8-Step Protocol session upon completion">
                   <span id="timerAutoLogDot"
-                    class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+                    class="w-2 h-2 rounded-full bg-emerald-400"></span>
                   <span id="timerAutoLogText" class="text-slate-200 hidden sm:inline">Auto-Log: Active</span>
                 </button>
 
@@ -2105,42 +2072,42 @@
                     </div>
                     <div onclick="setTimerTheme('cyber')" class="timer-theme-option" data-theme-id="cyber">
                       <span class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
-                        <span>Cyber Neon</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                        <span>Cyber Clean</span>
                       </span>
                       <i class="fa-solid fa-check text-[10px] text-cyan-400 opacity-0 check-mark"></i>
                     </div>
                     <div onclick="setTimerTheme('obsidian')" class="timer-theme-option" data-theme-id="obsidian">
                       <span class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-purple-400 shadow-[0_0_8px_#c084fc]"></span>
-                        <span>Obsidian Nebula</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                        <span>Obsidian Slate</span>
                       </span>
                       <i class="fa-solid fa-check text-[10px] text-purple-400 opacity-0 check-mark"></i>
                     </div>
                     <div onclick="setTimerTheme('emerald')" class="timer-theme-option" data-theme-id="emerald">
                       <span class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
-                        <span>Emerald Zen</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <span>Emerald Minimal</span>
                       </span>
                       <i class="fa-solid fa-check text-[10px] text-emerald-400 opacity-0 check-mark"></i>
                     </div>
                     <div onclick="setTimerTheme('amber')" class="timer-theme-option" data-theme-id="amber">
                       <span class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
                         <span>Solar Amber</span>
                       </span>
                       <i class="fa-solid fa-check text-[10px] text-amber-400 opacity-0 check-mark"></i>
                     </div>
                     <div onclick="setTimerTheme('crimson')" class="timer-theme-option" data-theme-id="crimson">
                       <span class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]"></span>
-                        <span>Crimson Surge</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                        <span>Crimson Minimal</span>
                       </span>
                       <i class="fa-solid fa-check text-[10px] text-rose-500 opacity-0 check-mark"></i>
                     </div>
                     <div onclick="setTimerTheme('monolith')" class="timer-theme-option" data-theme-id="monolith">
                       <span class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-slate-100 shadow-[0_0_8px_#ffffff]"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-slate-100"></span>
                         <span>Monolith Stealth</span>
                       </span>
                       <i class="fa-solid fa-check text-[10px] text-slate-200 opacity-0 check-mark"></i>
@@ -2281,7 +2248,7 @@
 
               <!-- END & COMPLETE STEP BUTTON -->
               <button onclick="openFinishSessionModal()"
-                class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold text-xs transition flex items-center gap-2 shadow-[0_4px_16px_rgba(16,185,129,0.3)] cursor-pointer">
+                class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold text-xs transition flex items-center gap-2 shadow-sm cursor-pointer">
                 <i class="fa-solid fa-flag-checkered"></i> <span>End & Complete Step</span>
               </button>
             </div>
@@ -2614,6 +2581,11 @@
                 <span id="wkAptitudeQsLogged">0 Qs Solved</span>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('aptitude')"
+                  class="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/25 text-xs font-semibold transition flex items-center gap-1.5"
+                  title="Open dedicated Aptitude Tracker to strike out topics">
+                  <i class="fa-solid fa-list-check"></i> Strike Out Topics
+                </button>
                 <button onclick="startWeekendAptitudeTimer()"
                   class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-semibold transition flex items-center gap-1.5">
                   <i class="fa-solid fa-play"></i> Start Aptitude Timer
@@ -2754,6 +2726,192 @@
       </div>
 
     </div> <!-- END OF #view-weekend -->
+
+    <!-- ============================================================== -->
+    <!-- TAB: APTITUDE TOPICS & STRIKEOUT TRACKER -->
+    <!-- ============================================================== -->
+    <div id="view-aptitude" class="hidden space-y-5">
+      <!-- HERO & ANALYTICS WRAPPER -->
+      <div
+        class="glass-card p-6 sm:p-7 rounded-2xl relative overflow-hidden border border-white/10 shadow-2xl space-y-6">
+        <!-- Ambient Decorative Glows -->
+        <div class="absolute -top-24 -right-24 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Header & Quick Launchers -->
+        <div class="relative z-10 flex flex-wrap justify-between items-start gap-4 border-b border-white/10 pb-5">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2.5">
+              <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-bold text-lg shadow-lg shadow-amber-500/20">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div>
+                <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                  <span>General Aptitude Syllabus &amp; Strikeout</span>
+                  <span
+                    class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">15 Marks GATE Weightage</span>
+                </h2>
+                <p class="text-xs text-slate-400">Mark topics as completed to strike them out. Master all 4 GATE Aptitude sections with precision.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="pickRandomAptitudeTopic()"
+              class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 text-xs font-semibold transition flex items-center gap-2"
+              title="Pick a random pending topic to practice today">
+              <i class="fa-solid fa-shuffle text-amber-400"></i>
+              <span>Pick Random Topic</span>
+            </button>
+            <button onclick="startWeekendAptitudeTimer()"
+              class="px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-semibold transition flex items-center gap-2">
+              <i class="fa-solid fa-play"></i>
+              <span>Aptitude Timer</span>
+            </button>
+            <button onclick="openWeekendLogModal('aptitude')"
+              class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs transition shadow-md flex items-center gap-2 hover:scale-[1.02]">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>Log Practice Qs</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 5 KPI CARDS IN RESPONSIVE GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <!-- Overall -->
+          <div class="p-4 rounded-xl bg-black/40 border border-amber-500/30 space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-400 font-medium">Total Struck Out</span>
+              <span id="aptOverallPct" class="font-bold text-amber-400 font-mono">0%</span>
+            </div>
+            <div class="text-2xl font-bold font-mono text-white flex items-baseline gap-1.5">
+              <span id="aptCompletedCount">0</span>
+              <span class="text-xs text-slate-500 font-normal">/ <span id="aptTotalCount">41</span> topics</span>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+              <div id="aptOverallProgressBar" class="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="text-[10px] text-amber-300/80 font-medium flex items-center justify-between">
+              <span>Estimated Marks:</span>
+              <span id="aptMarksEst" class="font-bold font-mono text-white">0.0 / 15.0</span>
+            </div>
+          </div>
+
+          <!-- Quantitative -->
+          <div class="p-4 rounded-xl bg-black/30 border border-white/5 space-y-2 hover:border-amber-500/30 transition cursor-pointer" onclick="setAptitudeSectionFilter('quant')">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                <i class="fa-solid fa-calculator text-amber-400"></i> Quantitative
+              </span>
+              <span id="aptQuantPct" class="font-bold text-amber-300 font-mono text-[11px]">0%</span>
+            </div>
+            <div class="text-xl font-bold font-mono text-white">
+              <span id="aptQuantCount">0</span> <span class="text-xs text-slate-500 font-normal">/ 16</span>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+              <div id="aptQuantProgressBar" class="h-full bg-amber-400 transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <span class="text-[10px] text-slate-400 block truncate">Arithmetic, Algebra, DI</span>
+          </div>
+
+          <!-- Analytical -->
+          <div class="p-4 rounded-xl bg-black/30 border border-white/5 space-y-2 hover:border-purple-500/30 transition cursor-pointer" onclick="setAptitudeSectionFilter('analytical')">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                <i class="fa-solid fa-lightbulb text-purple-400"></i> Analytical
+              </span>
+              <span id="aptAnalyticalPct" class="font-bold text-purple-300 font-mono text-[11px]">0%</span>
+            </div>
+            <div class="text-xl font-bold font-mono text-white">
+              <span id="aptAnalyticalCount">0</span> <span class="text-xs text-slate-500 font-normal">/ 10</span>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+              <div id="aptAnalyticalProgressBar" class="h-full bg-purple-400 transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <span class="text-[10px] text-slate-400 block truncate">Logic, Syllogisms, Relations</span>
+          </div>
+
+          <!-- Spatial -->
+          <div class="p-4 rounded-xl bg-black/30 border border-white/5 space-y-2 hover:border-cyan-500/30 transition cursor-pointer" onclick="setAptitudeSectionFilter('spatial')">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                <i class="fa-solid fa-shapes text-cyan-400"></i> Spatial
+              </span>
+              <span id="aptSpatialPct" class="font-bold text-cyan-300 font-mono text-[11px]">0%</span>
+            </div>
+            <div class="text-xl font-bold font-mono text-white">
+              <span id="aptSpatialCount">0</span> <span class="text-xs text-slate-500 font-normal">/ 7</span>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+              <div id="aptSpatialProgressBar" class="h-full bg-cyan-400 transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <span class="text-[10px] text-slate-400 block truncate">Folding, Cutting, 2D/3D</span>
+          </div>
+
+          <!-- Verbal -->
+          <div class="p-4 rounded-xl bg-black/30 border border-white/5 space-y-2 hover:border-emerald-500/30 transition cursor-pointer" onclick="setAptitudeSectionFilter('verbal')">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                <i class="fa-solid fa-spell-check text-emerald-400"></i> Verbal
+              </span>
+              <span id="aptVerbalPct" class="font-bold text-emerald-300 font-mono text-[11px]">0%</span>
+            </div>
+            <div class="text-xl font-bold font-mono text-white">
+              <span id="aptVerbalCount">0</span> <span class="text-xs text-slate-500 font-normal">/ 8</span>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+              <div id="aptVerbalProgressBar" class="h-full bg-emerald-400 transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <span class="text-[10px] text-slate-400 block truncate">Grammar, Vocab, Comprehension</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER & SEARCH TOOLBAR -->
+      <div class="glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+        <!-- Search Box -->
+        <div class="relative flex-1 min-w-[220px]">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="aptitudeSearchInput" oninput="onAptitudeSearchChange(this.value)"
+            placeholder="Search topics (e.g. Percentage, Syllogism, Paper Fold, Tenses)..."
+            class="w-full pl-9 pr-8 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-400 transition" />
+          <button id="aptitudeSearchClear" onclick="clearAptitudeSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Section Filter Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto custom-scroll text-xs">
+          <button type="button" onclick="setAptitudeSectionFilter('all')" data-sec="all"
+            class="apt-sec-btn px-3 py-1.5 rounded-lg bg-white text-slate-950 font-bold transition shadow">All Sections</button>
+          <button type="button" onclick="setAptitudeSectionFilter('quant')" data-sec="quant"
+            class="apt-sec-btn px-3 py-1.5 rounded-lg bg-white/5 text-amber-300 border border-amber-500/20 hover:text-amber-200 transition">Quant (16)</button>
+          <button type="button" onclick="setAptitudeSectionFilter('analytical')" data-sec="analytical"
+            class="apt-sec-btn px-3 py-1.5 rounded-lg bg-white/5 text-purple-300 border border-purple-500/20 hover:text-purple-200 transition">Analytical (10)</button>
+          <button type="button" onclick="setAptitudeSectionFilter('spatial')" data-sec="spatial"
+            class="apt-sec-btn px-3 py-1.5 rounded-lg bg-white/5 text-cyan-300 border border-cyan-500/20 hover:text-cyan-200 transition">Spatial (7)</button>
+          <button type="button" onclick="setAptitudeSectionFilter('verbal')" data-sec="verbal"
+            class="apt-sec-btn px-3 py-1.5 rounded-lg bg-white/5 text-emerald-300 border border-emerald-500/20 hover:text-emerald-200 transition">Verbal (8)</button>
+        </div>
+
+        <!-- Status Filter Pills -->
+        <div class="flex items-center gap-1.5 text-xs">
+          <button type="button" onclick="setAptitudeStatusFilter('all')" data-status="all"
+            class="apt-status-btn px-2.5 py-1.5 rounded-lg bg-white/10 text-white font-bold transition">All</button>
+          <button type="button" onclick="setAptitudeStatusFilter('pending')" data-status="pending"
+            class="apt-status-btn px-2.5 py-1.5 rounded-lg bg-white/5 text-slate-300 hover:text-white transition">Pending (<span id="aptPendingBadge">41</span>)</button>
+          <button type="button" onclick="setAptitudeStatusFilter('struck')" data-status="struck"
+            class="apt-status-btn px-2.5 py-1.5 rounded-lg bg-white/5 text-emerald-300 hover:text-emerald-200 transition">Struck Out (<span id="aptStruckBadge">0</span>)</button>
+        </div>
+      </div>
+
+      <!-- SECTIONS CONTAINER -->
+      <div id="aptitudeSectionsContainer" class="space-y-6">
+        <!-- Populated dynamically by renderAptitudeTracker() -->
+      </div>
+    </div>
 
     <!-- ============================================================== -->
     <!-- TAB 3: TESTS & MOCKS -->
@@ -3100,11 +3258,20 @@
       <!-- STATUS & CATEGORY FILTER STRIP -->
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div id="syllabusStatusSummary" class="flex flex-wrap gap-2.5 text-xs" role="status"></div>
-        <div class="flex flex-wrap items-center gap-1.5 p-1 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold">
-          <button type="button" onclick="setSyllabusCategoryFilter('all')" data-cat="all" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/20 text-white border border-white/30 shadow-sm transition">All (<span id="sylCountAll">15</span>)</button>
-          <button type="button" onclick="setSyllabusCategoryFilter('core')" data-cat="core" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 border border-white/10 hover:text-white transition">Core CS (<span id="sylCountCore">10</span>)</button>
-          <button type="button" onclick="setSyllabusCategoryFilter('math')" data-cat="math" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-purple-300 border border-purple-500/20 hover:text-purple-200 transition">Engineering Maths (<span id="sylCountMath">4</span>)</button>
-          <button type="button" onclick="setSyllabusCategoryFilter('aptitude')" data-cat="aptitude" class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-amber-300 border border-amber-500/20 hover:text-amber-200 transition">General Aptitude (<span id="sylCountApt">1</span>)</button>
+        <div
+          class="flex flex-wrap items-center gap-1.5 p-1 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold">
+          <button type="button" onclick="setSyllabusCategoryFilter('all')" data-cat="all"
+            class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/20 text-white border border-white/30 shadow-sm transition">All
+            (<span id="sylCountAll">15</span>)</button>
+          <button type="button" onclick="setSyllabusCategoryFilter('core')" data-cat="core"
+            class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 border border-white/10 hover:text-white transition">Core
+            CS (<span id="sylCountCore">10</span>)</button>
+          <button type="button" onclick="setSyllabusCategoryFilter('math')" data-cat="math"
+            class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-purple-300 border border-purple-500/20 hover:text-purple-200 transition">Engineering
+            Maths (<span id="sylCountMath">4</span>)</button>
+          <button type="button" onclick="setSyllabusCategoryFilter('aptitude')" data-cat="aptitude"
+            class="syllabus-cat-btn px-3 py-1.5 rounded-lg bg-white/5 text-amber-300 border border-amber-500/20 hover:text-amber-200 transition">General
+            Aptitude (<span id="sylCountApt">1</span>)</button>
         </div>
       </div>
 
@@ -5059,6 +5226,8 @@
         activeDayFilter: "all",
         showAllCoreMode: false
       },
+      aptitudeStrikeouts: {},
+      aptitudeTopicNotes: {},
       streak: 0,
       lastStreakDate: "",
       hasConfiguredPassword: false
@@ -5566,6 +5735,12 @@
         if (!appState.weekendRoutine.activeDayFilter) {
           appState.weekendRoutine.activeDayFilter = "all";
         }
+      }
+      if (!appState.aptitudeStrikeouts || typeof appState.aptitudeStrikeouts !== 'object') {
+        appState.aptitudeStrikeouts = {};
+      }
+      if (!appState.aptitudeTopicNotes || typeof appState.aptitudeTopicNotes !== 'object') {
+        appState.aptitudeTopicNotes = {};
       }
       if (appState.autoWeekendScheduleSwitch === undefined) {
         appState.autoWeekendScheduleSwitch = true;
@@ -6597,13 +6772,13 @@
 
         let colorClass = "bg-white/20 hover:bg-white/40 text-slate-300";
         if (isPeak) {
-          colorClass = "bg-gradient-to-t from-amber-500 to-yellow-300 shadow-[0_0_15px_rgba(251,191,36,0.5)] border border-amber-300 text-amber-300";
+          colorClass = "bg-amber-400 border border-amber-300 text-amber-300 shadow-sm";
         } else if (item.isCurrent) {
-          colorClass = "bg-gradient-to-t from-cyan-500 to-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)] border border-cyan-300 text-cyan-300";
+          colorClass = "bg-blue-500 border border-blue-400 text-blue-300 shadow-sm";
         } else if (item.val > 0) {
           colorClass = currentVelocityMetric === 'hours'
-            ? "bg-gradient-to-t from-blue-600/80 to-indigo-400/90 hover:from-blue-500 hover:to-indigo-300 text-blue-300 border border-blue-400/30"
-            : "bg-gradient-to-t from-emerald-600/80 to-teal-400/90 hover:from-emerald-500 hover:to-teal-300 text-emerald-300 border border-emerald-400/30";
+            ? "bg-blue-600/70 hover:bg-blue-500 text-blue-300 border border-blue-400/30"
+            : "bg-emerald-600/70 hover:bg-emerald-500 text-emerald-300 border border-emerald-400/30";
         }
 
         const barCol = document.createElement("div");
@@ -7534,7 +7709,7 @@
           btn.className = "h-8 px-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer";
           btn.title = "Auto-Logging is ACTIVE. Click to Pause (avoids automatically prompting or logging 8-Step protocol time)";
         }
-        if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]";
+        if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-400";
         if (text) text.innerHTML = '<span class="text-emerald-300">Auto-Log: Active</span>';
         if (footnote) {
           footnote.innerHTML = 'Auto-logging is <strong class="text-emerald-400 font-semibold">Active</strong>. Timer completion prompts you to log questions & advance step.';
@@ -7548,7 +7723,7 @@
           btn.className = "h-8 px-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/35 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer";
           btn.title = "Auto-Logging is PAUSED. Click to Resume auto-logging";
         }
-        if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24] animate-pulse";
+        if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-400";
         if (text) text.innerHTML = '<span class="text-amber-300">Auto-Log: Paused</span>';
         if (footnote) {
           footnote.innerHTML = 'Auto-logging is <strong class="text-amber-400 font-semibold">Paused</strong>. Timer completion will NOT automatically log 8-step protocol time.';
@@ -8030,6 +8205,7 @@
       renderTestsSection();
       renderSyllabusMatrix();
       renderWeekendSection();
+      renderAptitudeTracker();
       updateWeekendAlertBanners();
     }
 
@@ -8128,9 +8304,9 @@
       container.innerHTML = "";
 
       const activeSlots = [
-        { slot: "CORE 1", key: "core1", id: appState.activeCycle.core1, theme: "slot-theme-core1", icon: "fa-atom", chip: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30" },
-        { slot: "CORE 2", key: "core2", id: appState.activeCycle.core2, theme: "slot-theme-core2", icon: "fa-microchip", chip: "bg-purple-500/15 text-purple-300 border-purple-500/30" },
-        { slot: "MATH", key: "math", id: appState.activeCycle.math, theme: "slot-theme-math", icon: "fa-square-root-variable", chip: "bg-amber-500/15 text-amber-300 border-amber-500/30" }
+        { slot: "CORE 1", key: "core1", id: appState.activeCycle.core1, theme: "slot-theme-core1", icon: "fa-atom", chip: "bg-white/[0.08] text-cyan-300 border-white/10" },
+        { slot: "CORE 2", key: "core2", id: appState.activeCycle.core2, theme: "slot-theme-core2", icon: "fa-microchip", chip: "bg-white/[0.08] text-purple-300 border-white/10" },
+        { slot: "MATH", key: "math", id: appState.activeCycle.math, theme: "slot-theme-math", icon: "fa-square-root-variable", chip: "bg-white/[0.08] text-amber-300 border-white/10" }
       ];
 
       activeSlots.forEach((item, idx) => {
@@ -8163,13 +8339,13 @@
               </span>
               ${isMastered
             ? '<span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 font-bold border border-emerald-500/30 flex items-center gap-1 shadow-xs"><i class="fa-solid fa-check text-[9px]"></i> Mastered</span>'
-            : `<span class="text-[10px] px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 font-bold border border-cyan-500/30 flex items-center gap-1.5 shadow-xs"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> ${pct > 0 ? pct + '% In Progress' : 'In Progress'}</span>`
+            : `<span class="text-[10px] px-2.5 py-0.5 rounded-full bg-white/[0.06] text-slate-300 font-bold border border-white/10 flex items-center gap-1.5 shadow-xs"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> ${pct > 0 ? pct + '% In Progress' : 'In Progress'}</span>`
           }
             </div>
 
             <!-- SUBJECT TITLE & CHAPTER COUNT -->
             <div class="mt-2.5">
-              <h4 class="font-extrabold text-base sm:text-[17px] text-white tracking-tight truncate hover:text-cyan-300 transition-colors" title="${subj.name}">
+              <h4 class="font-extrabold text-base sm:text-[17px] text-white tracking-tight truncate hover:text-slate-200 transition-colors" title="${subj.name}">
                 ${subj.name}
               </h4>
               <p class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-2">
@@ -8197,7 +8373,7 @@
           <div class="flex items-center gap-2 pt-3 border-t border-white/[0.08] text-xs">
             ${!isMastered ? `
               <button onclick="markSubjectCompletedFromHome('${item.key}')"
-                class="flex-1 py-2 px-3 bg-gradient-to-r from-emerald-600/80 to-teal-600/80 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl border border-emerald-400/30 transition flex items-center justify-center gap-1.5 text-xs shadow-[0_4px_14px_rgba(16,185,129,0.25)] active:scale-[0.98] cursor-pointer"
+                class="flex-1 py-2 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl border border-emerald-500/40 transition flex items-center justify-center gap-1.5 text-xs shadow-sm active:scale-[0.98] cursor-pointer"
                 title="Mark this subject completed & mastered">
                 <i class="fa-solid fa-check text-[11px]"></i> <span>Mark Complete</span>
               </button>
@@ -8265,7 +8441,7 @@
       if (stepsCountLabel) stepsCountLabel.innerText = `${completedCount} / ${totalSteps} Steps`;
       if (pctBadge) {
         pctBadge.innerText = `${pct}% Done`;
-        pctBadge.className = `text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border ${completedCount === totalSteps ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.5)]' : 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25'}`;
+        pctBadge.className = `text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border ${completedCount === totalSteps ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm' : 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25'}`;
       }
       if (estTimeBadge) {
         const hrs = (totalTargetMinutes / 60).toFixed(1);
@@ -8317,7 +8493,7 @@
             <div class="flex items-center gap-3 min-w-0 flex-1">
               <!-- NUMBER / CHECK BADGE WITH DIRECT CLICK TOGGLE -->
               <button onclick="toggleStepDoneDirectly(event, '${s.key}')"
-                class="w-8 h-8 rounded-xl ${isDone ? 'bg-emerald-500 text-slate-950 shadow-[0_0_12px_rgba(16,185,129,0.5)]' : (isCurrent ? 'bg-cyan-500 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.5)] font-extrabold' : typeColor + ' border')} flex items-center justify-center text-xs font-bold shrink-0 transition-transform hover:scale-110 active:scale-95 cursor-pointer"
+                class="w-8 h-8 rounded-xl ${isDone ? 'bg-emerald-500 text-slate-950 shadow-sm' : (isCurrent ? 'bg-blue-500 text-white font-extrabold shadow-sm' : typeColor + ' border')} flex items-center justify-center text-xs font-bold shrink-0 transition-transform hover:scale-105 active:scale-95 cursor-pointer"
                 title="${isDone ? 'Mark step uncompleted' : 'Click to quickly toggle step complete'}">
                 ${isDone ? '<i class="fa-solid fa-check text-xs"></i>' : (idx + 1)}
               </button>
@@ -8782,7 +8958,7 @@
 
     // 15. TAB NAVIGATION & EXPORT
     function switchTab(tabId) {
-      const tabs = ['analytics', 'daily-flow', 'weekend', 'tests', 'completed', 'cycle-setup', 'syllabus'];
+      const tabs = ['analytics', 'daily-flow', 'weekend', 'aptitude', 'tests', 'completed', 'cycle-setup', 'syllabus'];
       tabs.forEach(t => {
         const btn = document.getElementById(`tab-${t}`);
         const view = document.getElementById(`view-${t}`);
@@ -8798,6 +8974,7 @@
 
       if (tabId === 'analytics') renderAnalyticsHub();
       if (tabId === 'weekend') renderWeekendSection();
+      if (tabId === 'aptitude') renderAptitudeTracker();
       if (tabId === 'tests') renderTestsSection();
       if (tabId === 'completed') renderCompletedSubjectsList();
       if (tabId === 'syllabus') renderSyllabusMatrix();
@@ -10531,6 +10708,575 @@
       if (sub) sub.innerText = "Master Revision: Formulas & Mistake Notebook";
       setTimerMode("countdown");
       setPresetMinutes(60);
+    }
+
+    // ==============================================================
+    // 19. APTITUDE SYLLABUS & STRIKEOUT TRACKER ENGINE
+    // ==============================================================
+    const GATE_APTITUDE_SECTIONS = [
+      {
+        id: "quant",
+        name: "Quantitative Aptitude",
+        shortName: "Quant",
+        marks: "6-8 Marks",
+        icon: "fa-calculator",
+        accentColor: "amber",
+        colorClass: "text-amber-400 bg-amber-500/20 border-amber-500/30",
+        description: "Numerical computation, estimation, percentages, powers, exponents, series, permutations, combinations, and data interpretation.",
+        categories: [
+          {
+            name: "Arithmetic & Commercial Math",
+            topics: [
+              { id: "qa_num_sys", name: "Number Systems, Divisibility Rules & Remainder Theorems", subtopics: ["Divisibility rules (2-13)", "Unit digit & last 2 digits", "Factors & multiples (HCF & LCM)", "Remainders & Fermat / Euler theorems"] },
+              { id: "qa_pct", name: "Percentages & Successive Percentage Changes", subtopics: ["Fraction to percentage conversions", "Percentage increase/decrease", "Successive percentage changes", "Population & depreciation formula"] },
+              { id: "qa_pl_disc", name: "Profit, Loss & Discount (Marked Price & Selling Price)", subtopics: ["Cost Price, Selling Price & Marked Price", "Profit% and Loss%", "False weights & dishonest dealers", "Successive discount calculations"] },
+              { id: "qa_ratio_prop", name: "Ratio, Proportion & Variations", subtopics: ["Compounded & duplicate ratios", "Direct & inverse proportions", "Mean, third & fourth proportionals", "Partnerships & profit sharing"] },
+              { id: "qa_avg_mix", name: "Averages, Mixtures & Alligations", subtopics: ["Weighted averages", "Rule of Alligation", "Replacement of mixtures", "Speed / price / marks mixture problems"] },
+              { id: "qa_si_ci", name: "Simple Interest & Compound Interest (Annual/Half-Yearly)", subtopics: ["Simple Interest formula & shortcuts", "Compound Interest (annually / semi-annually)", "Difference between CI and SI (2 & 3 years)", "Installments & loan repayments"] },
+              { id: "qa_tsd", name: "Time, Speed & Distance, Trains & Boats/Streams", subtopics: ["Average speed formula", "Relative speed concepts", "Problems on trains crossing poles/platforms", "Boats, streams, river currents & circular tracks"] },
+              { id: "qa_tw_pipe", name: "Time & Work, Efficiency & Pipes/Cisterns", subtopics: ["Unitary method & LCM efficiency method", "Workers leaving or joining midway", "Men, Women & Children work equivalence", "Pipes, cisterns & inlet/outlet leak problems"] }
+            ]
+          },
+          {
+            name: "Algebra, Modern Math & Geometry",
+            topics: [
+              { id: "qa_powers_log", name: "Powers, Exponents, Surds & Logarithms", subtopics: ["Laws of indices & powers", "Rationalization of surds", "Properties of logarithms (base change, log product/quotient)", "Solving exponential & logarithmic equations"] },
+              { id: "qa_quad_ineq", name: "Polynomials, Quadratic Equations & Inequalities", subtopics: ["Roots of quadratic equations (sum & product)", "Discriminant & nature of roots", "Modulus & absolute value equations", "Linear & quadratic inequalities"] },
+              { id: "qa_prog_series", name: "Progressions: Arithmetic (AP), Geometric (GP) & Harmonic (HP)", subtopics: ["nth term & sum of n terms of AP", "Geometric progression & sum of infinite GP", "Arithmetic-Geometric Progression (AGP)", "Special summation series (Σn, Σn², Σn³)"] },
+              { id: "qa_pnc", name: "Permutations & Combinations (Counting Principles)", subtopics: ["Fundamental counting principles (addition & multiplication)", "Permutations with repetition & restrictions", "Combinations & selection rules", "Circular permutations & distribution into groups"] },
+              { id: "qa_prob", name: "Elementary Probability, Conditional Probability & Bayes' Theorem", subtopics: ["Classical definition & sample spaces", "Addition & multiplication theorems of probability", "Independent vs mutually exclusive events", "Conditional probability & Bayes' Theorem"] },
+              { id: "qa_geom_mens", name: "Geometry & Mensuration (2D/3D Area, Perimeter & Volume)", subtopics: ["Properties of triangles, similarity & congruence", "Circles, tangents, chords & angles", "Area of polygons (quadrilaterals, polygons)", "Volume & surface area of spheres, cylinders, cones, prisms"] }
+            ]
+          },
+          {
+            name: "Data Interpretation (DI)",
+            topics: [
+              { id: "qa_di_charts", name: "Data Interpretation: Bar Charts, Histograms & Pie Charts", subtopics: ["Single & stacked bar charts", "Pie chart degree & percentage conversions", "Histograms & frequency distributions", "Rapid calculation shortcuts"] },
+              { id: "qa_di_plots", name: "Data Interpretation: 2D & 3D Plots, Tables & Web Diagrams", subtopics: ["Line graphs & dual-axis charts", "Complex tabular data extraction", "Radar / web diagrams & spider charts", "Data sufficiency in quantitative analysis"] }
+            ]
+          }
+        ]
+      },
+      {
+        id: "analytical",
+        name: "Analytical Aptitude",
+        shortName: "Analytical",
+        marks: "3-5 Marks",
+        icon: "fa-lightbulb",
+        accentColor: "purple",
+        colorClass: "text-purple-400 bg-purple-500/20 border-purple-500/30",
+        description: "Logic deduction, induction, analogies, numerical reasoning, relationships, syllogisms, and sequencing.",
+        categories: [
+          {
+            name: "Logic & Critical Deduction",
+            topics: [
+              { id: "aa_syllogisms", name: "Syllogisms & Categorical Propositions (Venn Method)", subtopics: ["All, Some, No, Some-Not propositions", "Euler & Venn diagram validation", "Possibility cases & Either-Or conditions", "Reverse syllogisms & conclusion checks"] },
+              { id: "aa_deduction_ind", name: "Logical Deduction, Induction & Valid Inferences", subtopics: ["Deductive vs inductive reasoning", "Hypothesis testing from statements", "Direct & indirect logical conclusions", "Spotting logical fallacies"] },
+              { id: "aa_assump_concl", name: "Statements & Assumptions, Conclusions & Inferences", subtopics: ["Implicit vs explicit assumptions", "Valid conclusions based on premises", "Courses of action evaluation", "Strong vs weak arguments"] },
+              { id: "aa_binary_logic", name: "Binary Logic: Truth-Tellers, Liars & Alternators", subtopics: ["Truth-tellers and liars puzzle deduction", "Hypothetical assignment method", "Knights & Knaves riddles", "Contradiction identification"] }
+            ]
+          },
+          {
+            name: "Reasoning & Relationships",
+            topics: [
+              { id: "aa_blood_rel", name: "Blood Relations & Family Tree Deduction", subtopics: ["Standard family relations terminology", "Coded blood relations (A + B means Father)", "Generational family tree diagrams", "Pointing to person / portrait riddles"] },
+              { id: "aa_dir_sense", name: "Direction Sense, Compass Navigation & Shadow Problems", subtopics: ["8 cardinal directions & turn angles", "Pythagoras theorem distance calculation", "Morning / evening sunrise-sunset shadows", "Clockwise & anti-clockwise angular rotations"] },
+              { id: "aa_seating_arr", name: "Seating Arrangements (Linear, Circular & Rectangular)", subtopics: ["Linear row facing north/south", "Circular table facing center / facing outward", "Two parallel rows facing each other", "Floor puzzles & multi-variable arrangements"] },
+              { id: "aa_coding_dec", name: "Coding-Decoding & Letter-Symbol Substitution", subtopics: ["Alphabet position values (A=1 ... Z=26)", "Reverse letter pairs (AZ, BY, CX)", "Direct letter & symbol coding", "Matrix coding & deciphering messages"] },
+              { id: "aa_series_analogy", name: "Number Series, Alphabet Series & Analogies", subtopics: ["Arithmetic & geometric step differences", "Prime, square & cube sequence patterns", "Letter-number hybrid sequences", "Semantic & numerical analogies"] },
+              { id: "aa_clocks_cal", name: "Clocks, Calendars & Age Problems", subtopics: ["Angle between hour and minute hands", "Coinciding, opposite & perpendicular hands", "Odd days in century / leap years", "Finding day of the week for any date"] }
+            ]
+          }
+        ]
+      },
+      {
+        id: "spatial",
+        name: "Spatial Aptitude",
+        shortName: "Spatial",
+        marks: "2-3 Marks",
+        icon: "fa-shapes",
+        accentColor: "cyan",
+        colorClass: "text-cyan-400 bg-cyan-500/20 border-cyan-500/30",
+        description: "Transformation of 2D and 3D shapes: translation, rotation, scaling, mirroring, assembling, grouping, paper folding and cutting.",
+        categories: [
+          {
+            name: "2D Transformations & Patterns",
+            topics: [
+              { id: "sa_trans_rot", name: "Shape Translation, Rotation (90°/180°) & Scaling", subtopics: ["Clockwise and counter-clockwise rotation", "Scaling of geometric shapes", "Compound transformations", "Orientation invariance"] },
+              { id: "sa_mirror_water", name: "Mirror Images (Vertical) & Water Images (Horizontal)", subtopics: ["Lateral inversion principles", "Mirror image of alphanumeric characters", "Water reflection of geometric patterns", "Mirror placement at arbitrary axes"] },
+              { id: "sa_paper_fold", name: "Paper Folding & Symmetry Lines", subtopics: ["Crease line predictions", "Transparent sheet folding overlays", "Symmetry axis identification", "Multi-fold layer alignment"] },
+              { id: "sa_paper_cut", name: "Paper Cutting & Punched Hole Unfolding", subtopics: ["Step-by-step reverse unfolding tracing", "Corner vs center punching", "Hole count and position symmetry", "Punch pattern identification"] }
+            ]
+          },
+          {
+            name: "3D Shapes & Spatial Assemblies",
+            topics: [
+              { id: "sa_cubes_dice", name: "Cubes & Dice: Unfolded Nets & Opposite Faces", subtopics: ["Standard dice rules (opposite faces sum to 7)", "Opposite face rules in open dice nets", "Rotated views of a single die", "Painted cube cuts & number of painted faces"] },
+              { id: "sa_assembling", name: "Shape Assembling, Grouping & Figure Matrices", subtopics: ["Fitting 2D pieces into a complete shape (Tangram)", "Grouping identical figures into sets", "3x3 figure matrix completion", "Visual odd-one-out"] },
+              { id: "sa_fig_counting", name: "Figure Counting (Triangles, Squares & Blocks)", subtopics: ["Formulas for nested triangles", "Grid formula for rectangles & squares", "Counting straight lines and circles", "3D block counting in layered stacks"] }
+            ]
+          }
+        ]
+      },
+      {
+        id: "verbal",
+        name: "Verbal Aptitude",
+        shortName: "Verbal",
+        marks: "3-4 Marks",
+        icon: "fa-spell-check",
+        accentColor: "emerald",
+        colorClass: "text-emerald-400 bg-emerald-500/20 border-emerald-500/30",
+        description: "Basic English grammar, tenses, subject-verb agreement, vocabulary, reading comprehension, and narrative sequencing.",
+        categories: [
+          {
+            name: "Grammar & Sentence Mechanics",
+            topics: [
+              { id: "va_grammar_rules", name: "Parts of Speech & Word Class Identification", subtopics: ["Nouns, pronouns, verbs, adverbs, adjectives", "Prepositions & their correct usage", "Coordinating & subordinating conjunctions", "Interjections & articles (a, an, the)"] },
+              { id: "va_sva_tenses", name: "Subject-Verb Agreement & Tenses Consistency", subtopics: ["Rules of subject-verb agreement (singular/plural)", "Either/or, neither/nor agreement", "Present, past, future perfect tenses", "Conditional sentences (Type 0, 1, 2, 3)"] },
+              { id: "va_modals_voice", name: "Modals, Active-Passive Voice & Direct-Indirect Speech", subtopics: ["Usage of modal auxiliaries (must, should, would, could)", "Active to passive voice conversion rules", "Reported speech & tense shifting", "Parallelism in sentence structure"] },
+              { id: "va_error_spotting", name: "Error Spotting & Sentence Correction", subtopics: ["Redundancy and tautology", "Dangling modifiers & split infinitives", "Commonly misplaced prepositions", "GATE past error correction patterns"] }
+            ]
+          },
+          {
+            name: "Vocabulary & Coherence",
+            topics: [
+              { id: "va_vocab_context", name: "Contextual Vocabulary, Synonyms & Antonyms", subtopics: ["High-frequency GATE academic words", "Context clues for word meanings", "Exact vs near synonyms", "Antonyms in nuanced sentence contexts"] },
+              { id: "va_idioms_phrases", name: "Idioms, Phrasal Verbs & Confusing Words", subtopics: ["Popular English idioms and proverbs", "Phrasal verbs with prepositions (look into, carry out)", "Confusing word pairs (affect/effect, discrete/discreet)", "One-word substitutions"] },
+              { id: "va_reading_comp", name: "Reading Comprehension & Critical Analysis", subtopics: ["Central theme & title identification", "Author's tone (objective, critical, analytical)", "Inference vs direct fact extraction", "Short technical & scientific passage comprehension"] },
+              { id: "va_para_jumbles", name: "Narrative Sequencing (Para Jumbles & Sentence Ordering)", subtopics: ["Mandatory pair identification", "Chronological & logical sequencing", "Opening & concluding sentence detection", "Pronoun antecedent link techniques"] }
+            ]
+          }
+        ]
+      }
+    ];
+
+    let currentAptitudeSectionFilter = 'all';
+    let currentAptitudeStatusFilter = 'all';
+    let currentAptitudeSearchQuery = '';
+
+    function playStrikeoutChime(isStrike = true) {
+      try {
+        if (localStorage.getItem("gate_timer_muted") === "true") return;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const now = ctx.currentTime;
+        if (isStrike) {
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } else {
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(349.23, now + 0.12);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+          osc.start(now);
+          osc.stop(now + 0.2);
+        }
+      } catch (e) {}
+    }
+
+    function getAllAptitudeTopics() {
+      const all = [];
+      GATE_APTITUDE_SECTIONS.forEach(sec => {
+        sec.categories.forEach(cat => {
+          cat.topics.forEach(top => {
+            all.push({ ...top, sectionId: sec.id, sectionName: sec.name, categoryName: cat.name });
+          });
+        });
+      });
+      return all;
+    }
+
+    function getAptitudeTopicById(id) {
+      return getAllAptitudeTopics().find(t => t.id === id);
+    }
+
+    function toggleAptitudeStrikeout(topicId) {
+      if (!appState.aptitudeStrikeouts) appState.aptitudeStrikeouts = {};
+      const topic = getAptitudeTopicById(topicId);
+      const wasStruck = !!appState.aptitudeStrikeouts[topicId];
+
+      if (wasStruck) {
+        delete appState.aptitudeStrikeouts[topicId];
+        playStrikeoutChime(false);
+        showAppToast(`Unmarked: ${topic ? topic.name : 'Topic'}`, "info");
+      } else {
+        const now = new Date();
+        appState.aptitudeStrikeouts[topicId] = {
+          completedAt: now.toISOString(),
+          dateStr: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        };
+        playStrikeoutChime(true);
+        showAppToast(`Struck out: ${topic ? topic.name : 'Topic'}!`, "success");
+      }
+
+      saveState();
+      renderAptitudeTracker();
+    }
+
+    function setAptitudeSectionFilter(secId) {
+      currentAptitudeSectionFilter = secId;
+      document.querySelectorAll(".apt-sec-btn").forEach(btn => {
+        const sec = btn.getAttribute("data-sec");
+        if (sec === secId) {
+          btn.className = "apt-sec-btn px-3 py-1.5 rounded-lg bg-white text-slate-950 font-bold transition shadow";
+        } else {
+          btn.className = "apt-sec-btn px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 border border-white/10 hover:text-white transition";
+        }
+      });
+      renderAptitudeTracker();
+    }
+
+    function setAptitudeStatusFilter(status) {
+      currentAptitudeStatusFilter = status;
+      document.querySelectorAll(".apt-status-btn").forEach(btn => {
+        const st = btn.getAttribute("data-status");
+        if (st === status) {
+          btn.className = "apt-status-btn px-2.5 py-1.5 rounded-lg bg-white/20 text-white font-bold transition shadow";
+        } else {
+          btn.className = "apt-status-btn px-2.5 py-1.5 rounded-lg bg-white/5 text-slate-300 hover:text-white transition";
+        }
+      });
+      renderAptitudeTracker();
+    }
+
+    function onAptitudeSearchChange(val) {
+      currentAptitudeSearchQuery = (val || "").trim().toLowerCase();
+      const clearBtn = document.getElementById("aptitudeSearchClear");
+      if (clearBtn) {
+        if (currentAptitudeSearchQuery) clearBtn.classList.remove("hidden");
+        else clearBtn.classList.add("hidden");
+      }
+      renderAptitudeTracker();
+    }
+
+    function clearAptitudeSearch() {
+      const inp = document.getElementById("aptitudeSearchInput");
+      if (inp) inp.value = "";
+      currentAptitudeSearchQuery = "";
+      const clearBtn = document.getElementById("aptitudeSearchClear");
+      if (clearBtn) clearBtn.classList.add("hidden");
+      renderAptitudeTracker();
+    }
+
+    function strikeCategoryAptitude(catName, shouldStrike) {
+      if (!appState.aptitudeStrikeouts) appState.aptitudeStrikeouts = {};
+      const allTopics = getAllAptitudeTopics().filter(t => t.categoryName === catName);
+      if (allTopics.length === 0) return;
+
+      const now = new Date();
+      allTopics.forEach(t => {
+        if (shouldStrike) {
+          appState.aptitudeStrikeouts[t.id] = {
+            completedAt: now.toISOString(),
+            dateStr: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          };
+        } else {
+          delete appState.aptitudeStrikeouts[t.id];
+        }
+      });
+
+      playStrikeoutChime(shouldStrike);
+      showAppToast(shouldStrike ? `Struck out all in "${catName}"` : `Reset topics in "${catName}"`, shouldStrike ? "success" : "info");
+      saveState();
+      renderAptitudeTracker();
+    }
+
+    function pickRandomAptitudeTopic() {
+      const allTopics = getAllAptitudeTopics();
+      const pendingTopics = allTopics.filter(t => !appState.aptitudeStrikeouts[t.id]);
+
+      if (pendingTopics.length === 0) {
+        showAppToast("Incredible! You have struck out all 41 Aptitude topics! 15/15 Marks secured!", "success");
+        return;
+      }
+
+      const randomTopic = pendingTopics[Math.floor(Math.random() * pendingTopics.length)];
+      setAptitudeSectionFilter('all');
+      setAptitudeStatusFilter('all');
+      clearAptitudeSearch();
+
+      setTimeout(() => {
+        const el = document.getElementById(`apt-topic-row-${randomTopic.id}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add("ring-2", "ring-amber-400", "scale-[1.02]");
+          setTimeout(() => {
+            el.classList.remove("ring-2", "ring-amber-400", "scale-[1.02]");
+          }, 3000);
+        }
+        showAppToast(`Today's Pick: ${randomTopic.name} (${randomTopic.sectionName})!`, "success");
+      }, 150);
+    }
+
+    function startAptitudePracticeSession(topicName, secName) {
+      switchTab("daily-flow");
+      loadStepIntoTimer("practice");
+      const title = document.getElementById("activeTimerTitle");
+      const sub = document.getElementById("activeTimerSubtitle");
+      if (title) title.innerText = `[Aptitude] ${topicName}`;
+      if (sub) sub.innerText = `GATE General Aptitude Practice: ${secName}`;
+      setTimerMode("countdown");
+      setPresetMinutes(30);
+    }
+
+    function renderAptitudeTracker() {
+      const container = document.getElementById("aptitudeSectionsContainer");
+      if (!container) return;
+
+      const strikeouts = appState.aptitudeStrikeouts || {};
+      const allTopics = getAllAptitudeTopics();
+      const totalCount = allTopics.length;
+      const totalStruck = allTopics.filter(t => !strikeouts[t.id] ? false : true).length;
+      const overallPct = totalCount > 0 ? Math.round((totalStruck / totalCount) * 100) : 0;
+      const marksEst = ((totalStruck / totalCount) * 15).toFixed(1);
+
+      // Section stats
+      const secStats = {};
+      GATE_APTITUDE_SECTIONS.forEach(sec => {
+        const secTopics = [];
+        sec.categories.forEach(c => secTopics.push(...c.topics));
+        const struck = secTopics.filter(t => !!strikeouts[t.id]).length;
+        const tot = secTopics.length;
+        const pct = tot > 0 ? Math.round((struck / tot) * 100) : 0;
+        secStats[sec.id] = { struck, tot, pct };
+      });
+
+      // Update KPI DOM elements
+      const elCompCount = document.getElementById("aptCompletedCount");
+      const elTotCount = document.getElementById("aptTotalCount");
+      const elOverallPct = document.getElementById("aptOverallPct");
+      const elOverallBar = document.getElementById("aptOverallProgressBar");
+      const elMarksEst = document.getElementById("aptMarksEst");
+
+      if (elCompCount) elCompCount.innerText = totalStruck;
+      if (elTotCount) elTotCount.innerText = totalCount;
+      if (elOverallPct) elOverallPct.innerText = `${overallPct}%`;
+      if (elOverallBar) elOverallBar.style.width = `${overallPct}%`;
+      if (elMarksEst) elMarksEst.innerText = `${marksEst} / 15.0`;
+
+      // Update individual section KPI elements
+      if (secStats.quant) {
+        const qCount = document.getElementById("aptQuantCount");
+        const qPct = document.getElementById("aptQuantPct");
+        const qBar = document.getElementById("aptQuantProgressBar");
+        if (qCount) qCount.innerText = secStats.quant.struck;
+        if (qPct) qPct.innerText = `${secStats.quant.pct}%`;
+        if (qBar) qBar.style.width = `${secStats.quant.pct}%`;
+      }
+      if (secStats.analytical) {
+        const aCount = document.getElementById("aptAnalyticalCount");
+        const aPct = document.getElementById("aptAnalyticalPct");
+        const aBar = document.getElementById("aptAnalyticalProgressBar");
+        if (aCount) aCount.innerText = secStats.analytical.struck;
+        if (aPct) aPct.innerText = `${secStats.analytical.pct}%`;
+        if (aBar) aBar.style.width = `${secStats.analytical.pct}%`;
+      }
+      if (secStats.spatial) {
+        const sCount = document.getElementById("aptSpatialCount");
+        const sPct = document.getElementById("aptSpatialPct");
+        const sBar = document.getElementById("aptSpatialProgressBar");
+        if (sCount) sCount.innerText = secStats.spatial.struck;
+        if (sPct) sPct.innerText = `${secStats.spatial.pct}%`;
+        if (sBar) sBar.style.width = `${secStats.spatial.pct}%`;
+      }
+      if (secStats.verbal) {
+        const vCount = document.getElementById("aptVerbalCount");
+        const vPct = document.getElementById("aptVerbalPct");
+        const vBar = document.getElementById("aptVerbalProgressBar");
+        if (vCount) vCount.innerText = secStats.verbal.struck;
+        if (vPct) vPct.innerText = `${secStats.verbal.pct}%`;
+        if (vBar) vBar.style.width = `${secStats.verbal.pct}%`;
+      }
+
+      // Update Navbar tab badge & status badges
+      const tabBadge = document.getElementById("aptitudeTabBadge");
+      if (tabBadge) tabBadge.innerText = `${totalStruck}/${totalCount}`;
+
+      const pendingBadge = document.getElementById("aptPendingBadge");
+      const struckBadge = document.getElementById("aptStruckBadge");
+      if (pendingBadge) pendingBadge.innerText = totalCount - totalStruck;
+      if (struckBadge) struckBadge.innerText = totalStruck;
+
+      // Filter sections to render
+      let sectionsToRender = GATE_APTITUDE_SECTIONS;
+      if (currentAptitudeSectionFilter !== 'all') {
+        sectionsToRender = GATE_APTITUDE_SECTIONS.filter(s => s.id === currentAptitudeSectionFilter);
+      }
+
+      let totalVisibleTopics = 0;
+      let html = "";
+
+      sectionsToRender.forEach(sec => {
+        const secInfo = secStats[sec.id] || { struck: 0, tot: 0, pct: 0 };
+        let sectionHtml = "";
+
+        sec.categories.forEach((cat, catIdx) => {
+          let topics = cat.topics;
+
+          // Apply search filter
+          if (currentAptitudeSearchQuery) {
+            topics = topics.filter(t => {
+              const nameMatch = t.name.toLowerCase().includes(currentAptitudeSearchQuery);
+              const subMatch = (t.subtopics || []).some(sub => sub.toLowerCase().includes(currentAptitudeSearchQuery));
+              return nameMatch || subMatch;
+            });
+          }
+
+          // Apply status filter
+          if (currentAptitudeStatusFilter === 'pending') {
+            topics = topics.filter(t => !strikeouts[t.id]);
+          } else if (currentAptitudeStatusFilter === 'struck') {
+            topics = topics.filter(t => !!strikeouts[t.id]);
+          }
+
+          if (topics.length === 0) return;
+          totalVisibleTopics += topics.length;
+
+          const catStruckCount = cat.topics.filter(t => !!strikeouts[t.id]).length;
+          const isCatAllStruck = catStruckCount === cat.topics.length && cat.topics.length > 0;
+
+          sectionHtml += `
+            <div class="rounded-2xl bg-black/30 border border-white/10 overflow-hidden shadow-lg space-y-0 mb-4">
+              <!-- Category Header -->
+              <div class="p-3.5 sm:p-4 bg-white/[0.03] border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full ${sec.accentColor === 'amber' ? 'bg-amber-400' : sec.accentColor === 'purple' ? 'bg-purple-400' : sec.accentColor === 'cyan' ? 'bg-cyan-400' : 'bg-emerald-400'}"></span>
+                  <h4 class="font-bold text-sm text-white tracking-wide">${cat.name}</h4>
+                  <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-slate-300 border border-white/5">
+                    ${catStruckCount}/${cat.topics.length} Struck
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="strikeCategoryAptitude('${cat.name.replace(/'/g, "\\'")}', ${!isCatAllStruck})"
+                    class="px-2.5 py-1 rounded-lg text-[11px] font-semibold transition border ${isCatAllStruck ? 'bg-white/5 text-slate-300 border-white/10 hover:text-white' : 'bg-amber-500/10 text-amber-300 border-amber-500/20 hover:bg-amber-500/20'} flex items-center gap-1.5">
+                    <i class="fa-solid ${isCatAllStruck ? 'fa-rotate-left' : 'fa-check-double'}"></i>
+                    <span>${isCatAllStruck ? 'Reset Category' : 'Strike Out All'}</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Topics List -->
+              <div class="p-3 sm:p-4 space-y-2.5">
+                ${topics.map(t => {
+                  const isStruck = !!strikeouts[t.id];
+                  const info = strikeouts[t.id] || {};
+                  return `
+                    <div id="apt-topic-row-${t.id}"
+                      class="p-3 sm:p-3.5 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group ${isStruck ? 'apt-topic-card-struck border-emerald-500/20 bg-emerald-950/10' : 'bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]'}">
+                      
+                      <!-- Topic Title & Checkbox -->
+                      <div class="flex items-start gap-3 min-w-0 flex-1 cursor-pointer select-none" onclick="toggleAptitudeStrikeout('${t.id}')">
+                        <!-- Checkbox Button -->
+                        <div class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-all ${isStruck ? 'bg-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/30 ring-2 ring-amber-400/40' : 'border border-white/20 bg-black/40 text-transparent hover:border-amber-400 group-hover:scale-105'}">
+                          <i class="fa-solid fa-check text-xs"></i>
+                        </div>
+
+                        <!-- Text Details -->
+                        <div class="min-w-0 flex-1 space-y-1">
+                          <div class="flex items-center gap-2 flex-wrap">
+                            <h5 class="text-sm font-semibold transition-all ${isStruck ? 'apt-topic-struck text-slate-400' : 'text-slate-100'}">
+                              ${t.name}
+                            </h5>
+                            ${isStruck ? `
+                              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                                <i class="fa-solid fa-strikethrough text-[9px]"></i> Struck Out
+                              </span>
+                              ${info.dateStr ? `<span class="text-[10px] text-slate-500 font-mono">${info.dateStr}</span>` : ''}
+                            ` : `
+                              <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-slate-400 border border-white/5">Pending</span>
+                            `}
+                          </div>
+
+                          <!-- Subtopics Chips -->
+                          <div class="flex flex-wrap gap-1.5 pt-0.5">
+                            ${t.subtopics.map(sub => `
+                              <span class="text-[10px] px-2 py-0.5 rounded-md bg-black/40 border border-white/5 text-slate-400 ${isStruck ? 'line-through opacity-60 text-slate-500' : ''}">${sub}</span>
+                            `).join("")}
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Right Actions -->
+                      <div class="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                        <button type="button" onclick="startAptitudePracticeSession('${t.name.replace(/'/g, "\\'")}', '${sec.name.replace(/'/g, "\\'")}')"
+                          class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold transition flex items-center gap-1.5"
+                          title="Start 30m practice session for this topic in Timer">
+                          <i class="fa-solid fa-stopwatch text-amber-400"></i>
+                          <span>Practice</span>
+                        </button>
+                        <button type="button" onclick="toggleAptitudeStrikeout('${t.id}')"
+                          class="px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${isStruck ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' : 'bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30'}">
+                          <i class="fa-solid ${isStruck ? 'fa-rotate-left' : 'fa-strikethrough'}"></i>
+                          <span>${isStruck ? 'Unstrike' : 'Strike Out'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            </div>
+          `;
+        });
+
+        if (sectionHtml) {
+          html += `
+            <div class="glass-card p-5 sm:p-6 rounded-2xl space-y-4 border border-white/10">
+              <!-- Section Banner -->
+              <div class="flex flex-wrap justify-between items-center gap-3 border-b border-white/10 pb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-xl ${sec.colorClass} flex items-center justify-center text-sm shadow-inner">
+                    <i class="fa-solid ${sec.icon}"></i>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-bold text-base text-white">${sec.name}</h3>
+                      <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-slate-300 border border-white/10">${sec.marks}</span>
+                    </div>
+                    <p class="text-xs text-slate-400">${sec.description}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <span class="text-xs font-mono font-bold text-slate-300">${secInfo.struck} / ${secInfo.tot} Struck (${secInfo.pct}%)</span>
+                  <div class="w-24 bg-white/10 rounded-full h-2 overflow-hidden">
+                    <div class="h-full ${sec.accentColor === 'amber' ? 'bg-amber-400' : sec.accentColor === 'purple' ? 'bg-purple-400' : sec.accentColor === 'cyan' ? 'bg-cyan-400' : 'bg-emerald-400'}" style="width: ${secInfo.pct}%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Categories -->
+              ${sectionHtml}
+            </div>
+          `;
+        }
+      });
+
+      if (totalVisibleTopics === 0) {
+        html = `
+          <div class="glass-card p-10 rounded-2xl text-center space-y-3 border border-white/10">
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 text-slate-400 flex items-center justify-center mx-auto text-xl">
+              <i class="fa-solid fa-filter-circle-xmark"></i>
+            </div>
+            <h4 class="font-bold text-base text-white">No Aptitude Topics Found</h4>
+            <p class="text-xs text-slate-400 max-w-md mx-auto">No topics match your current filter and search query. Try clearing the search or changing status filter.</p>
+            <button onclick="clearAptitudeSearch(); setAptitudeSectionFilter('all'); setAptitudeStatusFilter('all');"
+              class="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-semibold transition">
+              Reset All Filters
+            </button>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
     }
 
     // ==============================================================
